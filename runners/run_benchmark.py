@@ -22,6 +22,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from experiments.config_loader import (
+    MAP_POSTHOC_CONFIG_NAMES,
     inherit_map_posthoc_parameters,
     load_json,
     resolve_dataset_method_override,
@@ -36,6 +37,7 @@ from experiments.artifacts import (
     write_json,
 )
 from experiments.unified_experiment import run_experiment
+from utils.robot_runtime import active as robot_runtime
 from envs import load_env
 from methods import JOINT_METHODS
 from visualization.io import save_figure
@@ -52,6 +54,8 @@ def _method_config_name(method_name: str) -> str:
 
 def _load_env_config(config_root: Path, dataset_name: str) -> dict[str, Any]:
     path = config_root / "envs" / f"{dataset_name}.json"
+    if dataset_name == "BarClean" and config_root.resolve() == (PROJECT_ROOT / "configs").resolve():
+        path = robot_runtime().site_dir / "learning.json"
     cfg = load_json(path)
     cfg = dict(cfg)
     cfg.pop("name", None)
@@ -128,7 +132,7 @@ def _parse_kv_overrides(items: list[str] | None) -> dict[str, Any]:
 
 
 def _top_level_or_segmenter_override(method_name: str, key: str, value: Any) -> dict[str, Any]:
-    if str(method_name) in JOINT_METHODS or str(method_name) == "fchmm":
+    if str(method_name) in JOINT_METHODS:
         return {str(key): value}
     return {"segmenter": {str(key): value}}
 
@@ -176,10 +180,6 @@ def _extract_plot_record(method_name: str, result: dict[str, Any], method_seed: 
     if method_name in JOINT_METHODS:
         learner = result["joint_result"]["model"]
         gammas = result["joint_result"]["gammas"]
-    elif method_name == "fchmm":
-        segmentation = result["segmentation"]
-        learner = segmentation.model
-        gammas = segmentation.extras.get("gammas")
     else:
         learner = result["constraints"]["model"]
         gammas = result["constraints"]["gammas"]
@@ -390,7 +390,10 @@ def run_benchmark(
 
     dataset_overrides = dataset_overrides or {}
     method_overrides = method_overrides or {}
-    base_map_cfg = _load_method_config(config_root, "map")
+    base_map_cfgs = {
+        name: _load_method_config(config_root, name)
+        for name in MAP_POSTHOC_CONFIG_NAMES
+    }
     summary_path = outdir / "benchmark_results.json"
     existing_by_key: dict[tuple[str, str, int, int], dict[str, Any]] = {}
     if resume and summary_path.exists():
@@ -454,14 +457,15 @@ def run_benchmark(
                         _clear_demo_cache_for_dataset(dataset_name, dataset_cfg)
                         refreshed_demo_cache_keys.add(refresh_key)
                 run_method_cfg = _deep_merge(run_method_cfg, env_method_override)
+                run_method_cfg = _deep_merge(run_method_cfg, external_method_override)
                 run_method_cfg = inherit_map_posthoc_parameters(
                     method_name,
                     run_method_cfg,
-                    base_map_cfg,
+                    base_map_cfgs,
                     dataset_method_overrides,
                 )
                 run_method_cfg = _deep_merge(run_method_cfg, external_method_override)
-                if method_name in JOINT_METHODS or method_name == "fchmm":
+                if method_name in JOINT_METHODS:
                     run_method_cfg["seed"] = int(method_seed)
                 else:
                     segmenter_cfg = dict(run_method_cfg.get("segmenter", {}))
@@ -555,8 +559,8 @@ def main():
     parser.add_argument("--outdir", default="outputs/benchmark")
     parser.add_argument(
         "--run-output-root",
-        default="outputs",
-        help="Root directory for per-run models and plots (default: outputs).",
+        default=None,
+        help="Root for models and plots; BarClean defaults to outputs/ROBOT/SITE.",
     )
     parser.add_argument("--n-demos", "--n_demos", dest="n_demos", type=int, default=None)
     parser.add_argument("--plot-every", "--plot_every", dest="plot_every", type=int, default=None)
@@ -591,6 +595,9 @@ def main():
         help="Skip completed runs only when their stored dataset fingerprint matches the current dataset.",
     )
     args = parser.parse_args()
+    if args.run_output_root is None:
+        cfg = robot_runtime()
+        args.run_output_root = str(Path("outputs") / cfg.robot_id / cfg.site_id) if _split_csv(args.datasets) == ["BarClean"] else "outputs"
 
     methods = _split_csv(args.methods)
     datasets = _split_csv(args.datasets)

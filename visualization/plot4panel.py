@@ -301,7 +301,7 @@ def _plot_feature_evolution_panel(ax, learner, taus, gammas, demo_idx: int = 0, 
     if len(color_cycle) < M:
         from itertools import cycle, islice
         color_cycle = list(islice(cycle(color_cycle), M))
-    is_joint_feature_hmm = str(getattr(learner, "feature_emission_mode", "")) == "joint_gmm"
+    is_hmm = str(getattr(learner, "plot_context", "")) == "hmm"
 
     for m in range(M):
         feature_label = (
@@ -337,7 +337,7 @@ def _plot_feature_evolution_panel(ax, learner, taus, gammas, demo_idx: int = 0, 
             t_seg = t_axis[s : e + 1]
             if len(t_seg) == 0:
                 continue
-            if is_joint_feature_hmm or learner.r[stage_idx, m] != 1:
+            if is_hmm or learner.r[stage_idx, m] != 1:
                 continue
             model = learner.feature_models[stage_idx][m]
             info = model.get_summary()
@@ -1239,13 +1239,11 @@ def plot_results_4panel(learner, taus, it, gammas, alphas, betas, xis_list, aux_
     learning_title = {
         "joint": "Joint learning curves",
         "posthoc": "Segmentation learning curves",
-        "fchmm": "Feature-Constrained HMM learning curves",
         "hmm": "HMM learning curves",
     }.get(plot_context, "Learning curves")
     decomposition_title = {
         "joint": "Joint posterior decomposition",
         "posthoc": "Posthoc constraint decomposition",
-        "fchmm": "Feature-Constrained HMM posterior factors",
         "hmm": "HMM posterior factors",
     }.get(plot_context, "Posterior decomposition")
 
@@ -1679,7 +1677,7 @@ def plot_results_4panel(learner, taus, it, gammas, alphas, betas, xis_list, aux_
         ax.plot(t_axis, d_feat, '-', lw=1.1, color='tab:red', label='feat diff')
         if d_prog is not None:
             ax.plot(t_axis, d_prog, '-', lw=1.1, color='tab:blue', label='prog diff')
-        if d_trans is not None and getattr(learner, "plot_context", "") not in {"fchmm", "hmm"}:
+        if d_trans is not None and getattr(learner, "plot_context", "") != "hmm":
             ax.plot(t_axis, d_trans, '--', lw=1.2, color='tab:orange', label='trans diff')
         ax.plot(t_axis, post_odds, '-', lw=1.6, color='black', label='posterior log-odds')
         for j, cp in enumerate(stage_ends0[:-1]):

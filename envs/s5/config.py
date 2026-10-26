@@ -247,7 +247,7 @@ S5_SYNTHETIC_V21 = S5SyntheticPreset(
     ),
 )
 S5_SYNTHETIC_V22 = S5SyntheticPreset(name="s5_synthetic_v22", version=22)
-S5_SYNTHETIC_V23 = S5SyntheticPreset(name="s5_synthetic_v23", version=23)
+S5_SYNTHETIC_V24 = S5SyntheticPreset(name="s5_synthetic_v24", version=24)
 
 
 def cache_compatible_s5_loader_config(env_cfg: dict[str, Any] | None) -> dict[str, Any]:

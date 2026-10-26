@@ -78,14 +78,6 @@ def main():
             method_cfg["max_iter"] = int(args.max_iter)
         if args.plot_every is not None:
             method_cfg["plot_every"] = int(args.plot_every)
-    elif method_name == "fchmm":
-        method_cfg.setdefault("seed", 0 if args.method_seed is None else int(args.method_seed))
-        if args.method_seed is not None:
-            method_cfg["seed"] = int(args.method_seed)
-        if args.max_iter is not None:
-            method_cfg["max_iter"] = int(args.max_iter)
-        if args.plot_every is not None:
-            method_cfg["plot_every"] = int(args.plot_every)
     else:
         segmenter_cfg = dict(method_cfg.get("segmenter", {}))
         constraint_cfg = dict(method_cfg.get("posthoc_constraint", {}))

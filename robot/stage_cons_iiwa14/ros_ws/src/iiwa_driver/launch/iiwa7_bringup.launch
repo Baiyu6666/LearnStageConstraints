@@ -26,16 +26,19 @@
 |-->
 <launch>
   <!-- Select the robot -->
-  <arg name="robot_name" default="iiwa7"/>
-  <arg name="model" default="7" />
+  <arg name="robot_name" default="$(optenv STAGE_ROBOT_NAME iiwa7)"/>
+  <arg name="model" default="$(optenv STAGE_ROBOT_MODEL 7)" />
 
   <!-- Select the controller -->
-  <arg name="controller" default="TorqueController"/>
+  <arg name="controller" default="SafeTorqueController"/>
+
+  <arg name="robot_ip" default="$(optenv ROBOT_IP 192.170.10.4)"/>
 
   <include file="$(find iiwa_driver)/launch/iiwa_bringup.launch">
     <arg name="robot_name" value="$(arg robot_name)"/>
     <arg name="model" value="$(arg model)"/>
     <arg name="controller" value="$(arg controller)"/>
+    <arg name="robot_ip" value="$(arg robot_ip)"/>
   </include>
 
 </launch>

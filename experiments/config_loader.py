@@ -28,6 +28,24 @@ MAP_POSTHOC_PARAMETER_KEYS = (
     "map_refit_winning_voters",
 )
 
+MAP_POSTHOC_CONFIG_NAMES = frozenset(
+    {"map", "map_pooled", "map_balanced_pooled"}
+)
+
+
+def resolve_posthoc_map_config_name(training_mode: Any) -> str:
+    text = str(training_mode).strip().lower().replace("-", "_")
+    aliases = {
+        "map_pooled": "map_pooled",
+        "pooled": "map_pooled",
+        "pooled_nll": "map_pooled",
+        "map_balanced_pooled": "map_balanced_pooled",
+        "balanced_pooled": "map_balanced_pooled",
+        "demo_balanced": "map_balanced_pooled",
+        "demo_balanced_pooled": "map_balanced_pooled",
+    }
+    return aliases.get(text, "map")
+
 def load_json(path: str | Path) -> Dict[str, Any]:
     with open(path, "r") as f:
         return json.load(f)
@@ -65,16 +83,20 @@ def resolve_dataset_method_override(
 def inherit_map_posthoc_parameters(
     method_name: str,
     method_cfg: Dict[str, Any],
-    map_method_cfg: Dict[str, Any],
+    map_method_cfgs: Dict[str, Dict[str, Any]],
     dataset_method_overrides: Dict[str, Any],
 ) -> Dict[str, Any]:
     merged = dict(method_cfg)
-    if method_name == "fchmm" or not isinstance(merged.get("posthoc_constraint"), dict):
+    if not isinstance(merged.get("posthoc_constraint"), dict):
         return merged
 
+    training_mode = merged["posthoc_constraint"].get("posthoc_training_mode", "swcl")
+    map_config_name = resolve_posthoc_map_config_name(training_mode)
+    if map_config_name not in map_method_cfgs:
+        raise ValueError(f"Missing MAP posthoc config '{map_config_name}'.")
     effective_map_cfg = deep_merge(
-        dict(map_method_cfg),
-        dict(dataset_method_overrides.get("map", {})),
+        dict(map_method_cfgs[map_config_name]),
+        dict(dataset_method_overrides.get(map_config_name, {})),
     )
     inherited = {
         key: effective_map_cfg[key]

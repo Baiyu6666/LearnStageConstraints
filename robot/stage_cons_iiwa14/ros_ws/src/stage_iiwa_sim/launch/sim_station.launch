@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <launch>
+  <param name="/stage_cons/runtime_identity" value="$(optenv STAGE_RUNTIME_IDENTITY)"/>
   <arg name="gui" default="false"/>
   <arg name="auto_plan" default="true"/>
   <arg name="render_video" default="true"/>
@@ -7,12 +8,12 @@
   <arg name="velocity_scale" default="0.25"/>
   <arg name="acceleration_limit_rad_s2" default="1.0"/>
   <arg name="output_root" default="/data/sim_runs"/>
-  <arg name="scene_config" default="/workcell_definition/demo_scene.json"/>
+  <arg name="scene_config" default="$(optenv STAGE_SCENE_CONFIG /workcell_definition/demo_scene.json)"/>
 
-  <group ns="iiwa14">
+  <group ns="$(optenv STAGE_ROBOT_NAME iiwa14)">
     <param name="robot_description"
-           command="$(find xacro)/xacro --inorder '$(find iiwa_description)/urdf/iiwa14.urdf.xacro'
-                    hardware_interface:=PositionJointInterface robot_name:=iiwa14
+           command="$(find xacro)/xacro --inorder '$(find iiwa_description)/urdf/iiwa$(optenv STAGE_ROBOT_MODEL 14).urdf.xacro'
+                    hardware_interface:=PositionJointInterface robot_name:=$(optenv STAGE_ROBOT_NAME iiwa14)
                     force_sensor:=False grabber:=False simple_collision:=false"/>
 
     <node pkg="robot_state_publisher"
@@ -38,6 +39,6 @@
   </group>
 
   <include file="$(find stage_constraint_planner)/launch/task_planner.launch">
-    <arg name="frame_id" value="iiwa14_link_0"/>
+    <arg name="frame_id" value="$(optenv STAGE_BASE_FRAME iiwa14_link_0)"/>
   </include>
 </launch>

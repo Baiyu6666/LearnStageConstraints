@@ -5,7 +5,7 @@ joint_state_controller:
 SafeTorqueController:
   type: iiwa_control/WatchdogEffortController
   command_timeout: 0.05
-  max_abs_command: 6.0
+  max_abs_command: $(optenv STAGE_DEMO_TORQUE_LIMIT 6.0)
   position_stop_margin: 0.0872664626  # 5 degrees, measured from each URDF limit
   joints:
     - $(arg robot_name)_joint_1

@@ -27,35 +27,15 @@ from experiments.bar_inspect_processing import (  # noqa: E402
 )
 
 
-JOINT_TOPIC = "/iiwa14/joint_states"
-BAR_TOPIC = "/vrpn_client_node/baiyu_bar/pose_from_iiwa14"
-OBSTACLE_TOPIC = "/vrpn_client_node/baiyu_obs_bar/pose_from_iiwa14"
-OBSTACLE_B_TOPIC = "/vrpn_client_node/baiyu_obs_bar_b/pose_from_iiwa14"
-JOINT_ORDER = tuple(f"iiwa14_joint_{index}" for index in range(1, 8))
-JOINT_ORIGINS_XYZ = np.asarray(
-    [
-        [0.0, 0.0, 0.1575],
-        [0.0, 0.0, 0.2025],
-        [0.0, 0.2045, 0.0],
-        [0.0, 0.0, 0.2155],
-        [0.0, 0.1845, 0.0],
-        [0.0, 0.0, 0.2155],
-        [0.0, 0.0810, 0.0],
-    ],
-    dtype=float,
-)
-JOINT_ORIGINS_RPY = np.asarray(
-    [
-        [0.0, 0.0, 0.0],
-        [np.pi / 2.0, 0.0, np.pi],
-        [np.pi / 2.0, 0.0, np.pi],
-        [np.pi / 2.0, 0.0, 0.0],
-        [-np.pi / 2.0, np.pi, 0.0],
-        [np.pi / 2.0, 0.0, 0.0],
-        [-np.pi / 2.0, np.pi, 0.0],
-    ],
-    dtype=float,
-)
+from utils.robot_runtime import active as robot_runtime
+
+JOINT_TOPIC = robot_runtime().topic("joint_states")
+BAR_TOPIC = robot_runtime().tracking_topic("object")
+OBSTACLE_TOPIC = robot_runtime().tracking_topic("obstacle_a")
+OBSTACLE_B_TOPIC = robot_runtime().tracking_topic("obstacle_b")
+JOINT_ORDER = tuple(robot_runtime().robot["joint_names"])
+JOINT_ORIGINS_XYZ = np.asarray(robot_runtime().robot["joint_origins_xyz"], dtype=float)
+JOINT_ORIGINS_RPY = np.asarray(robot_runtime().robot["joint_origins_rpy"], dtype=float)
 
 
 def pose_row(message):
@@ -79,7 +59,7 @@ def homogeneous(rotation, translation):
     return output
 
 
-def iiwa14_fk(joint_positions):
+def robot_fk(joint_positions):
     origin_transforms = [
         homogeneous(Rotation.from_euler("xyz", rpy).as_matrix(), xyz)
         for xyz, rpy in zip(JOINT_ORIGINS_XYZ, JOINT_ORIGINS_RPY)
@@ -397,7 +377,7 @@ def main():
         args.joint_topic,
         args.feature_hz,
     )
-    trajectory = iiwa14_fk(joint_positions)
+    trajectory = robot_fk(joint_positions)
     environment = BarInspectEnv(
         **load_environment_config(args.env_config, 1.0 / args.feature_hz)
     )

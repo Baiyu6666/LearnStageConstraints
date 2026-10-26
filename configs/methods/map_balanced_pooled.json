@@ -16,7 +16,6 @@
   "fixed_true_cutpoint_prefix": 0,
   "fixed_true_cutpoint_indices": null,
   "map_eq_sigma": 0.05,
-  "map_eq_sigma_mode": "profiled_upper_bound",
   "map_c_bg": 1.0,
   "map_c_ineq": 0.0,
   "map_eq_distribution": "gaussian",

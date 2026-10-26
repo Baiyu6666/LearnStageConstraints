@@ -55,6 +55,10 @@ def _normalize_posthoc_training_mode(value: Any) -> str:
         "map_pooled": "pooled",
         "pooled": "pooled",
         "pooled_nll": "pooled",
+        "map_balanced_pooled": "map_balanced_pooled",
+        "balanced_pooled": "map_balanced_pooled",
+        "demo_balanced": "map_balanced_pooled",
+        "demo_balanced_pooled": "map_balanced_pooled",
         "demo_vote": "voting",
         "map_vote": "voting",
         "shared_vote": "voting",
@@ -62,7 +66,10 @@ def _normalize_posthoc_training_mode(value: Any) -> str:
         "voting": "voting",
     }
     if text not in aliases:
-        raise ValueError("posthoc_training_mode must be one of: swcl, pooled, voting.")
+        raise ValueError(
+            "posthoc_training_mode must be one of: swcl, pooled, "
+            "map_balanced_pooled, voting."
+        )
     return aliases[text]
 
 @dataclass
@@ -107,6 +114,10 @@ class PostHocConstraintLearner:
             )
             gammas = _hard_gammas_from_labels(labels, num_stages=num_stages)
         else:
+            if "map_eq_sigma_mode" in resolved_kwargs:
+                raise ValueError(
+                    "MAP always profiles equality sigma up to map_eq_sigma; remove map_eq_sigma_mode."
+                )
             learner = StageWiseMAPConstraintLearningModel(
                 demos=dataset.demos,
                 env=dataset.env,
@@ -129,7 +140,6 @@ class PostHocConstraintLearner:
                 eval_fn=None,
                 verbose=False,
                 map_eq_sigma=resolved_kwargs.get("map_eq_sigma", 0.05),
-                map_eq_sigma_mode=resolved_kwargs.get("map_eq_sigma_mode", "fixed"),
                 map_active_sigma_floor=resolved_kwargs.get("map_active_sigma_floor", 0.003),
                 map_c_bg=resolved_kwargs.get("map_c_bg", 2.0),
                 map_c_ineq=resolved_kwargs.get("map_c_ineq", 0.0),
@@ -141,7 +151,11 @@ class PostHocConstraintLearner:
                 map_boundary_quantile=resolved_kwargs.get("map_boundary_quantile", 0.05),
                 map_activation_prior=resolved_kwargs.get("map_activation_prior"),
                 map_active_mode_prior=resolved_kwargs.get("map_active_mode_prior"),
-                map_mode_aggregation="pooled" if training_mode == "pooled" else "shared_vote",
+                map_mode_aggregation={
+                    "pooled": "pooled",
+                    "map_balanced_pooled": "demo_balanced_pooled",
+                    "voting": "shared_vote",
+                }[training_mode],
                 map_vote_prior_scope=resolved_kwargs.get("map_vote_prior_scope", "shared"),
                 map_refit_winning_voters=resolved_kwargs.get("map_refit_winning_voters", False),
                 map_convergence_tol=0.0,

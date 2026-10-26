@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "task_id": "BarClean",
+  "constraint_source_by_task": {
+    "BarClean": "true"
+  },
+  "start_by_task": {
+    "BarClean": {
+      "x": 0.6183,
+      "y": -0.1613,
+      "z": 0.26584,
+      "qx": 0.0,
+      "qy": 1.0,
+      "qz": 0.0,
+      "qw": 0.0
+    }
+  },
+  "goal_by_task": {
+    "BarClean": {
+      "x": 0.45,
+      "y": -0.44,
+      "z": 0.26584,
+      "qx": 0.0,
+      "qy": 1.0,
+      "qz": 0.0,
+      "qw": 0.0
+    }
+  },
+  "record_video": false
+}

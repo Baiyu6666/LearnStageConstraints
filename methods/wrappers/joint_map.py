@@ -30,6 +30,10 @@ def _is_stage_sweep(value: Any) -> bool:
 
 
 def _fit_single_map(kwargs: Dict[str, Any], dataset: TaskBundle) -> Dict[str, Any]:
+    if "map_eq_sigma_mode" in kwargs:
+        raise ValueError(
+            "MAP always profiles equality sigma up to map_eq_sigma; remove map_eq_sigma_mode."
+        )
     unsupported_weights = sorted(
         key
         for key in (
@@ -72,7 +76,6 @@ def _fit_single_map(kwargs: Dict[str, Any], dataset: TaskBundle) -> Dict[str, An
         disable_plots=kwargs.get("disable_plots", False),
         verbose=kwargs.get("verbose", True),
         map_eq_sigma=kwargs.get("map_eq_sigma", 0.05),
-        map_eq_sigma_mode=kwargs.get("map_eq_sigma_mode", "fixed"),
         map_active_sigma_floor=kwargs.get("map_active_sigma_floor", 0.003),
         map_c_bg=kwargs.get("map_c_bg", 2.0),
         map_c_ineq=kwargs.get("map_c_ineq", 0.0),

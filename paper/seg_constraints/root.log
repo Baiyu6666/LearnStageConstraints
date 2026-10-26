@@ -1,0 +1,1462 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.7.27)  2 SEP 2026 09:10
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**root.tex
+(./root.tex
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-06-18>
+(./IEEEtran.cls
+Document Class: IEEEtran 2015/08/26 V1.8b by Michael Shell
+-- See the "IEEEtran_HOWTO" manual for usage information.
+-- http://www.michaelshell.org/tex/ieeetran/
+\@IEEEtrantmpdimenA=\dimen150
+\@IEEEtrantmpdimenB=\dimen151
+\@IEEEtrantmpdimenC=\dimen152
+\@IEEEtrantmpcountA=\count276
+\@IEEEtrantmpcountB=\count277
+\@IEEEtrantmpcountC=\count278
+\@IEEEtrantmptoksA=\toks17
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 5
+03.
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+-- Using 8.5in x 11in (letter) paper.
+-- Using PDF output.
+\@IEEEnormalsizeunitybaselineskip=\dimen153
+-- This is a 10 point document.
+LaTeX Encoding Info:    Redeclaring text command \textunderscore (encoding ?) o
+n input line 940.
+\CLASSINFOnormalsizebaselineskip=\dimen154
+\CLASSINFOnormalsizeunitybaselineskip=\dimen155
+\IEEEnormaljot=\dimen156
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1086.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <5> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1086.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1086.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1086.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1086.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1086.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1086.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1086.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1086.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1086.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <11> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1086.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <11> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1086.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1086.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1086.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <18> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1086.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <18> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1086.
+
+\IEEEquantizedlength=\dimen157
+\IEEEquantizedlengthdiff=\dimen158
+\IEEEquantizedtextheightdiff=\dimen159
+\IEEEilabelindentA=\dimen160
+\IEEEilabelindentB=\dimen161
+\IEEEilabelindent=\dimen162
+\IEEEelabelindent=\dimen163
+\IEEEdlabelindent=\dimen164
+\IEEElabelindent=\dimen165
+\IEEEiednormlabelsep=\dimen166
+\IEEEiedmathlabelsep=\dimen167
+\IEEEiedtopsep=\skip49
+\c@section=\count279
+\c@subsection=\count280
+\c@subsubsection=\count281
+\c@paragraph=\count282
+\c@IEEEsubequation=\count283
+\abovecaptionskip=\skip50
+\belowcaptionskip=\skip51
+\c@figure=\count284
+\c@table=\count285
+\@IEEEeqnnumcols=\count286
+\@IEEEeqncolcnt=\count287
+\@IEEEsubeqnnumrollback=\count288
+\@IEEEquantizeheightA=\dimen168
+\@IEEEquantizeheightB=\dimen169
+\@IEEEquantizeheightC=\dimen170
+\@IEEEquantizeprevdepth=\dimen171
+\@IEEEquantizemultiple=\count289
+\@IEEEquantizeboxA=\box53
+\@IEEEtmpitemindent=\dimen172
+\IEEEPARstartletwidth=\dimen173
+\c@IEEEbiography=\count290
+\@IEEEtranrubishbin=\box54
+) (/home/baiyu/texlive/2026/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen174
+\lightrulewidth=\dimen175
+\cmidrulewidth=\dimen176
+\belowrulesep=\dimen177
+\belowbottomsep=\dimen178
+\aboverulesep=\dimen179
+\abovetopsep=\dimen180
+\cmidrulesep=\dimen181
+\cmidrulekern=\dimen182
+\defaultaddspace=\dimen183
+\@cmidla=\count291
+\@cmidlb=\count292
+\@aboverulesep=\dimen184
+\@belowrulesep=\dimen185
+\@thisruleclass=\count293
+\@lastruleclass=\count294
+\@thisrulewidth=\dimen186
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/doublestroke/dsfont.sty
+Package: dsfont 1995/08/01 v0.1 Double stroke roman fonts
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2026-05-17 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2026-05-17 v1.15 key=value parser (DPC)
+\KV@toks@=\toks18
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2026-05-17 v1.4h Standard LaTeX Graphics (DPC,SPQR)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 106.
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen187
+\Gin@req@width=\dimen188
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/subfig/subfig.sty
+Package: subfig 2005/06/28 ver: 1.3 subfig package
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen189
+\captionmargin=\dimen190
+\caption@leftmargin=\dimen191
+\caption@rightmargin=\dimen192
+\caption@width=\dimen193
+\caption@indent=\dimen194
+\caption@parindent=\dimen195
+\caption@hangindent=\dimen196
+Package caption Info: Unknown document class (or package),
+(caption)             standard defaults will be used.
+Package caption Info: \@makecaption = \long macro:#1#2->\ifx \@captype \@IEEEta
+blestring \footnotesize \bgroup \par \centering \@IEEEtabletopskipstrut {\norma
+lfont \footnotesize #1}\\{\normalfont \footnotesize \scshape #2}\par \addvspace
+ {0.5\baselineskip }\egroup \@IEEEtablecaptionsepspace \else \@IEEEfigurecaptio
+nsepspace \setbox \@tempboxa \hbox {\normalfont \footnotesize {#1.}\nobreakspac
+e \nobreakspace #2}\ifdim \wd \@tempboxa >\hsize \setbox \@tempboxa \hbox {\nor
+malfont \footnotesize {#1.}\nobreakspace \nobreakspace }\parbox [t]{\hsize }{\n
+ormalfont \footnotesize \noindent \unhbox \@tempboxa #2}\else \ifCLASSOPTIONcon
+ference \hbox to\hsize {\normalfont \footnotesize \hfil \box \@tempboxa \hfil }
+\else \hbox to\hsize {\normalfont \footnotesize \box \@tempboxa \hfil }\fi \fi 
+\fi  on input line 1175.
+)
+\c@KVtest=\count295
+\sf@farskip=\skip52
+\sf@captopadj=\dimen197
+\sf@capskip=\skip53
+\sf@nearskip=\skip54
+\c@subfigure=\count296
+\c@subfigure@save=\count297
+\c@lofdepth=\count298
+\c@subtable=\count299
+\c@subtable@save=\count300
+\c@lotdepth=\count301
+\sf@top=\skip55
+\sf@bottom=\skip56
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/tools/array.sty
+Package: array 2026/02/24 v2.7b Tabular extension package (FMi)
+\col@sep=\dimen198
+\ar@mcellbox=\box55
+\extrarowheight=\dimen199
+\NC@list=\toks19
+\extratabsurround=\skip57
+\backup@length=\skip58
+\ar@cellbox=\box56
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2024/04/24 v2.1b Standard LaTeX package
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2024-01-22 v1.5x LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks20
+\verbatim@line=\toks21
+\verbatim@in@stream=\read2
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/epstopdf-pkg/epstopdf.sty
+Package: epstopdf 2020-01-24 v2.11 Conversion with epstopdf on the fly (HO)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/grfext/grfext.sty
+Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)) (/home/baiyu/texlive/2026/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+))
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2024/12/12 v1.0g TeX engine tests
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 504.
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+)))
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/cite/cite.sty
+LaTeX Info: Redefining \cite on input line 302.
+LaTeX Info: Redefining \nocite on input line 332.
+Package: cite 2015/02/27  v 5.5
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2026/05/19 v2.18d AMS math features
+\@mathmargin=\skip59
+
+For additional information on amsmath, use the `?' option.
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2024/11/17 v2.01 AMS text
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks22
+\ex@=\dimen256
+))
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen257
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count302
+LaTeX Info: Redefining \frac on input line 233.
+\uproot@=\count303
+\leftroot@=\count304
+LaTeX Info: Redefining \overline on input line 398.
+LaTeX Info: Redefining \colon on input line 409.
+\classnum@=\count305
+\DOTSCASE@=\count306
+LaTeX Info: Redefining \ldots on input line 495.
+LaTeX Info: Redefining \dots on input line 498.
+LaTeX Info: Redefining \cdots on input line 619.
+\Mathstrutbox@=\box57
+\strutbox@=\box58
+LaTeX Info: Redefining \big on input line 721.
+LaTeX Info: Redefining \Big on input line 722.
+LaTeX Info: Redefining \bigg on input line 723.
+LaTeX Info: Redefining \Bigg on input line 724.
+\big@size=\dimen258
+LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
+\macc@depth=\count307
+LaTeX Info: Redefining \bmod on input line 904.
+LaTeX Info: Redefining \pmod on input line 909.
+LaTeX Info: Redefining \smash on input line 939.
+LaTeX Info: Redefining \relbar on input line 969.
+LaTeX Info: Redefining \Relbar on input line 970.
+\c@MaxMatrixCols=\count308
+\dotsspace@=\muskip17
+\c@parentequation=\count309
+\dspbrk@lvl=\count310
+\tag@help=\toks23
+\row@=\count311
+\column@=\count312
+\maxfields@=\count313
+\andhelp@=\toks24
+\eqnshift@=\dimen259
+\alignsep@=\dimen260
+\tagshift@=\dimen261
+\tagwidth@=\dimen262
+\totwidth@=\dimen263
+\lineht@=\dimen264
+\@envbody=\toks25
+\multlinegap=\skip60
+\multlinetaggap=\skip61
+\mathdisplay@stack=\toks26
+LaTeX Info: Redefining \[ on input line 2965.
+LaTeX Info: Redefining \] on input line 2966.
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/amscls/amsthm.sty
+Package: amsthm 2020/05/29 v2.20.6
+\thm@style=\toks27
+\thm@bodyfont=\toks28
+\thm@headfont=\toks29
+\thm@notefont=\toks30
+\thm@headpunct=\toks31
+\thm@preskip=\skip62
+\thm@postskip=\skip63
+\thm@headsep=\skip64
+\dth@everypar=\toks32
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
+)
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count314
+\c@ALG@rem=\count315
+\c@ALG@nested=\count316
+\ALG@tlm=\skip65
+\ALG@thistlm=\skip66
+\c@ALG@Lnr=\count317
+\c@ALG@blocknr=\count318
+\c@ALG@storecount=\count319
+\c@ALG@tmpcounter=\count320
+\ALG@tmplength=\skip67
+) (/home/baiyu/texlive/2026/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
+Package: algpseudocode 
+Document Style - pseudocode environments for use with the `algorithmicx' style
+) (/home/baiyu/texlive/2026/texmf-dist/tex/latex/algorithms/algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
+nment
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count321
+\float@exts=\toks33
+\float@box=\box59
+\@float@everytoks=\toks34
+\@floatcapt=\box60
+)
+\@float@every@algorithm=\toks35
+\c@algorithm=\count322
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 274.
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/graphics/mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
+Package xcolor Info: Model `RGB' extended on input line 1365.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2026/05/01 v1.0l Color table columns (DPC)
+
+new hooks used!!
+\minrowclearance=\skip68
+\rownum=\count323
+) (/home/baiyu/texlive/2026/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 2023/12/11 v2.12a `tabularx' package (DPC)
+\TX@col@width=\dimen265
+\TX@old@table=\dimen266
+\TX@old@col=\dimen267
+\TX@target=\dimen268
+\TX@delta=\dimen269
+\TX@cols=\count324
+\TX@ftn=\toks36
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip18
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
+\multirow@colwidth=\skip69
+\multirow@cntb=\count325
+\multirow@dima=\skip70
+\bigstrutjot=\dimen270
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/tools/enumerate.sty
+Package: enumerate 2023/07/04 v3.00 enumerate extensions (DPC)
+\@enLab=\toks37
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/siunitx/siunitx.sty
+Package: siunitx 2026-05-15 v3.5.5 A comprehensive (SI) units package
+\l__siunitx_number_uncert_offset_int=\count326
+\l__siunitx_number_exponent_fixed_int=\count327
+\l__siunitx_number_min_decimal_int=\count328
+\l__siunitx_number_min_integer_int=\count329
+\l__siunitx_number_round_precision_int=\count330
+\l__siunitx_number_lower_threshold_int=\count331
+\l__siunitx_number_upper_threshold_int=\count332
+\l__siunitx_number_group_first_int=\count333
+\l__siunitx_number_group_size_int=\count334
+\l__siunitx_number_group_min_int=\count335
+\l__siunitx_number_group_minimum_int=\count336
+\l__siunitx_compound_count_int=\count337
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/translations/translations.sty
+Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages
+ (CN)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count338
+))
+\l__siunitx_table_tmp_box=\box61
+\l__siunitx_table_tmp_dim=\dimen271
+\l__siunitx_table_column_width_dim=\dimen272
+\l__siunitx_table_integer_box=\box62
+\l__siunitx_table_decimal_box=\box63
+\l__siunitx_table_uncert_box=\box64
+\l__siunitx_table_before_box=\box65
+\l__siunitx_table_after_box=\box66
+\l__siunitx_table_before_dim=\dimen273
+\l__siunitx_table_carry_dim=\dimen274
+\l__siunitx_unit_tmp_int=\count339
+\l__siunitx_unit_position_int=\count340
+\l__siunitx_unit_total_int=\count341
+\l__siunitx_sexagesimal_tmp_dim=\dimen275
+\l__siunitx_sexagesimal_marker_box=\box67
+\l__siunitx_sexagesimal_unit_box=\box68
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/pbox/pbox.sty
+Package: pbox 2011/12/07 v1.2 Dynamic parboxes
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2025/03/01 v4.3b Infix arithmetic (KKT,FJ)
+\calc@Acount=\count342
+\calc@Bcount=\count343
+\calc@Adimen=\dimen276
+\calc@Bdimen=\dimen277
+\calc@Askip=\skip71
+\calc@Bskip=\skip72
+LaTeX Info: Redefining \setlength on input line 86.
+LaTeX Info: Redefining \addtolength on input line 87.
+\calc@Ccount=\count344
+\calc@Cskip=\skip73
+)
+\pb@xlen=\skip74
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/sttools/stfloats.sty
+Package: stfloats 2025/06/18 v3.4 Improve float mechanism and baselineskip sett
+ings
+\@dblbotnum=\count345
+\c@dblbotnumber=\count346
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/adjustbox/adjustbox.sty
+Package: adjustbox 2025/02/26 v1.3c Adjusting TeX boxes (trim, clip, ...)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2025/11/04 v2.10 package option processing (HA)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks38
+\XKV@tempa@toks=\toks39
+\XKV@tempb@toks=\toks40
+)
+\XKV@depth=\count347
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/adjustbox/adjcalc.sty
+Package: adjcalc 2012/05/16 v1.1 Provides advanced setlength with multiple back
+-ends (calc, etex, pgfmath)
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/adjustbox/trimclip.sty
+Package: trimclip 2025/02/21 v1.2a Trim and clip general TeX material
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/collectbox/collectbox.sty
+Package: collectbox 2022/10/17 v0.4c Collect macro arguments as boxes
+\collectedbox=\box69
+)
+\tc@llx=\dimen278
+\tc@lly=\dimen279
+\tc@urx=\dimen280
+\tc@ury=\dimen281
+Package trimclip Info: Using driver 'tc-pdftex.def'.
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/adjustbox/tc-pdftex.def
+File: tc-pdftex.def 2025/02/26 v2.3 Clipping driver for pdftex
+))
+\adjbox@Width=\dimen282
+\adjbox@Height=\dimen283
+\adjbox@Depth=\dimen284
+\adjbox@Totalheight=\dimen285
+\adjbox@pwidth=\dimen286
+\adjbox@pheight=\dimen287
+\adjbox@pdepth=\dimen288
+\adjbox@ptotalheight=\dimen289
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
+Package: ifoddpage 2022/10/18 v1.2 Conditionals for odd/even page detection
+\c@checkoddpage=\count348
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/varwidth/varwidth.sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box70
+\sift@deathcycles=\count349
+\@vwid@loff=\dimen290
+\@vwid@roff=\dimen291
+)
+==> First Aid for varwidth.sty applied!
+) (/home/baiyu/texlive/2026/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2026-06-17 v7.01r Hypertext links for LaTeX
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2026-01-29 v2.58 Cross-referencing by name of section
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/gettitlestring/gettitlestring.
+sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count350
+) (/home/baiyu/texlive/2026/texmf-dist/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
+)
+)
+\@linkdim=\dimen292
+\Hy@linkcounter=\count351
+\Hy@pagecounter=\count352
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2026-06-17 v7.01r Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+\Hy@SavedSpaceFactor=\count353
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2026-06-17 v7.01r Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 4070.
+Package hyperref Info: Hyper figures OFF on input line 4199.
+Package hyperref Info: Link nesting OFF on input line 4204.
+Package hyperref Info: Hyper index ON on input line 4207.
+Package hyperref Info: Plain pages OFF on input line 4214.
+Package hyperref Info: Backreferencing OFF on input line 4219.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4466.
+\c@Hy@tempcnt=\count354
+LaTeX Info: Redefining \url on input line 4805.
+\XeTeXLinkMargin=\dimen293
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count355
+\Field@Width=\dimen294
+\Fld@charsize=\dimen295
+Package hyperref Info: Hyper figures OFF on input line 6091.
+Package hyperref Info: Link nesting OFF on input line 6096.
+Package hyperref Info: Hyper index ON on input line 6099.
+Package hyperref Info: backreferencing OFF on input line 6106.
+Package hyperref Info: Link coloring ON on input line 6109.
+Package hyperref Info: Link coloring with OCG OFF on input line 6116.
+Package hyperref Info: PDF/A mode OFF on input line 6121.
+\Hy@abspage=\count356
+\c@Item=\count357
+\c@Hfootnote=\count358
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2026-06-17 v7.01r Hyperref driver for pdfTeX
+\Fld@listcount=\count359
+\c@bookmark@seq@number=\count360
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.st
+y
+Package: rerunfilecheck 2025-06-21 v1.11 Rerun checks for auxiliary files (HO)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/uniquecounter/uniquecounter.st
+y
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+84.
+)
+\Hy@SectionHShift=\skip75
+)
+\c@assumption=\count361
+\c@definition=\count362
+\c@theorem=\count363
+\c@corollary=\count364
+\c@proposition=\count365
+\c@lemma=\count366
+\c@remark=\count367
+ (/home/baiyu/texlive/2026/texmf-dist/tex/latex/tcolorbox/tcolorbox.sty
+Package: tcolorbox 2026/05/28 version 6.10.0 text color boxes
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.t
+ex
+\pgfutil@everybye=\toks41
+\pgfutil@tempdima=\dimen296
+\pgfutil@tempdimb=\dimen297
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.de
+f
+\pgfutil@abb=\box71
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/pgf.revision.tex)
+Package: pgfrcs 2025-08-29 v3.1.11a (3.1.11a)
+))
+Package: pgf 2025-08-29 v3.1.11a (3.1.11a)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.te
+x
+Package: pgfsys 2025-08-29 v3.1.11a (3.1.11a)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks42
+\pgfkeys@temptoks=\toks43
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfi
+ltered.code.tex
+\pgfkeys@tmptoks=\toks44
+))
+\pgf@x=\dimen298
+\pgf@y=\dimen299
+\pgf@xa=\dimen300
+\pgf@ya=\dimen301
+\pgf@xb=\dimen302
+\pgf@yb=\dimen303
+\pgf@xc=\dimen304
+\pgf@yc=\dimen305
+\pgf@xd=\dimen306
+\pgf@yd=\dimen307
+\w@pgf@writea=\write3
+\r@pgf@reada=\read3
+\c@pgf@counta=\count368
+\c@pgf@countb=\count369
+\c@pgf@countc=\count370
+\c@pgf@countd=\count371
+\t@pgf@toka=\toks45
+\t@pgf@tokb=\toks46
+\t@pgf@tokc=\toks47
+\pgf@sys@id@count=\count372
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
+File: pgf.cfg 2025-08-29 v3.1.11a (3.1.11a)
+)
+Driver file for pgf: pgfsys-pdftex.def
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-pdftex.
+def
+File: pgfsys-pdftex.def 2025-08-29 v3.1.11a (3.1.11a)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-
+pdf.def
+File: pgfsys-common-pdf.def 2025-08-29 v3.1.11a (3.1.11a)
+)))
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath
+.code.tex
+File: pgfsyssoftpath.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfsyssoftpath@smallbuffer@items=\count373
+\pgfsyssoftpath@bigbuffer@items=\count374
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol
+.code.tex
+File: pgfsysprotocol.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+))
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.te
+x
+Package: pgfcore 2025-08-29 v3.1.11a (3.1.11a)
+ (/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.te
+x
+\pgfmath@dimen=\dimen308
+\pgfmath@count=\count375
+\pgfmath@box=\box72
+\pgfmath@toks=\toks48
+\pgfmath@stack@operand=\toks49
+\pgfmath@stack@operation=\toks50
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code
+.tex)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basi
+c.code.tex)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trig
+onometric.code.tex)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.rand
+om.code.tex)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comp
+arison.code.tex)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base
+.code.tex)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.roun
+d.code.tex)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc
+.code.tex)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.inte
+gerarithmetics.code.tex)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count376
+)) (/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfint.code.tex)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.c
+ode.tex
+File: pgfcorepoints.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@picminx=\dimen309
+\pgf@picmaxx=\dimen310
+\pgf@picminy=\dimen311
+\pgf@picmaxy=\dimen312
+\pgf@pathminx=\dimen313
+\pgf@pathmaxx=\dimen314
+\pgf@pathminy=\dimen315
+\pgf@pathmaxy=\dimen316
+\pgf@xx=\dimen317
+\pgf@xy=\dimen318
+\pgf@yx=\dimen319
+\pgf@yy=\dimen320
+\pgf@zx=\dimen321
+\pgf@zy=\dimen322
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathcons
+truct.code.tex
+File: pgfcorepathconstruct.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@path@lastx=\dimen323
+\pgf@path@lasty=\dimen324
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusag
+e.code.tex
+File: pgfcorepathusage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@shorten@end@additional=\dimen325
+\pgf@shorten@start@additional=\dimen326
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.c
+ode.tex
+File: pgfcorescopes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfpic=\box73
+\pgf@hbox=\box74
+\pgf@layerbox@main=\box75
+\pgf@picture@serial@count=\count377
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphics
+tate.code.tex
+File: pgfcoregraphicstate.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgflinewidth=\dimen327
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransfor
+mations.code.tex
+File: pgfcoretransformations.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@pt@x=\dimen328
+\pgf@pt@y=\dimen329
+\pgf@pt@temp=\dimen330
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.co
+de.tex
+File: pgfcorequick.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.
+code.tex
+File: pgfcoreobjects.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathproc
+essing.code.tex
+File: pgfcorepathprocessing.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.c
+ode.tex
+File: pgfcorearrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfarrowsep=\dimen331
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.co
+de.tex
+File: pgfcoreshade.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@max=\dimen332
+\pgf@sys@shading@range@num=\count378
+\pgf@shadingcount=\count379
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.co
+de.tex
+File: pgfcoreimage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal
+.code.tex
+File: pgfcoreexternal.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfexternal@startupbox=\box76
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.c
+ode.tex
+File: pgfcorelayers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretranspar
+ency.code.tex
+File: pgfcoretransparency.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns
+.code.tex
+File: pgfcorepatterns.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf.code
+.tex
+File: pgfcorerdf.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)))
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.co
+de.tex
+File: pgfmoduleshapes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfnodeparttextbox=\box77
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code
+.tex
+File: pgfmoduleplot.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-versio
+n-0-65.sty
+Package: pgfcomp-version-0-65 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@nodesepstart=\dimen333
+\pgf@nodesepend=\dimen334
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-versio
+n-1-18.sty
+Package: pgfcomp-version-1-18 2025-08-29 v3.1.11a (3.1.11a)
+))
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/pgf/utilities/pgffor.sty
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
+)) (/home/baiyu/texlive/2026/texmf-dist/tex/latex/pgf/math/pgfmath.sty
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex))
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
+Package: pgffor 2025-08-29 v3.1.11a (3.1.11a)
+\pgffor@iter=\dimen335
+\pgffor@skip=\dimen336
+\pgffor@stack=\toks51
+\pgffor@toks=\toks52
+))
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.co
+de.tex
+Package: tikz 2025-08-29 v3.1.11a (3.1.11a)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/libraries/pgflibraryplotha
+ndlers.code.tex
+File: pgflibraryplothandlers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@plot@mark@count=\count380
+\pgfplotmarksize=\dimen337
+)
+\tikz@lastx=\dimen338
+\tikz@lasty=\dimen339
+\tikz@lastxsaved=\dimen340
+\tikz@lastysaved=\dimen341
+\tikz@lastmovetox=\dimen342
+\tikz@lastmovetoy=\dimen343
+\tikzleveldistance=\dimen344
+\tikzsiblingdistance=\dimen345
+\tikz@figbox=\box78
+\tikz@figbox@bg=\box79
+\tikz@tempbox=\box80
+\tikz@tempbox@bg=\box81
+\tikztreelevel=\count381
+\tikznumberofchildren=\count382
+\tikznumberofcurrentchild=\count383
+\tikz@fig@count=\count384
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.co
+de.tex
+File: pgfmodulematrix.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfmatrixcurrentrow=\count385
+\pgfmatrixcurrentcolumn=\count386
+\pgf@matrix@numberofcolumns=\count387
+)
+\tikz@expandcount=\count388
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librari
+es/tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)))
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\tcb@titlebox=\box82
+\tcb@upperbox=\box83
+\tcb@lowerbox=\box84
+\tcb@phantombox=\box85
+\c@tcbbreakpart=\count389
+\c@tcblayer=\count390
+\c@tcolorbox@number=\count391
+\l__tcobox_tmpa_box=\box86
+\l__tcobox_tmpa_dim=\dimen346
+\tcb@temp=\box87
+\tcb@temp=\box88
+\tcb@temp=\box89
+\tcb@temp=\box90
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/tcolorbox/tcbraster.code.tex
+Library (tcolorbox): 'tcbraster.code.tex' version '6.10.0'
+\c@tcbrastercolumn=\count392
+\c@tcbrasterrow=\count393
+\c@tcbrasternum=\count394
+\c@tcbraster=\count395
+) (/home/baiyu/texlive/2026/texmf-dist/tex/latex/tcolorbox/tcbskins.code.tex
+Library (tcolorbox): 'tcbskins.code.tex' version '6.10.0'
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/tikzfill/tikzfill.image.sty
+Package: tikzfill.image 2026/04/23 v1.2.0 Image filling library for TikZ
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/tikzfill/tikzlibraryfill.image.c
+ode.tex
+File: tikzlibraryfill.image.code.tex 2026/04/23 v1.2.0 Image filling library
+\l__tikzfill_tmpa_dim=\dimen347
+\l__tikzfill_tmpb_dim=\dimen348
+\l__tikzfill_img_box=\box91
+))
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/tcolorbox/tcbskinsjigsaw.code.te
+x
+Library (tcolorbox): 'tcbskinsjigsaw.code.tex' version '6.10.0'
+))
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/tcolorbox/tcbbreakable.code.tex
+Library (tcolorbox): 'tcbbreakable.code.tex' version '6.10.0'
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/pdfcol/pdfcol.sty
+Package: pdfcol 2026-06-20 v1.8 Handle new color stacks for pdfTeX (HO)
+)
+Package pdfcol Info: New color stack `tcb@breakable' = 1 on input line 23.
+\tcb@testbox=\box92
+\tcb@totalupperbox=\box93
+\tcb@totallowerbox=\box94
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/tcolorbox/tcbhooks.code.tex
+Library (tcolorbox): 'tcbhooks.code.tex' version '6.10.0'
+) (/home/baiyu/texlive/2026/texmf-dist/tex/latex/tcolorbox/tcbtheorems.code.tex
+Library (tcolorbox): 'tcbtheorems.code.tex' version '6.10.0'
+) (/home/baiyu/texlive/2026/texmf-dist/tex/latex/tcolorbox/tcbfitting.code.tex
+Library (tcolorbox): 'tcbfitting.code.tex' version '6.10.0'
+\tcbfitdim=\dimen349
+\tcb@lowerfitdim=\dimen350
+\tcb@upperfitdim=\dimen351
+\tcb@cur@hbadness=\count396
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/tcolorbox/tcblistingsutf8.code.t
+ex
+Library (tcolorbox): 'tcblistingsutf8.code.tex' version '6.10.0'
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/tcolorbox/tcblistings.code.tex
+Library (tcolorbox): 'tcblistings.code.tex' version '6.10.0'
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count397
+\lst@gtempboxa=\box95
+\lst@token=\toks53
+\lst@length=\count398
+\lst@currlwidth=\dimen352
+\lst@column=\count399
+\lst@pos=\count400
+\lst@lostspace=\dimen353
+\lst@width=\dimen354
+\lst@newlines=\count401
+\lst@lineno=\count402
+\lst@maxwidth=\dimen355
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/listings/lstpatch.sty
+File: lstpatch.sty 2025/11/14 1.11b (Carsten Heinz)
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2025/11/14 1.11b (Carsten Heinz)
+\c@lstnumber=\count403
+\lst@skipnumbers=\count404
+\lst@framebox=\box96
+)
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2025/11/14 1.11b listings configuration
+))
+Package: listings 2025/11/14 1.11b (Carsten Heinz)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/tcolorbox/tcblistingscore.code.t
+ex
+Library (tcolorbox): 'tcblistingscore.code.tex' version '6.10.0'
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/tcolorbox/tcbprocessing.code.tex
+Library (tcolorbox): 'tcbprocessing.code.tex' version '6.10.0'
+)
+\c@tcblisting=\count405
+))
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/listingsutf8/listingsutf8.sty
+Package: listingsutf8 2019-12-10 v1.5 Allow UTF-8 in listings input (HO)
+))
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/tcolorbox/tcbexternal.code.tex
+Library (tcolorbox): 'tcbexternal.code.tex' version '6.10.0'
+) (/home/baiyu/texlive/2026/texmf-dist/tex/latex/tcolorbox/tcbmagazine.code.tex
+Library (tcolorbox): 'tcbmagazine.code.tex' version '6.10.0'
+) (/home/baiyu/texlive/2026/texmf-dist/tex/latex/tcolorbox/tcbvignette.code.tex
+Library (tcolorbox): 'tcbvignette.code.tex' version '6.10.0'
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librari
+es/tikzlibraryfadings.code.tex
+File: tikzlibraryfadings.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/generic/pgf/libraries/pgflibraryfading
+s.code.tex
+File: pgflibraryfadings.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)))
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/tcolorbox/tcbposter.code.tex
+Library (tcolorbox): 'tcbposter.code.tex' version '6.10.0'
+)) (/home/baiyu/texlive/2026/texmf-dist/tex/latex/preprint/balance.sty
+Package: balance 1999/02/23 4.3 (PWD)
+\oldvsize=\dimen356
+)
+Package translations Info: No language package found. I am going to use `englis
+h' as default language. on input line 69.
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2026-02-18 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count406
+)
+
+LaTeX Warning: Unused global option(s):
+    [lettersize].
+
+(./root.aux)
+\openout1 = `root.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+
+-- Lines per column: 58 (exact).
+(/home/baiyu/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count407
+\scratchdimen=\dimen357
+\scratchbox=\box97
+\nofMPsegments=\count408
+\nofMParguments=\count409
+\everyMPshowfont=\toks54
+\MPscratchCnt=\count410
+\MPscratchDim=\dimen358
+\MPnumerator=\count411
+\makeMPintoPDFobject=\count412
+\everyMPtoPDFconversion=\toks55
+)
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: subfig package v1.3 is loaded.
+Package caption Info: End \AtBeginDocument code.
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/translations/translations-basic-
+dictionary-english.trsl
+File: translations-basic-dictionary-english.trsl (english translation file `tra
+nslations-basic-dictionary')
+)
+Package translations Info: loading dictionary `translations-basic-dictionary' f
+or `english'. on input line 69.
+Package hyperref Info: Link coloring ON on input line 69.
+ (./root.out) (./root.out)
+\@outlinefile=\write4
+\openout4 = `root.out'.
+
+\c@lstlisting=\count413
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2024/02/08 v1.3d Input encoding file
+\inpenc@prehook=\toks56
+\inpenc@posthook=\toks57
+)
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 85.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 85.
+
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 85.
+
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 8
+5.
+
+(/home/baiyu/texlive/2026/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+Underfull \hbox (badness 1715) in paragraph at lines 105--106
+[]\OT1/ptm/m/n/10 We pro-pose Stage-Wise Con-straint Learn-ing (SWCL),
+ []
+
+[1{/home/baiyu/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/home
+/baiyu/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc}
+
+
+] [2] (./method.tex
+[3]
+Underfull \hbox (badness 8113) in paragraph at lines 37--39
+\OT1/ptm/m/n/10 where $\OML/cmm/m/it/10 ^^V[]$ \OT1/ptm/m/n/10 and $\OML/cmm/m/
+it/10 ^^[[]$ \OT1/ptm/m/n/10 are fit-ted sep-a-rately to each
+ []
+
+
+Underfull \hbox (badness 1817) in paragraph at lines 90--91
+ \OT1/ptm/m/it/10 4) []Uni-fied Con-straint Like-li-hood[]: [][][] \OT1/ptm/m/n
+/10 Con-di-tioned on the
+ []
+
+<figs/soft_half_t_example_distribution.png, id=267, 240.29774pt x 103.3461pt>
+File: figs/soft_half_t_example_distribution.png Graphic file (type png)
+<use figs/soft_half_t_example_distribution.png>
+Package pdftex.def Info: figs/soft_half_t_example_distribution.png  used on inp
+ut line 106.
+(pdftex.def)             Requested size: 246.95892pt x 106.20955pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 123--125
+\OT1/ptm/m/n/10 The full mode prior fac-tor-izes as $\OML/cmm/m/it/10 p\OT1/cmr
+/m/n/10 (^^@) =
+ []
+
+
+Underfull \hbox (badness 6204) in paragraph at lines 123--125
+[][] [][] \OML/cmm/m/it/10 ^^Y[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^M[]\OT1/cmr
+/m/n/10 )$\OT1/ptm/m/n/10 . It acts at the task-model level:
+ []
+
+[4] [5 <./figs/soft_half_t_example_distribution.png>]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 245.
+)
+Underfull \hbox (badness 6708) in paragraph at lines 507--508
+\OT1/ptm/m/n/10 sim-u-lated multi-stage bench-mark tasks: \OT1/pcr/m/n/10 S3Obs
+Avoid\OT1/ptm/m/n/10 ,
+ []
+
+
+Underfull \hbox (badness 1648) in paragraph at lines 507--508
+\OT1/pcr/m/n/10 S4SlideInsert\OT1/ptm/m/n/10 , and \OT1/pcr/m/n/10 S5SphereInsp
+ect \OT1/ptm/m/n/10 with three
+ []
+
+<figs/s3_demonstration.png, id=306, 220.4235pt x 117.0774pt>
+File: figs/s3_demonstration.png Graphic file (type png)
+<use figs/s3_demonstration.png>
+Package pdftex.def Info: figs/s3_demonstration.png  used on input line 514.
+(pdftex.def)             Requested size: 209.16046pt x 111.09425pt.
+
+Underfull \hbox (badness 1490) in paragraph at lines 529--533
+\OT1/ptm/m/n/10 in Ta-ble [][]I[][], while their ground-truth and learned stage
+-
+ []
+
+[6 <./figs/s3_demonstration.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 718--720
+[]\OT1/ptm/b/n/10 Autoregressive Hid-den Semi-Markov Model
+ []
+
+
+Underfull \hbox (badness 6284) in paragraph at lines 718--720
+\OT1/ptm/m/n/10 the joint state-feature rep-re-sen-ta-tion $\OT1/cmr/m/n/10 (\O
+ML/cmm/m/it/10 x[]; ^^^\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x[]\OT1/cmr/m/n/10 ))$
+\OT1/ptm/m/n/10 . Af-ter
+ []
+
+
+Underfull \hbox (badness 1430) in paragraph at lines 718--720
+\OT1/ptm/m/n/10 inequality-type fea-tures, the bound-ary is es-ti-mated from
+ []
+
+
+Underfull \hbox (badness 4543) in paragraph at lines 718--720
+\OT1/ptm/m/n/10 the cor-re-spond-ing tail quan-tile us-ing the ground-truth
+ []
+
+<figs/s5_feature_profile.png, id=328, 220.4235pt x 128.6406pt>
+File: figs/s5_feature_profile.png Graphic file (type png)
+<use figs/s5_feature_profile.png>
+Package pdftex.def Info: figs/s5_feature_profile.png  used on input line 743.
+(pdftex.def)             Requested size: 201.60077pt x 117.65591pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 747--747
+\OT1/ptm/m/n/8 Fig. 3.  [] Nor-mal-ized fea-ture pro-files of one rep-re-sen-ta
+-tive
+ []
+
+
+Underfull \hbox (badness 2142) in paragraph at lines 747--747
+\OT1/pcr/m/n/8 S5SphereInspect \OT1/ptm/m/n/8 demon-stra-tion. Solid gray ver-t
+i-cal lines in-di-cate
+ []
+
+
+Underfull \hbox (badness 1895) in paragraph at lines 751--752
+\OT1/ptm/m/n/10 achieves rea-son-able seg-men-ta-tion ac-cu-racy, but its con-
+ []
+
+
+Underfull \hbox (badness 1968) in paragraph at lines 751--752
+\OT1/ptm/m/n/10 straint er-ror re-mains higher than SWCL, es-pe-cially on
+ []
+
+
+Underfull \hbox (badness 1584) in paragraph at lines 753--754
+[]\OT1/ptm/m/n/10 A sec-ond vis-i-ble pat-tern is vari-ance. ARHSMM and
+ []
+
+[7]
+<figs/benchmark_results_comparison.png, id=339, 242.1045pt x 189.3474pt>
+File: figs/benchmark_results_comparison.png Graphic file (type png)
+<use figs/benchmark_results_comparison.png>
+Package pdftex.def Info: figs/benchmark_results_comparison.png  used on input l
+ine 757.
+(pdftex.def)             Requested size: 226.79846pt x 177.38272pt.
+<figs/S3ObsAvoid_true_vs_learned_constraints.png, id=340, 459.6372pt x 728.4816
+pt>
+File: figs/S3ObsAvoid_true_vs_learned_constraints.png Graphic file (type png)
+<use figs/S3ObsAvoid_true_vs_learned_constraints.png>
+Package pdftex.def Info: figs/S3ObsAvoid_true_vs_learned_constraints.png  used 
+on input line 783.
+(pdftex.def)             Requested size: 131.7414pt x 208.80212pt.
+<figs/S4SlideInsert_true_vs_learned_constraints.png, id=341, 569.4876pt x 728.4
+816pt>
+File: figs/S4SlideInsert_true_vs_learned_constraints.png Graphic file (type png
+)
+<use figs/S4SlideInsert_true_vs_learned_constraints.png>
+Package pdftex.def Info: figs/S4SlideInsert_true_vs_learned_constraints.png  us
+ed on input line 788.
+(pdftex.def)             Requested size: 163.22675pt x 208.80212pt.
+<figs/S5SphereInspect_true_vs_learned_constraints.png, id=342, 669.9429pt x 728
+.4816pt>
+File: figs/S5SphereInspect_true_vs_learned_constraints.png Graphic file (type p
+ng)
+<use figs/S5SphereInspect_true_vs_learned_constraints.png>
+Package pdftex.def Info: figs/S5SphereInspect_true_vs_learned_constraints.png  
+used on input line 793.
+(pdftex.def)             Requested size: 192.01929pt x 208.80212pt.
+<figs/s4_transfer_tilt.png, id=343, 216.153pt x 162.06pt>
+File: figs/s4_transfer_tilt.png Graphic file (type png)
+<use figs/s4_transfer_tilt.png>
+Package pdftex.def Info: figs/s4_transfer_tilt.png  used on input line 811.
+(pdftex.def)             Requested size: 123.48138pt x 92.58038pt.
+<figs/s4_transfer_curve.png, id=344, 1204.5pt x 903.375pt>
+File: figs/s4_transfer_curve.png Graphic file (type png)
+<use figs/s4_transfer_curve.png>
+Package pdftex.def Info: figs/s4_transfer_curve.png  used on input line 814.
+(pdftex.def)             Requested size: 123.48138pt x 92.60342pt.
+
+Overfull \hbox (8.96301pt too wide) in paragraph at lines 811--819
+ [][][][] 
+ []
+
+<figs/s5_planned_frame_000010.png, id=345, 487.8225pt x 433.62pt>
+File: figs/s5_planned_frame_000010.png Graphic file (type png)
+<use figs/s5_planned_frame_000010.png>
+Package pdftex.def Info: figs/s5_planned_frame_000010.png  used on input line 8
+27.
+(pdftex.def)             Requested size: 91.84479pt x 81.63437pt.
+<figs/s5_planned_frame_000050.png, id=346, 487.8225pt x 433.62pt>
+File: figs/s5_planned_frame_000050.png Graphic file (type png)
+<use figs/s5_planned_frame_000050.png>
+Package pdftex.def Info: figs/s5_planned_frame_000050.png  used on input line 8
+30.
+(pdftex.def)             Requested size: 91.84479pt x 81.63437pt.
+<figs/s5_planned_frame_000090.png, id=347, 487.8225pt x 433.62pt>
+File: figs/s5_planned_frame_000090.png Graphic file (type png)
+<use figs/s5_planned_frame_000090.png>
+Package pdftex.def Info: figs/s5_planned_frame_000090.png  used on input line 8
+33.
+(pdftex.def)             Requested size: 91.84479pt x 81.63437pt.
+<figs/s5_planned_frame_000115.png, id=348, 487.8225pt x 433.62pt>
+File: figs/s5_planned_frame_000115.png Graphic file (type png)
+<use figs/s5_planned_frame_000115.png>
+Package pdftex.def Info: figs/s5_planned_frame_000115.png  used on input line 8
+36.
+(pdftex.def)             Requested size: 91.84479pt x 81.63437pt.
+<figs/s5_planned_frame_000130.png, id=349, 487.8225pt x 433.62pt>
+File: figs/s5_planned_frame_000130.png Graphic file (type png)
+<use figs/s5_planned_frame_000130.png>
+Package pdftex.def Info: figs/s5_planned_frame_000130.png  used on input line 8
+39.
+(pdftex.def)             Requested size: 91.84479pt x 81.63437pt.
+
+Underfull \hbox (badness 6252) in paragraph at lines 856--857
+\OT1/ptm/m/n/10 ture on \OT1/pcr/m/n/10 S3ObsAvoid \OT1/ptm/m/n/10 and \OT1/pcr
+/m/n/10 S5SphereInspect\OT1/ptm/m/n/10 . On
+ []
+
+[8 <./figs/s5_feature_profile.png> <./figs/benchmark_results_comparison.png>]
+<figs/barclear_learned_constraints.png, id=365, 685.1196pt x 342.5598pt>
+File: figs/barclear_learned_constraints.png Graphic file (type png)
+<use figs/barclear_learned_constraints.png>
+Package pdftex.def Info: figs/barclear_learned_constraints.png  used on input l
+ine 882.
+(pdftex.def)             Requested size: 216.72015pt x 108.35641pt.
+
+[9 <./figs/S3ObsAvoid_true_vs_learned_constraints.png> <./figs/S4SlideInsert_tr
+ue_vs_learned_constraints.png> <./figs/S5SphereInspect_true_vs_learned_constrai
+nts.png> <./figs/s4_transfer_tilt.png> <./figs/s4_transfer_curve.png (PNG copy)
+>]
+<figs/barclear_asss10_stage1.png, id=381, 1204.5pt x 787.94376pt>
+File: figs/barclear_asss10_stage1.png Graphic file (type png)
+<use figs/barclear_asss10_stage1.png>
+Package pdftex.def Info: figs/barclear_asss10_stage1.png  used on input line 93
+1.
+(pdftex.def)             Requested size: 121.26031pt x 79.31598pt.
+<figs/barclear_asss10_stage2.png, id=382, 1204.5pt x 787.94376pt>
+File: figs/barclear_asss10_stage2.png Graphic file (type png)
+<use figs/barclear_asss10_stage2.png>
+Package pdftex.def Info: figs/barclear_asss10_stage2.png  used on input line 93
+4.
+(pdftex.def)             Requested size: 121.26031pt x 79.31598pt.
+<figs/barclear_asss10_stage3.png, id=383, 1204.5pt x 787.94376pt>
+File: figs/barclear_asss10_stage3.png Graphic file (type png)
+<use figs/barclear_asss10_stage3.png>
+Package pdftex.def Info: figs/barclear_asss10_stage3.png  used on input line 93
+7.
+(pdftex.def)             Requested size: 121.26031pt x 79.31598pt.
+<figs/barclear_asss10_stage4.png, id=384, 1204.5pt x 787.94376pt>
+File: figs/barclear_asss10_stage4.png Graphic file (type png)
+<use figs/barclear_asss10_stage4.png>
+Package pdftex.def Info: figs/barclear_asss10_stage4.png  used on input line 94
+0.
+(pdftex.def)             Requested size: 121.26031pt x 79.31598pt.
+ [10 <./figs/s5_planned_frame_000010.png (PNG copy)> <./figs/s5_planned_frame_0
+00050.png (PNG copy)> <./figs/s5_planned_frame_000090.png (PNG copy)> <./figs/s
+5_planned_frame_000115.png (PNG copy)> <./figs/s5_planned_frame_000130.png (PNG
+ copy)> <./figs/barclear_learned_constraints.png>]
+<figs/barclear_transfer.png, id=399, 1212.78094pt x 878.53218pt>
+File: figs/barclear_transfer.png Graphic file (type png)
+<use figs/barclear_transfer.png>
+Package pdftex.def Info: figs/barclear_transfer.png  used on input line 950.
+(pdftex.def)             Requested size: 146.16046pt x 105.87509pt.
+ (./root.bbl [11 <./figs/barclear_asss10_stage1.png (PNG copy)> <./figs/barclea
+r_asss10_stage2.png (PNG copy)> <./figs/barclear_asss10_stage3.png (PNG copy)> 
+<./figs/barclear_asss10_stage4.png (PNG copy)> <./figs/barclear_transfer.png (P
+NG copy)>]) [12
+
+]
+(./root.aux)
+ ***********
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-06-18>
+ ***********
+Package rerunfilecheck Info: File `root.out' has not changed.
+(rerunfilecheck)             Checksum: 7056D9A811F5706F6C759FD9FE49336C;5479.
+ ) 
+Here is how much of TeX's memory you used:
+ 35599 strings out of 467168
+ 762845 string characters out of 5408939
+ 1163707 words of memory out of 5000000
+ 64168 multiletter control sequences out of 15000+600000
+ 670933 words of font info for 133 fonts, out of 8000000 for 9000
+ 1145 hyphenation exceptions out of 8191
+ 98i,12n,108p,1885b,1176s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</home/baiyu/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pf
+b></home/baiyu/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pf
+b></home/baiyu/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb
+></home/baiyu/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb>
+</home/baiyu/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb
+></home/baiyu/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+</home/baiyu/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></
+home/baiyu/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></ho
+me/baiyu/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></home
+/baiyu/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></home/b
+aiyu/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/b
+aiyu/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></home/ba
+iyu/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></ho
+me/baiyu/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
+</home/baiyu/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></home/
+baiyu/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></home/baiyu/t
+exlive/2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></home/baiyu/texlive/20
+26/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></home/baiyu/texlive/2026/texmf
+-dist/fonts/type1/urw/times/utmr8a.pfb></home/baiyu/texlive/2026/texmf-dist/fon
+ts/type1/urw/times/utmri8a.pfb>
+Output written on root.pdf (12 pages, 8923507 bytes).
+PDF statistics:
+ 529 PDF objects out of 1000 (max. 8388607)
+ 417 compressed objects within 5 object streams
+ 122 named destinations out of 1000 (max. 500000)
+ 505 words of extra memory for PDF output out of 10000 (max. 10000000)
+

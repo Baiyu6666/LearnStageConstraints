@@ -46,15 +46,6 @@ python /home/baiyu/PycharmProjects/LearnStageConstraint/runners/run_benchmark.py
   --n-demos 10
 
 
-python runners/run_benchmark.py \
-  --methods map \
-  --datasets S3ObsAvoidReal \
-  --method-seeds 0 \
-  --dataset-seed 0 \
-  --outdir outputs/benchmark/s3_real_restore \
-  --n-demos 4 \
-  --method-param save_paper_figures=true
-
 ```bash
 python /home/baiyu/PycharmProjects/LearnStageConstraint/runners/run_benchmark.py \
   --methods changeforest,arhsmm,cluster,gmmhmm \

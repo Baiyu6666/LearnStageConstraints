@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "frame_id": "iiwa7_link_0",
+  "captured_from": "Uncommissioned example: replace for the new iiwa7 site",
+  "pose": {
+    "x": 0.68372703,
+    "y": 0.01605977,
+    "z": 0.33073452,
+    "qx": -0.00481996,
+    "qy": 0.99670911,
+    "qz": -0.02416525,
+    "qw": -0.07722539
+  },
+  "joint_position_reference": [
+    0.05961299,
+    0.9619841,
+    -0.06020073,
+    -1.10392477,
+    0.00395374,
+    1.23205567,
+    0.01003284
+  ],
+  "execution": {
+    "approach_speed_mps": 0.06
+  }
+}

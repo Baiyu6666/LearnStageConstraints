@@ -11,6 +11,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from envs import load_env
 from experiments.config_loader import (
+    MAP_POSTHOC_CONFIG_NAMES,
     deep_merge,
     inherit_map_posthoc_parameters,
     load_json,
@@ -64,12 +65,8 @@ def run_experiment(
         return pipeline.run(dataset)
 
     if method_name in SEQUENTIAL_METHODS:
-        if method_name == "fchmm":
-            segmenter_kwargs = dict(method_kwargs)
-            constraint_kwargs = {}
-        else:
-            segmenter_kwargs = dict(method_kwargs.get("segmenter", {}))
-            constraint_kwargs = dict(method_kwargs.get("posthoc_constraint", {}))
+        segmenter_kwargs = dict(method_kwargs.get("segmenter", {}))
+        constraint_kwargs = dict(method_kwargs.get("posthoc_constraint", {}))
         if _should_replace_plot_dir(segmenter_kwargs.get("plot_dir")):
             segmenter_kwargs["plot_dir"] = default_plot_dir
         if _should_replace_plot_dir(constraint_kwargs.get("plot_dir")):
@@ -109,7 +106,10 @@ def main():
     method_kwargs = inherit_map_posthoc_parameters(
         args.method,
         method_kwargs,
-        _load_method_config("map"),
+        {
+            name: _load_method_config(name)
+            for name in MAP_POSTHOC_CONFIG_NAMES
+        },
         dataset_method_overrides,
     )
     if args.method in JOINT_METHODS:
@@ -118,22 +118,16 @@ def main():
             override_kwargs["max_iter"] = args.max_iter
         method_kwargs = deep_merge(method_kwargs, override_kwargs)
     else:
-        if args.method == "fchmm":
-            override_kwargs = {"verbose": True, "seed": args.method_seed}
-            if args.max_iter is not None:
-                override_kwargs["max_iter"] = args.max_iter
-            method_kwargs = deep_merge(method_kwargs, override_kwargs)
-        else:
-            segmenter_override = {"verbose": True, "seed": args.method_seed}
-            if args.max_iter is not None:
-                segmenter_override["max_iter"] = args.max_iter
-            method_kwargs = deep_merge(
-                method_kwargs,
-                {
-                    "segmenter": segmenter_override,
-                    "posthoc_constraint": {},
-                },
-            )
+        segmenter_override = {"verbose": True, "seed": args.method_seed}
+        if args.max_iter is not None:
+            segmenter_override["max_iter"] = args.max_iter
+        method_kwargs = deep_merge(
+            method_kwargs,
+            {
+                "segmenter": segmenter_override,
+                "posthoc_constraint": {},
+            },
+        )
 
     results = run_experiment(
         dataset_name=args.dataset,

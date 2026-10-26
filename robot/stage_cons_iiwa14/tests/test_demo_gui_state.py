@@ -14,6 +14,9 @@ SOURCE = (
 )
 
 
+sys.path.insert(0, str(SOURCE.parents[2] / "stage_robot_config/src"))
+
+
 def _message_module(name, **classes):
     module = types.ModuleType(name)
     for class_name, value in classes.items():

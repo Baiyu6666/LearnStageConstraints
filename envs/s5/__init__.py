@@ -10,7 +10,7 @@ from .config import (
     S5_SYNTHETIC_V20,
     S5_SYNTHETIC_V21,
     S5_SYNTHETIC_V22,
-    S5_SYNTHETIC_V23,
+    S5_SYNTHETIC_V24,
     active_s5_env_kwargs,
     apply_default_s5_loader_config,
 )
@@ -34,7 +34,7 @@ __all__ = [
     "S5_SYNTHETIC_V20",
     "S5_SYNTHETIC_V21",
     "S5_SYNTHETIC_V22",
-    "S5_SYNTHETIC_V23",
+    "S5_SYNTHETIC_V24",
     "FixedStepTimeParameterizer",
     "TimeParameterizedPath",
     "active_s5_env_kwargs",

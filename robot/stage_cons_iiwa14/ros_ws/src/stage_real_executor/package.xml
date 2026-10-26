@@ -23,4 +23,5 @@
   <depend>tf</depend>
   <depend>trajectory_msgs</depend>
   <exec_depend>python3-rospkg</exec_depend>
+  <exec_depend>stage_robot_config</exec_depend>
 </package>

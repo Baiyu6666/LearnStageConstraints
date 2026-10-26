@@ -1,0 +1,19 @@
+{
+  "id": "iiwa7_new",
+  "robot_profile": "iiwa7",
+  "hardware_commissioned": true,
+  "notes": "Hardware startup enabled at user request. Scene, tool, home and safety settings remain examples requiring on-site verification; network addresses must be configured.",
+  "optitrack": {
+    "server": "128.178.145.104",
+    "base": "iiwa7",
+    "object": "baiyu_bar",
+    "obstacle_a": "baiyu_obs_bar",
+    "obstacle_b": "baiyu_obs_bar_b"
+  },
+  "fri_cpu_affinity": 0,
+  "network": {
+    "host_ip": null,
+    "robot_ip": null,
+    "host_prefix": 24
+  }
+}

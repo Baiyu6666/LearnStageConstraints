@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from .config import S5_METRIC_SCALE, S5SyntheticPreset, S5_SYNTHETIC_V23
+from .config import S5_METRIC_SCALE, S5SyntheticPreset, S5_SYNTHETIC_V24
 from .execution import S5ExecutionMixin
 from .features import S5FeatureMixin
 from .generator import S5DemoGeneratorMixin
@@ -23,13 +23,13 @@ class S5SphereInspectEnv(
     3D spherical surface inspection task.
     """
 
-    preset_name = S5_SYNTHETIC_V23.name
-    preset_version = S5_SYNTHETIC_V23.version
+    preset_name = S5_SYNTHETIC_V24.name
+    preset_version = S5_SYNTHETIC_V24.version
 
     @classmethod
     def from_preset(
         cls,
-        preset: S5SyntheticPreset = S5_SYNTHETIC_V23,
+        preset: S5SyntheticPreset = S5_SYNTHETIC_V24,
         **overrides,
     ):
         env_kwargs = preset.apply(overrides)

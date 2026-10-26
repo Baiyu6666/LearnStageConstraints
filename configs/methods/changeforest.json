@@ -5,7 +5,7 @@
     "use_state": false,
     "use_velocity": true,
     "velocity_weight": 1.0,
-    "use_env_features": false,
+    "use_env_features": true,
     "selected_raw_feature_ids": null,
     "standardize": true,
     "min_len": 3,
@@ -19,7 +19,7 @@
     "verbose": true
   },
   "posthoc_constraint": {
-    "posthoc_training_mode": "voting",
+    "posthoc_training_mode": "map_balanced_pooled",
     "verbose": true,
     "fixed_feature_mask": null,
     "selected_raw_feature_ids": null,

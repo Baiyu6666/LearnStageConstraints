@@ -95,7 +95,6 @@ class StageWiseMAPConstraintLearningModel(StageWiseConstraintLearningModel):
         self,
         *args,
         map_eq_sigma: float = 0.05,
-        map_eq_sigma_mode: str = "fixed",
         map_active_sigma_floor: float = 0.003,
         map_c_bg: float = 2.0,
         map_c_ineq: float = 0.0,
@@ -120,6 +119,10 @@ class StageWiseMAPConstraintLearningModel(StageWiseConstraintLearningModel):
         **kwargs,
     ):
         kwargs = dict(kwargs)
+        if "map_eq_sigma_mode" in kwargs:
+            raise ValueError(
+                "MAP always profiles equality sigma up to map_eq_sigma; remove map_eq_sigma_mode."
+            )
         if "truncated_z_observation_noise_scale" in kwargs:
             raise ValueError(
                 "MAP uses map_active_sigma_floor; remove truncated_z_observation_noise_scale."
@@ -173,7 +176,6 @@ class StageWiseMAPConstraintLearningModel(StageWiseConstraintLearningModel):
 
         self.method_name = "map"
         self.map_eq_sigma = max(float(map_eq_sigma), 1e-9)
-        self.map_eq_sigma_mode = self._normalize_map_eq_sigma_mode(map_eq_sigma_mode)
         self.map_active_sigma_floor = max(float(map_active_sigma_floor), 1e-9)
         self.map_c_bg = max(float(map_c_bg), 1.0 + 1e-9)
         self.map_c_ineq = max(float(map_c_ineq), 0.0)
@@ -219,7 +221,6 @@ class StageWiseMAPConstraintLearningModel(StageWiseConstraintLearningModel):
         self._map_inactive_fit_cache: dict[tuple[int, int, int, int], _MAPModeFit] = {}
         self._map_interval_stats_cache: dict[tuple[int, int, int, int], dict] = {}
         self._map_shared_cost_cache: dict[tuple[int, int, int, int, int], float] = {}
-        self._map_shared_eq_prefix_cache: dict[tuple[int, int, int, float], np.ndarray] = {}
         self._map_t_ppf_cache: dict[tuple[float, float], float] = {}
         self._map_shared_cache_version = 0
         self.map_shared_mode_costs_ = []
@@ -250,13 +251,6 @@ class StageWiseMAPConstraintLearningModel(StageWiseConstraintLearningModel):
         if text not in aliases:
             raise ValueError("MAP distribution must be one of: student_t, gaussian.")
         return aliases[text]
-
-    @staticmethod
-    def _normalize_map_eq_sigma_mode(value: str) -> str:
-        text = str(value).strip().lower().replace("-", "_")
-        if text not in {"fixed", "profiled_upper_bound"}:
-            raise ValueError("map_eq_sigma_mode must be one of: fixed, profiled_upper_bound.")
-        return text
 
     @staticmethod
     def _normalize_map_mode_aggregation(value: str) -> str:
@@ -1451,8 +1445,6 @@ class StageWiseMAPConstraintLearningModel(StageWiseConstraintLearningModel):
         return max(float(self.map_active_sigma_floor), float(self.map_c_ineq * self.map_eq_sigma))
 
     def _eq_profile_scale(self, xs, *, eta: float) -> float:
-        if self.map_eq_sigma_mode == "fixed":
-            return float(self.map_eq_sigma)
         xs = np.asarray(xs, dtype=float).reshape(-1)
         xs = xs[np.isfinite(xs)]
         lower = self._eq_scale_floor()
@@ -1583,7 +1575,6 @@ class StageWiseMAPConstraintLearningModel(StageWiseConstraintLearningModel):
             "mode": "eq",
             "mu": float(eta_hat),
             "sigma": scale,
-            "sigma_mode": self.map_eq_sigma_mode,
             "sigma_upper_bound": float(self.map_eq_sigma),
             "nu": float(self.map_nu_eq),
             "L": float(eta_hat - scale),
@@ -1861,26 +1852,6 @@ class StageWiseMAPConstraintLearningModel(StageWiseConstraintLearningModel):
             return self._inequality_fit(xs, mode=mode, eta=eta, feat_idx=int(feat_idx))
         return self._inactive_fit(xs, feat_idx=int(feat_idx))
 
-    def _shared_eq_prefix(self, demo_idx: int, feat_idx: int, eta: float) -> np.ndarray:
-        key = (
-            int(self._map_shared_cache_version),
-            int(demo_idx),
-            int(feat_idx),
-            round(float(eta), 12),
-        )
-        cached = self._map_shared_eq_prefix_cache.get(key)
-        if cached is not None:
-            return cached
-        xs = self.standardized_features[int(demo_idx)][:, int(feat_idx)]
-        nll = self._eq_nll_values(xs, eta=float(eta))
-        prefix = np.concatenate([[0.0], np.cumsum(np.asarray(nll, dtype=float), dtype=float)])
-        self._map_shared_eq_prefix_cache[key] = prefix
-        return prefix
-
-    @staticmethod
-    def _prefix_interval_sum(prefix: np.ndarray, s: int, e: int) -> float:
-        return float(np.asarray(prefix, dtype=float)[int(e) + 1] - np.asarray(prefix, dtype=float)[int(s)])
-
     def _shared_feature_interval_cost(self, demo_idx: int, stage_idx: int, feat_idx: int, s: int, e: int) -> float:
         if int(feat_idx) in self.force_inactive_feature_indices:
             return 0.0
@@ -1900,9 +1871,6 @@ class StageWiseMAPConstraintLearningModel(StageWiseConstraintLearningModel):
 
         eta = float(np.asarray(vec, dtype=float).reshape(-1)[0])
         if mode == "eq":
-            if self.map_eq_sigma_mode == "fixed":
-                prefix = self._shared_eq_prefix(int(demo_idx), int(feat_idx), float(eta))
-                return self._prefix_interval_sum(prefix, int(core_s), int(core_e))
             xs = self.standardized_features[int(demo_idx)][int(core_s) : int(core_e) + 1, int(feat_idx)]
             fit = self._equality_fit(xs, eta=float(eta))
             return self._mode_fit_likelihood_cost(fit)
@@ -2333,7 +2301,6 @@ class StageWiseMAPConstraintLearningModel(StageWiseConstraintLearningModel):
         self.shared_activation_signature_mean = signature
         self._map_shared_cache_version += 1
         self._map_shared_cost_cache.clear()
-        self._map_shared_eq_prefix_cache.clear()
 
     def _record_iteration_state(self, iteration: int, selected_infos: Sequence[dict], total_loss: float):
         self.param_consensus_lambda_hist.append(0.0)
@@ -2570,7 +2537,6 @@ class StageWiseMAPConstraintLearningModel(StageWiseConstraintLearningModel):
         self._map_inactive_fit_cache.clear()
         self._map_interval_stats_cache.clear()
         self._map_shared_cost_cache.clear()
-        self._map_shared_eq_prefix_cache.clear()
         self._map_shared_cache_version = 0
         self.map_shared_mode_costs_ = []
         self.map_shared_mode_votes_ = []

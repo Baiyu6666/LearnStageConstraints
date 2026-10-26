@@ -968,6 +968,19 @@ class S5DemoGeneratorMixin:
             ],
             dtype=int,
         )
+        transition_kernel = int(self.trajectory_noise_kernel)
+        smoothed_traj = np.stack(
+            [
+                self._smooth_trace(traj[:, dim], kernel_size=transition_kernel)
+                for dim in range(traj.shape[1])
+            ],
+            axis=1,
+        )
+        transition_radius = transition_kernel // 2
+        for cutpoint in true_cutpoints[1:2]:
+            start = max(int(cutpoint) - transition_radius + 1, 1)
+            stop = min(int(cutpoint) + transition_radius + 1, len(traj) - 1)
+            traj[start:stop] = smoothed_traj[start:stop]
         stage_lengths = (len(stage1), len(stage2) - 1, len(stage3) - 1, len(stage4) - 1, len(stage5) - 1)
         stage2_slice = slice(len(stage1), len(stage1) + len(stage2) - 1)
         stage4_slice = slice(

@@ -1,0 +1,19 @@
+{
+  "id": "lab_iiwa14",
+  "robot_profile": "iiwa14",
+  "hardware_commissioned": true,
+  "notes": "Existing iiwa14 laboratory setup.",
+  "optitrack": {
+    "server": "128.178.145.104",
+    "base": "iiwa14",
+    "object": "baiyu_bar",
+    "obstacle_a": "baiyu_obs_bar",
+    "obstacle_b": "baiyu_obs_bar_b"
+  },
+  "fri_cpu_affinity": 4,
+  "network": {
+    "host_ip": "192.170.10.1",
+    "robot_ip": "192.170.10.4",
+    "host_prefix": 24
+  }
+}

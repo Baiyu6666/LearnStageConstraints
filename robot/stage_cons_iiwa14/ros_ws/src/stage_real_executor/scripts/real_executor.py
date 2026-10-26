@@ -45,19 +45,22 @@ from trajectory_msgs.msg import JointTrajectoryPoint
 ValidationError = TrajectoryValidationError
 
 
+from stage_robot_config import active as robot_runtime, resolve as robot_resource
+
+
 class RealExecutor:
     _TASK_IDS = {"BarInspect", "BarClean"}
 
     def __init__(self):
         self._lock = threading.RLock()
-        self._joint_names = ["iiwa14_joint_{}".format(index) for index in range(1, 8)]
-        self._base_frame = rospy.get_param("~base_frame", "iiwa14_link_0")
-        self._tip_link = rospy.get_param("~tip_link", "iiwa14_link_7")
+        self._joint_names = [robot_resource("iiwa14_joint_{}").format(index) for index in range(1, 8)]
+        self._base_frame = rospy.get_param("~base_frame", robot_resource("iiwa14_link_0"))
+        self._tip_link = rospy.get_param("~tip_link", robot_resource("iiwa14_link_7"))
         self._action_name = rospy.get_param(
             "~controller_action",
-            "/iiwa14/PositionTrajectoryController/follow_joint_trajectory",
+            robot_resource("/iiwa14/PositionTrajectoryController/follow_joint_trajectory"),
         )
-        self._output_root = Path(rospy.get_param("~output_root", "/data/demos"))
+        self._output_root = Path(rospy.get_param("~output_root", "/data/demos")) / robot_runtime().robot_id / robot_runtime().site_id
         self._position_mode = int(rospy.get_param("~position_command_mode", 1))
         self._joint_state_timeout = float(rospy.get_param("~joint_state_timeout", 0.5))
         self._fri_status_timeout = float(rospy.get_param("~fri_status_timeout", 0.5))
@@ -84,7 +87,7 @@ class RealExecutor:
         self._acceleration_limit = float(rospy.get_param("~acceleration_limit_rad_s2", 1.00))
         task_definition_dir = rospy.get_param("~task_definition_dir", "/task_definitions")
         self._home_config_path = rospy.get_param(
-            "~home_config", os.path.join(task_definition_dir, "robot_home.json")
+            "~home_config", str(robot_runtime().task_dir / "robot_home.json")
         )
         self._scene_config_path = rospy.get_param(
             "~scene_config", "/workcell_definition/demo_scene.json"
@@ -106,7 +109,7 @@ class RealExecutor:
         self._minimum_approach_z = float(rospy.get_param("~minimum_approach_z", 0.20))
         self._approach_clearance_z = float(rospy.get_param("~approach_clearance_z", 0.33))
         self._torque_thresholds = np.asarray(
-            rospy.get_param("~external_torque_thresholds_nm", [20, 20, 15, 15, 8, 8, 8]),
+            rospy.get_param("~external_torque_thresholds_nm", robot_runtime().robot["external_torque_thresholds_nm"]),
             dtype=float,
         )
         if self._torque_thresholds.shape != (7,):
@@ -153,10 +156,10 @@ class RealExecutor:
             self._action_name, FollowJointTrajectoryAction
         )
         self._position_gate = rospy.ServiceProxy(
-            "/iiwa14/iiwa_driver/set_position_commanding", SetBool
+            robot_resource("/iiwa14/iiwa_driver/set_position_commanding"), SetBool
         )
         self._position_heartbeat_pub = rospy.Publisher(
-            "/iiwa14/iiwa_driver/position_command_heartbeat", Empty, queue_size=1
+            robot_resource("/iiwa14/iiwa_driver/position_command_heartbeat"), Empty, queue_size=1
         )
         self._fri_ready_pub = rospy.Publisher(
             "~fri_ready_status", Bool, queue_size=1, latch=True
@@ -680,7 +683,7 @@ class RealExecutor:
             position = None if self._joint_position is None else self._joint_position.copy()
             age = time.monotonic() - self._joint_received
         if position is None or age > self._joint_state_timeout:
-            raise ValidationError("/iiwa14/joint_states is missing or stale")
+            raise ValidationError(robot_resource("/iiwa14/joint_states is missing or stale"))
         return position
 
     def _require_hardware_ready(self):
@@ -991,6 +994,10 @@ class RealExecutor:
 
     def _return_home(self, _request):
         try:
+            robot_runtime().require_hardware()
+        except RuntimeError as error:
+            return TriggerResponse(False, str(error))
+        try:
             self._require_hardware_ready()
             if self._protective_stop:
                 raise ValidationError(
@@ -1062,6 +1069,10 @@ class RealExecutor:
             return TriggerResponse(False, str(error))
 
     def _prepare(self, _request):
+        try:
+            robot_runtime().require_hardware()
+        except RuntimeError as error:
+            return TriggerResponse(False, str(error))
         try:
             self._require_hardware_ready()
             if self._protective_stop:
@@ -1343,23 +1354,24 @@ class RealExecutor:
         self._run_directory.mkdir(parents=True, exist_ok=False)
         bag = self._run_directory / "real_task.bag"
         topics = [
-            "/iiwa14/joint_states", "/iiwa14/additional_outputs",
-            "/iiwa14/PositionTrajectoryController/state", "/iiwa14/real_executor/status",
-            "/iiwa14/commanding_status", "/iiwa14/fri_command_mode",
-            "/iiwa14/fri_diagnostics",
+            robot_resource("/iiwa14/joint_states"), robot_resource("/iiwa14/additional_outputs"),
+            robot_resource("/iiwa14/PositionTrajectoryController/state"), robot_resource("/iiwa14/real_executor/status"),
+            robot_resource("/iiwa14/commanding_status"), robot_resource("/iiwa14/fri_command_mode"),
+            robot_resource("/iiwa14/fri_diagnostics"),
             "/stage_cons/plan", "/tf", "/tf_static",
             "/stage_cons/planner/task", "/stage_cons/plan_stage_boundaries",
             "/stage_cons/plan_orientation_constraints",
             "/stage_cons/planner/tracking_status",
-            "/vrpn_client_node/baiyu_bar/pose_from_iiwa14",
-            "/vrpn_client_node/baiyu_obs_bar/pose_from_iiwa14",
+            robot_resource("/vrpn_client_node/baiyu_bar/pose_from_iiwa14"),
+            robot_resource("/vrpn_client_node/baiyu_obs_bar/pose_from_iiwa14"),
         ]
         metadata = {
             "schema_version": 1,
             "mode": "real",
             "task_id": self._task_id,
             "constraint_source": self._constraint_source,
-            "robot": "iiwa14",
+            "robot": robot_runtime().robot_id,
+            **robot_runtime().metadata(),
             "tip_link": self._tip_link,
             "orientation_control": "position_plus_full_orientation",
             "started_at_utc": now.isoformat(),
@@ -1509,6 +1521,10 @@ class RealExecutor:
                 )
 
     def _execute(self, _request):
+        try:
+            robot_runtime().require_hardware()
+        except RuntimeError as error:
+            return TriggerResponse(False, str(error))
         try:
             self._require_hardware_ready()
             current = self._fresh_joint_position()

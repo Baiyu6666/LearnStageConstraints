@@ -11,7 +11,7 @@ MAP_METHODS = frozenset(
 )
 JOINT_METHODS = frozenset(MAP_METHODS | {"swcl"})
 SEQUENTIAL_METHODS = frozenset(
-    {"fchmm", "gmmhmm", "hmm", "arhsmm", "changepoint", "changeforest", "cluster"}
+    {"gmmhmm", "hmm", "arhsmm", "changepoint", "changeforest", "cluster"}
 )
 ALL_METHODS = tuple(sorted(JOINT_METHODS | SEQUENTIAL_METHODS))
 

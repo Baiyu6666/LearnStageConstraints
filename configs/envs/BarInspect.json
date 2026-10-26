@@ -121,32 +121,7 @@
           "tool_pitch",
           "tool_roll"
         ]
-      },
-      "posthoc_constraint": {
-        "posthoc_training_mode": "voting"
       }
-    },
-    "fchmm": {
-      "n_stages": 4,
-      "selected_raw_feature_ids": [
-        "obs_dist",
-        "table_dist",
-        "tool_pitch",
-        "tool_roll"
-      ],
-      "feature_model_types": {
-        "obs_dist": "trunc_t_lower_z",
-        "table_dist": "student_t",
-        "tool_pitch": "student_t",
-        "tool_roll": "student_t"
-      },
-      "fixed_feature_mask": [
-        [1, 0, 0, 0],
-        [0, 1, 1, 1],
-        [0, 1, 1, 1],
-        [0, 0, 0, 0]
-      ],
-      "feat_weight": 0.2
     },
     "hmm": {
       "segmenter": {
@@ -174,7 +149,6 @@
         ]
       },
       "posthoc_constraint": {
-        "posthoc_training_mode": "voting",
         "fixed_feature_mask": null
       }
     },
@@ -204,7 +178,6 @@
         ]
       },
       "posthoc_constraint": {
-        "posthoc_training_mode": "voting",
         "fixed_feature_mask": null
       }
     },

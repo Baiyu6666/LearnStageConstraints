@@ -17,6 +17,9 @@ from std_msgs.msg import Bool, Empty, Float64MultiArray, Int32, String
 from std_srvs.srv import SetBool, Trigger
 
 
+from stage_robot_config import active as robot_runtime, resolve as robot_resource
+
+
 class DemoGui:
     TASK_IDS = {"BarClean"}
 
@@ -61,14 +64,13 @@ class DemoGui:
             raise ValueError("Unknown initial task id {}".format(self._task_id))
         rospy.set_param("/demo_recorder/task_id", self._task_id)
 
-        self._root_frame = rospy.get_param("~root_frame", "iiwa14_link_0")
-        self._ee_frame = rospy.get_param("~ee_frame", "iiwa14_link_ee")
+        self._root_frame = rospy.get_param("~root_frame", robot_resource("iiwa14_link_0"))
+        self._ee_frame = rospy.get_param("~ee_frame", robot_resource("iiwa14_link_ee"))
         self._gui_file = rospy.get_param("~gui_file")
         self._host = rospy.get_param("~host", "127.0.0.1")
         self._port = int(rospy.get_param("~port", 8080))
         self._tracker_to_robot_rotation = rospy.get_param(
-            "~optitrack_to_robot_rotation",
-            [[0.0, 0.0, 1.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0.0]],
+            "~optitrack_to_robot_rotation", robot_runtime().scene["optitrack_to_robot"]["rotation"]
         )
         self._tracker_to_robot_translation = rospy.get_param(
             "~optitrack_to_robot_translation", [0.0, 0.0, 0.0]
@@ -85,13 +87,13 @@ class DemoGui:
         self._position_hold_enabled = False
 
         self._orientation_service = rospy.ServiceProxy(
-            "/iiwa14/demo_virtual_fixture/enable_orientation", SetBool
+            robot_resource("/iiwa14/demo_virtual_fixture/enable_orientation"), SetBool
         )
         self._vertical_service = rospy.ServiceProxy(
-            "/iiwa14/demo_virtual_fixture/enable_vertical_damping", SetBool
+            robot_resource("/iiwa14/demo_virtual_fixture/enable_vertical_damping"), SetBool
         )
         self._all_service = rospy.ServiceProxy(
-            "/iiwa14/demo_virtual_fixture/enable_all", SetBool
+            robot_resource("/iiwa14/demo_virtual_fixture/enable_all"), SetBool
         )
         self._record_start_service = rospy.ServiceProxy(
             "/demo_recorder/start", Trigger
@@ -100,29 +102,29 @@ class DemoGui:
             "/demo_recorder/stop", Trigger
         )
         self._demo_mode_service = rospy.ServiceProxy(
-            "/iiwa14/iiwa_driver/set_demo_mode", SetBool
+            robot_resource("/iiwa14/iiwa_driver/set_demo_mode"), SetBool
         )
         self._demo_heartbeat_publisher = rospy.Publisher(
-            "/iiwa14/iiwa_driver/demo_mode_heartbeat", Empty, queue_size=1
+            robot_resource("/iiwa14/iiwa_driver/demo_mode_heartbeat"), Empty, queue_size=1
         )
 
         rospy.Subscriber(
-            "/iiwa14/joint_states", JointState, self._on_joint_state, queue_size=1
+            robot_resource("/iiwa14/joint_states"), JointState, self._on_joint_state, queue_size=1
         )
         rospy.Subscriber(
-            "/vrpn_client_node/baiyu_bar/pose_from_iiwa14",
+            robot_resource("/vrpn_client_node/baiyu_bar/pose_from_iiwa14"),
             PoseStamped,
             self._on_bar_pose,
             queue_size=1,
         )
         rospy.Subscriber(
-            "/vrpn_client_node/baiyu_obs_bar/pose_from_iiwa14",
+            robot_resource("/vrpn_client_node/baiyu_obs_bar/pose_from_iiwa14"),
             PoseStamped,
             self._on_obstacle_pose,
             queue_size=1,
         )
         rospy.Subscriber(
-            "/iiwa14/demo_virtual_fixture/status",
+            robot_resource("/iiwa14/demo_virtual_fixture/status"),
             Float64MultiArray,
             self._on_fixture_status,
             queue_size=1,
@@ -134,13 +136,13 @@ class DemoGui:
             queue_size=1,
         )
         rospy.Subscriber(
-            "/iiwa14/commanding_status", Bool, self._on_commanding, queue_size=1
+            robot_resource("/iiwa14/commanding_status"), Bool, self._on_commanding, queue_size=1
         )
         rospy.Subscriber(
-            "/iiwa14/fri_command_mode", Int32, self._on_command_mode, queue_size=1
+            robot_resource("/iiwa14/fri_command_mode"), Int32, self._on_command_mode, queue_size=1
         )
         rospy.Subscriber(
-            "/iiwa14/demo_mode_active", Bool, self._on_motion_gate, queue_size=1
+            robot_resource("/iiwa14/demo_mode_active"), Bool, self._on_motion_gate, queue_size=1
         )
 
         self._tf_buffer = tf2_ros.Buffer(cache_time=rospy.Duration(10.0))
@@ -396,6 +398,7 @@ class DemoGui:
             return {
                 "ok": True,
                 "task_id": self._task_id,
+                **robot_runtime().metadata(),
                 "available_tasks": sorted(self.TASK_IDS),
                 "mode_active": self._driver_demo_active,
                 "mode_requested": self._mode_requested,
@@ -434,6 +437,8 @@ class DemoGui:
         return bool(response.success), response.message
 
     def set_mode(self, enabled):
+        if enabled:
+            robot_runtime().require_hardware()
         with self._service_lock:
             if enabled:
                 missing = [

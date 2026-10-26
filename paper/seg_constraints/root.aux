@@ -1,0 +1,171 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{argall2009survey}
+\citation{berenson2011task,kingston2018sampling}
+\citation{chou2020local,chou2020parametric,chou2022gp}
+\citation{scobee2020maximum,malik2021inverse,liu2023benchmarking}
+\citation{peng2025pucl}
+\citation{rabiner1989hmm,johnson2013hsmm,truong2020selective,aminikhanghahi2017survey,niekum2015grounded,medina2017stable,tanwani2016semi,shiarlis2018taco,kipf2019compile}
+\providecommand \oddpage@label [2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{section.1}\protected@file@percent }
+\newlabel{sec:introduction}{{I}{1}{Introduction}{section.1}{}}
+\citation{chou2020local,chou2020parametric,chou2022gp}
+\citation{scobee2020maximum,malik2021inverse,liu2023benchmarking}
+\citation{peng2025pucl}
+\citation{sutanto2021ecomann}
+\citation{ureche2015task}
+\citation{park2020cbnirl}
+\citation{loula2020constraint}
+\citation{perezdarpino2017clearn,conkey2019hybrid,hegeler2023contact}
+\citation{rabiner1989hmm,johnson2013hsmm}
+\citation{niekum2015grounded}
+\citation{medina2017stable}
+\citation{tanwani2016semi,tanwani2021sequential}
+\citation{truong2020selective,aminikhanghahi2017survey}
+\citation{shiarlis2018taco}
+\citation{kipf2019compile}
+\citation{fu2024language}
+\@writefile{toc}{\contentsline {section}{\numberline {II}Related Work}{2}{section.2}\protected@file@percent }
+\newlabel{sec:related_work}{{II}{2}{Related Work}{section.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-A}}Learning Constraints from Demonstrations}{2}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-B}}Task Segmentation and Sequential Imitation Learning}{2}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {III}Preliminaries and Problem Formulation}{2}{section.3}\protected@file@percent }
+\newlabel{eq:stage_feature_feasible_set}{{1}{3}{Preliminaries and Problem Formulation}{equation.1}{}}
+\newlabel{eq:stagewise_feasibility_problem}{{2}{3}{Preliminaries and Problem Formulation}{equation.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Method}{3}{section.4}\protected@file@percent }
+\newlabel{sec:method}{{IV}{3}{Method}{section.4}{}}
+\newlabel{eq:swcl_posterior}{{3}{3}{Method}{equation.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Constraint-specific Observation Models}{3}{subsection.4.1}\protected@file@percent }
+\newlabel{subsec:constraint_observation_models}{{\mbox  {IV-A}}{3}{Constraint-specific Observation Models}{subsection.4.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}1}Inactive Mode}{3}{subsubsection.4.1.1}\protected@file@percent }
+\citation{chou2020local}
+\newlabel{eq:inactive_observation_model}{{4}{4}{Inactive Mode}{equation.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}2}Equality Mode}{4}{subsubsection.4.1.2}\protected@file@percent }
+\newlabel{eq:equality_observation_model}{{5}{4}{Equality Mode}{equation.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}3}Inequality Modes}{4}{subsubsection.4.1.3}\protected@file@percent }
+\newlabel{eq:inequality_signed_slack}{{6}{4}{Inequality Modes}{equation.6}{}}
+\newlabel{eq:soft_half_t_density}{{7}{4}{Inequality Modes}{equation.7}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}4}\textcolor {red}{Unified Constraint Likelihood}}{4}{subsubsection.4.1.4}\protected@file@percent }
+\newlabel{eq:constraint_likelihood}{{8}{4}{\textcolor {red}{Unified Constraint Likelihood}}{equation.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Constraint-mode Prior}{4}{subsection.4.2}\protected@file@percent }
+\newlabel{subsec:constraint_mode_prior}{{\mbox  {IV-B}}{4}{Constraint-mode Prior}{subsection.4.2}{}}
+\newlabel{eq:constraint_mode_prior}{{9}{4}{Constraint-mode Prior}{equation.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textcolor {red}{Mode-specific fits to a feature distribution aggregated across demonstrations. The four curves use their respective fitted parameters, and the legend reports their mean negative log-likelihoods (lower is better). In this example, the lower-bound mode provides the strongest likelihood evidence and is selected.}}}{5}{figure.1}\protected@file@percent }
+\newlabel{fig:soft_half_t_example}{{1}{5}{\textcolor {red}{Mode-specific fits to a feature distribution aggregated across demonstrations. The four curves use their respective fitted parameters, and the legend reports their mean negative log-likelihoods (lower is better). In this example, the lower-bound mode provides the strongest likelihood evidence and is selected.}}{figure.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}Directional Subgoal Progress}{5}{subsection.4.3}\protected@file@percent }
+\newlabel{subsec:directional_progress}{{\mbox  {IV-C}}{5}{Directional Subgoal Progress}{subsection.4.3}{}}
+\newlabel{eq:directional_progress}{{10}{5}{Directional Subgoal Progress}{equation.10}{}}
+\newlabel{eq:progress_likelihood}{{11}{5}{Directional Subgoal Progress}{equation.11}{}}
+\newlabel{eq:progress_cost}{{12}{5}{Directional Subgoal Progress}{equation.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-D}}Shared Constraint Estimation}{5}{subsection.4.4}\protected@file@percent }
+\newlabel{subsec:shared_constraint_estimation}{{\mbox  {IV-D}}{5}{Shared Constraint Estimation}{subsection.4.4}{}}
+\newlabel{eq:demo_mean_mode_nll}{{13}{5}{Shared Constraint Estimation}{equation.13}{}}
+\newlabel{eq:shared_mode_update}{{14}{5}{Shared Constraint Estimation}{equation.14}{}}
+\newlabel{eq:progress_kappa_update}{{15}{5}{Shared Constraint Estimation}{equation.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-E}}Segmentation under the Shared Constraint Model}{5}{subsection.4.5}\protected@file@percent }
+\newlabel{subsec:shared_model_segmentation}{{\mbox  {IV-E}}{5}{Segmentation under the Shared Constraint Model}{subsection.4.5}{}}
+\newlabel{eq:shared_interval_constraint_cost}{{16}{5}{Segmentation under the Shared Constraint Model}{equation.16}{}}
+\newlabel{eq:full_stage_cost}{{17}{5}{Segmentation under the Shared Constraint Model}{equation.17}{}}
+\newlabel{eq:dp_recurrence}{{18}{5}{Segmentation under the Shared Constraint Model}{equation.18}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Stage-Wise Constraint Learning}}{6}{algorithm.1}\protected@file@percent }
+\newlabel{alg:swcl}{{1}{6}{Alternating Inference}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-F}}Alternating Inference}{6}{subsection.4.6}\protected@file@percent }
+\newlabel{subsec:alternating_inference}{{\mbox  {IV-F}}{6}{Alternating Inference}{subsection.4.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Simulation Experiment}{6}{section.5}\protected@file@percent }
+\newlabel{sec:experiment}{{V}{6}{Simulation Experiment}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-A}}Experimental Setup}{6}{subsection.5.1}\protected@file@percent }
+\newlabel{subsec:exp_setup}{{\mbox  {V-A}}{6}{Experimental Setup}{subsection.5.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-A}1}Benchmark Datasets}{6}{subsubsection.5.1.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces  Example demonstration from the \texttt  {S3ObsAvoid} environment. The colored trajectory segments correspond to the three ground-truth stages: obstacle avoidance, transition, and terminal arc following. Gray ellipses denote the composite obstacle, the black circle and square mark the start and end states, and black crosses indicate the true stage cutpoints. }}{6}{figure.2}\protected@file@percent }
+\newlabel{fig:s3_demo_cutpoints}{{2}{6}{Example demonstration from the \texttt {S3ObsAvoid} environment. The colored trajectory segments correspond to the three ground-truth stages: obstacle avoidance, transition, and terminal arc following. Gray ellipses denote the composite obstacle, the black circle and square mark the start and end states, and black crosses indicate the true stage cutpoints}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-A}2}Baselines}{6}{subsubsection.5.1.2}\protected@file@percent }
+\citation{rabiner1989hmm}
+\citation{johnson2013hsmm}
+\citation{keogh2004segmenting}
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces  Feature banks used in the three benchmark tasks. Units refer to the feature values before standardization. }}{7}{table.1}\protected@file@percent }
+\newlabel{tab:dataset_features}{{I}{7}{Feature banks used in the three benchmark tasks. Units refer to the feature values before standardization}{table.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-A}3}Evaluation metrics}{7}{subsubsection.5.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-B}}Results}{7}{subsection.5.2}\protected@file@percent }
+\newlabel{subsec:main_benchmark}{{\mbox  {V-B}1}{7}{Main benchmark comparison}{subsubsection.5.2.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-B}1}Main benchmark comparison}{7}{subsubsection.5.2.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces  Normalized feature profiles of one representative \texttt  {S5SphereInspect} demonstration. Solid gray vertical lines indicate the ground-truth cutpoints, and dotted black vertical lines indicate the cutpoints learned by SWCL. }}{8}{figure.3}\protected@file@percent }
+\newlabel{fig:s5_feature_profile}{{3}{8}{Normalized feature profiles of one representative \texttt {S5SphereInspect} demonstration. Solid gray vertical lines indicate the ground-truth cutpoints, and dotted black vertical lines indicate the cutpoints learned by SWCL}{figure.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Main benchmark comparison across the three datasets. Top: mean absolute cutpoint error. Bottom: normalized constraint error. Lower is better in both plots.}}{8}{figure.4}\protected@file@percent }
+\newlabel{fig:benchmark_main}{{4}{8}{Main benchmark comparison across the three datasets. Top: mean absolute cutpoint error. Bottom: normalized constraint error. Lower is better in both plots}{figure.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-B}2}Learned constraint modes of SWCL}{8}{subsubsection.5.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-C}}Reuse the Learned Constraints for Planning}{8}{subsection.5.3}\protected@file@percent }
+\newlabel{subsec:planning_learned_constraints}{{\mbox  {V-C}}{8}{Reuse the Learned Constraints for Planning}{subsection.5.3}{}}
+\newlabel{fig:constraints_s3}{{5a}{9}{Main benchmark comparison}{subfigure.5.1}{}}
+\newlabel{fig:constraints_s4}{{5b}{9}{Main benchmark comparison}{subfigure.5.2}{}}
+\newlabel{fig:constraints_s5}{{5c}{9}{Main benchmark comparison}{subfigure.5.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Ground-truth and learned stage-wise constraints.}}{9}{figure.5}\protected@file@percent }
+\newlabel{fig:true_learned_modes_all}{{5}{9}{Ground-truth and learned stage-wise constraints}{figure.5}{}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {\texttt {S3ObsAvoid}}}}{9}{subfigure.5.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {\texttt {S4SlideInsert}}}}{9}{subfigure.5.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {\texttt {S5SphereInspect}}}}{9}{subfigure.5.3}\protected@file@percent }
+\newlabel{fig:s4_transfer_tilt}{{6a}{9}{Main benchmark comparison}{subfigure.6.1}{}}
+\newlabel{fig:s4_transfer_curve}{{6b}{9}{Main benchmark comparison}{subfigure.6.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces  Transfer of learned \texttt  {S4SlideInsert} constraints to two modified tasks with the same stage-wise constraint semantics but different environments. (a) The guide surface is tilted. (b) The straight guide is replaced by a curved rail. }}{9}{figure.6}\protected@file@percent }
+\newlabel{fig:s4_transfer}{{6}{9}{Transfer of learned \texttt {S4SlideInsert} constraints to two modified tasks with the same stage-wise constraint semantics but different environments. (a) The guide surface is tilted. (b) The straight guide is replaced by a curved rail}{figure.6}{}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Tilted surface transfer}}}{9}{subfigure.6.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Curved rail transfer}}}{9}{subfigure.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Real-robot Validation}{9}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-A}}Experiment Setup and Constraint Learning}{9}{subsection.6.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces  PyBullet execution snapshots of a new \texttt  {S5SphereInspect} planning instance using the learned stage-wise constraints. The five snapshots correspond to the five stages of the task: (a) the tool approaches the sphere from a new start configuration; (b) it performs surface inspection while maintaining the learned surface-distance, normal-alignment, and speed constraints; (c) it transitions away from the strongly constrained surface-tracing regime; (d) it performs inspection on a larger spherical shell farther from the sphere; and (e) it departs toward the terminal goal. }}{10}{figure.7}\protected@file@percent }
+\newlabel{fig:s5_planning_snapshots}{{7}{10}{PyBullet execution snapshots of a new \texttt {S5SphereInspect} planning instance using the learned stage-wise constraints. The five snapshots correspond to the five stages of the task: (a) the tool approaches the sphere from a new start configuration; (b) it performs surface inspection while maintaining the learned surface-distance, normal-alignment, and speed constraints; (c) it transitions away from the strongly constrained surface-tracing regime; (d) it performs inspection on a larger spherical shell farther from the sphere; and (e) it departs toward the terminal goal}{figure.7}{}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {stage 1: approach}}}{10}{subfigure.7.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {stage 2: surface inspection}}}{10}{subfigure.7.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {stage 3: transition}}}{10}{subfigure.7.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(d)}{\ignorespaces {stage 4: outer-shell inspection}}}{10}{subfigure.7.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(e)}{\ignorespaces {stage 5: departure}}}{10}{subfigure.7.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Learned stage-wise constraints for the bar-clearing task.}}{10}{figure.8}\protected@file@percent }
+\newlabel{fig:barclear_learned_constraints}{{8}{10}{Learned stage-wise constraints for the bar-clearing task}{figure.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-B}}Planning and Execution}{10}{subsection.6.2}\protected@file@percent }
+\newlabel{eq:barclear_constraint_residual}{{19}{10}{Planning and Execution}{equation.19}{}}
+\newlabel{eq:barclear_trajectory_optimization}{{20}{10}{Planning and Execution}{equation.20}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-C}}Results}{10}{subsection.6.3}\protected@file@percent }
+\bibstyle{IEEEtran}
+\bibdata{ref}
+\bibcite{argall2009survey}{1}
+\bibcite{berenson2011task}{2}
+\bibcite{kingston2018sampling}{3}
+\bibcite{chou2020local}{4}
+\bibcite{chou2020parametric}{5}
+\bibcite{chou2022gp}{6}
+\bibcite{scobee2020maximum}{7}
+\bibcite{malik2021inverse}{8}
+\bibcite{liu2023benchmarking}{9}
+\bibcite{peng2025pucl}{10}
+\bibcite{rabiner1989hmm}{11}
+\bibcite{johnson2013hsmm}{12}
+\bibcite{truong2020selective}{13}
+\bibcite{aminikhanghahi2017survey}{14}
+\bibcite{niekum2015grounded}{15}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Representative snapshots from a real-robot execution of the bar-clearing task using the learned stage-wise constraints. The four snapshots show the first four stages: (a) approaching the bar while avoiding the black obstacle; (b) sweeping the litter objects from the bar onto the table; (c) repositioning the tool between the two sweeping motions; and (d) sweeping the litter objects off the table. The final departure stage is omitted.}}{11}{figure.9}\protected@file@percent }
+\newlabel{fig:barclear_execution_snapshots}{{9}{11}{Representative snapshots from a real-robot execution of the bar-clearing task using the learned stage-wise constraints. The four snapshots show the first four stages: (a) approaching the bar while avoiding the black obstacle; (b) sweeping the litter objects from the bar onto the table; (c) repositioning the tool between the two sweeping motions; and (d) sweeping the litter objects off the table. The final departure stage is omitted}{figure.9}{}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {stage 1: approach}}}{11}{subfigure.9.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {stage 2: bar sweeping}}}{11}{subfigure.9.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {stage 3: repositioning}}}{11}{subfigure.9.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(d)}{\ignorespaces {Stage 4: table sweeping}}}{11}{subfigure.9.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Transfer setting with a curved bar and an additional obstacle.}}{11}{figure.10}\protected@file@percent }
+\newlabel{fig:barclear_transfer}{{10}{11}{Transfer setting with a curved bar and an additional obstacle}{figure.10}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {VII}Conclusion}{11}{section.7}\protected@file@percent }
+\newlabel{sec:conclusion}{{VII}{11}{Conclusion}{section.7}{}}
+\@writefile{toc}{\contentsline {section}{References}{11}{section*.1}\protected@file@percent }
+\bibcite{medina2017stable}{16}
+\bibcite{tanwani2016semi}{17}
+\bibcite{shiarlis2018taco}{18}
+\bibcite{kipf2019compile}{19}
+\bibcite{sutanto2021ecomann}{20}
+\bibcite{ureche2015task}{21}
+\bibcite{park2020cbnirl}{22}
+\bibcite{loula2020constraint}{23}
+\bibcite{perezdarpino2017clearn}{24}
+\bibcite{conkey2019hybrid}{25}
+\bibcite{hegeler2023contact}{26}
+\bibcite{tanwani2021sequential}{27}
+\bibcite{fu2024language}{28}
+\bibcite{keogh2004segmenting}{29}
+\gdef \@abspage@last{12}

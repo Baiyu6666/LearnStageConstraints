@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="robot_name" default="iiwa14"/>
-  <arg name="config" default="$(find inspection_virtual_fixture)/config/inspection_virtual_fixture_iiwa14.yaml"/>
+  <arg name="robot_name" default="$(optenv STAGE_ROBOT_NAME iiwa14)"/>
+  <arg name="config" default="$(optenv STAGE_ASSISTANCE_CONFIG)"/>
 
   <group ns="/$(arg robot_name)">
     <node name="demo_virtual_fixture"
@@ -10,6 +10,9 @@
           output="screen"
           required="true">
       <rosparam file="$(arg config)" command="load"/>
+      <param name="bar_pose_topic" value="$(optenv STAGE_BAR_TOPIC)"/>
+      <param name="demo_mode_topic" value="/$(arg robot_name)/demo_mode_active"/>
+      <param name="end_effector" value="$(optenv STAGE_EE_FRAME)"/>
     </node>
   </group>
 </launch>

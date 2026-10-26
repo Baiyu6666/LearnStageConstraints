@@ -2,7 +2,10 @@ from types import SimpleNamespace
 
 import numpy as np
 
-from experiments.artifacts import _extract_learned_constraint_artifact
+from experiments.artifacts import (
+    _extract_learned_constraint_artifact,
+    _supports_learned_endpoint_export,
+)
 
 
 class _EndpointEnv:
@@ -22,6 +25,11 @@ class _EndpointEnv:
             np.repeat([[1.0, 0.0, 0.0]], count, axis=0),
             np.repeat([[0.0, 1.0, 0.0]], count, axis=0),
         )
+
+
+def test_learned_endpoint_export_requires_bar_task_frame_environment():
+    assert _supports_learned_endpoint_export({"dataset": SimpleNamespace(env=_EndpointEnv())})
+    assert not _supports_learned_endpoint_export({"dataset": SimpleNamespace(env=SimpleNamespace())})
 
 
 def test_map_artifact_contains_every_feature_stage_pair_and_inactive_mode():

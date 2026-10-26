@@ -30,6 +30,7 @@ class HostRealExecutionFlowTest(unittest.TestCase):
             Path(self._temporary_directory.name) / "gui_settings.json"
         )
         self.subject = self.module.Supervisor()
+        self.subject._assert_selected_container_profile = lambda: None
 
     def tearDown(self):
         self.subject.shutdown()
@@ -997,7 +998,7 @@ class HostRealExecutionFlowTest(unittest.TestCase):
         self.assertEqual(events[0][0], "release_position")
         self.assertEqual(events[1], ("demo",))
         self.assertEqual(events[2][0], "driver")
-        self.assertIn("iiwa14_bringup.launch", events[2][1])
+        self.assertIn("iiwa_bringup.launch", events[2][1])
         self.assertEqual(events[3], ("ready", child))
 
     def test_demo_prepare_routes_even_final_hold_through_release(self):
@@ -1567,9 +1568,10 @@ class HostRealExecutionFlowTest(unittest.TestCase):
         )
         self.assertAlmostEqual(series["samples"][0][2], expected_surface)
         self.assertAlmostEqual(series["samples"][0][3], 0.02)
-        self.assertAlmostEqual(abs(series["samples"][0][6]), math.pi)
+        feature_index = {item["name"]: index + 1 for index, item in enumerate(series["schema"])}
+        self.assertAlmostEqual(abs(series["samples"][0][feature_index["tool_yaw"]]), math.pi)
         self.assertAlmostEqual(
-            series["samples"][0][7],
+            series["samples"][0][feature_index["axial_offset"]],
             0.10 - definition["true_constraints"]["bar_axial_offset_reference"],
         )
         self.assertEqual(visualization["source"], "planner_scene")

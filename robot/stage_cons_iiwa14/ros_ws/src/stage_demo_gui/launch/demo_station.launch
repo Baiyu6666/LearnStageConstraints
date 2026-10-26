@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="optitrack_server" default="128.178.145.104"/>
-  <arg name="optitrack_base" default="iiwa14"/>
-  <arg name="optitrack_object" default="baiyu_bar"/>
-  <arg name="optitrack_obstacle_a" default="baiyu_obs_bar"/>
-  <arg name="optitrack_obstacle_b" default="baiyu_obs_bar_b"/>
+  <param name="/stage_cons/runtime_identity" value="$(optenv STAGE_RUNTIME_IDENTITY)"/>
+  <arg name="optitrack_server" default="$(optenv STAGE_TRACKING_SERVER 128.178.145.104)"/>
+  <arg name="optitrack_base" default="$(optenv STAGE_TRACKING_BASE iiwa14)"/>
+  <arg name="optitrack_object" default="$(optenv STAGE_TRACKING_OBJECT baiyu_bar)"/>
+  <arg name="optitrack_obstacle_a" default="$(optenv STAGE_TRACKING_OBSTACLE_A baiyu_obs_bar)"/>
+  <arg name="optitrack_obstacle_b" default="$(optenv STAGE_TRACKING_OBSTACLE_B baiyu_obs_bar_b)"/>
   <arg name="start_optitrack" default="true"/>
   <arg name="use_fixed_scene" default="true"/>
   <arg name="gui_host" default="127.0.0.1"/>
@@ -13,10 +14,10 @@
   <!-- The Demo station must be able to start before the FRI driver. Upload
        only the kinematic model needed by the virtual fixture; this launches
        no hardware, controller, or robot-state publisher process. -->
-  <group ns="/iiwa14">
-    <include file="$(find iiwa_description)/launch/iiwa14_upload.launch">
+  <group ns="/$(optenv STAGE_ROBOT_NAME iiwa14)">
+    <include file="$(find iiwa_description)/launch/iiwa$(optenv STAGE_ROBOT_MODEL 14)_upload.launch">
       <arg name="hardware_interface" value="EffortJointInterface"/>
-      <arg name="robot_name" value="iiwa14"/>
+      <arg name="robot_name" value="$(optenv STAGE_ROBOT_NAME iiwa14)"/>
     </include>
   </group>
 

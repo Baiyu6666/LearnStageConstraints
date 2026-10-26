@@ -425,6 +425,11 @@ def _estimate_constraint_value_raw(learner, stage_idx, local_feature_idx):
     return to_raw(z_value)
 
 
+def _compute_constraint_set_iou(match_count, true_count, predicted_count):
+    union_count = int(true_count) + int(predicted_count) - int(match_count)
+    return float(match_count / union_count) if union_count > 0 else 1.0
+
+
 def _compute_constraint_metrics(learner):
     num_stages = int(getattr(learner, "num_stages", 0))
     num_features = int(getattr(learner, "num_features", 0))
@@ -484,10 +489,16 @@ def _compute_constraint_metrics(learner):
         if semantic_precision + semantic_recall > 0.0
         else 0.0
     )
+    semantic_iou = _compute_constraint_set_iou(
+        semantic_match_count,
+        true_constraint_count,
+        predicted_constraint_count,
+    )
     metrics = {
         "SemanticConstraintPrecision": semantic_precision,
         "SemanticConstraintRecall": semantic_recall,
         "SemanticConstraintF1": semantic_f1,
+        "SemanticConstraintIoU": semantic_iou,
         "SemanticConstraintMatchCount": semantic_match_count,
         "TrueConstraintCount": true_constraint_count,
         "PredictedConstraintCount": predicted_constraint_count,

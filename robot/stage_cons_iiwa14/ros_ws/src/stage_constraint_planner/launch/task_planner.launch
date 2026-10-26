@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="frame_id" default="iiwa14_link_0"/>
-  <arg name="bar_clean_config" default="/task_definitions/bar_clean_true.json"/>
+  <arg name="frame_id" default="$(optenv STAGE_BASE_FRAME iiwa14_link_0)"/>
+  <arg name="bar_clean_config" default="$(optenv STAGE_TASK_DIR /task_definitions)/bar_clean_true.json"/>
   <arg name="scene_pose_rotation" default="[[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]"/>
   <arg name="scene_pose_translation" default="[0.0, 0.0, 0.0]"/>
 

@@ -73,7 +73,7 @@
       "map_active_sigma_floor": 0.003,
       "map_eq_sigma": 0.05,
       "map_c_bg": 1.0,
-      "map_c_ineq": 0.0,
+      "map_c_ineq": 0.25,
       "map_boundary_quantile": 0.05,
       "fixed_true_cutpoint_indices": [],
       "map_activation_prior": 0.5
@@ -82,24 +82,7 @@
       "segmenter": {
         "n_stages": 5,
         "selected_raw_feature_ids": ["surf_dist", "normal_err", "speed", "ang_speed", "start_dist", "goal_dist"]
-      },
-      "posthoc_constraint": {
-        "posthoc_training_mode": "voting"
       }
-    },
-    "fchmm": {
-      "n_stages": 5,
-      "feat_weight": 0.1,
-      "selected_raw_feature_ids": ["surf_dist", "normal_err", "speed", "ang_speed", "start_dist", "goal_dist"],
-      "feature_model_types": {
-        "surf_dist": "student_t",
-        "speed": "trunc_t_upper_z",
-        "ang_speed": "trunc_t_upper_z",
-        "normal_err": "trunc_t_upper_z",
-        "start_dist": "trunc_t_lower_z",
-        "goal_dist": "trunc_t_lower_z"
-      },
-      "fixed_feature_mask": [[1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1]]
     },
     "hmm": {
       "segmenter": {
@@ -159,10 +142,16 @@
     "changeforest": {
       "segmenter": {
         "n_stages": 5,
-        "selected_raw_feature_ids": ["surf_dist", "normal_err", "speed", "ang_speed", "start_dist", "goal_dist"]
+        "selected_raw_feature_ids": ["surf_dist", "normal_err", "speed", "ang_speed", "start_dist", "goal_dist"],
+        "use_state": true,
+        "use_velocity": true,
+        "use_env_features": true,
+        "method": "random_forest",
+        "random_forest_n_estimators": 200,
+        "random_forest_max_depth": 1,
+        "random_forest_max_features": 1
       },
       "posthoc_constraint": {
-        "posthoc_training_mode": "voting",
         "fixed_feature_mask": null
       }
     },

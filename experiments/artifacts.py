@@ -106,7 +106,7 @@ def resolve_plot_dir(run_dir: str | Path) -> Path:
 
 
 def default_method_seed(method_name: str, method_kwargs: Mapping[str, Any]) -> int:
-    if method_name in JOINT_METHODS or method_name == "fchmm":
+    if method_name in JOINT_METHODS:
         return int(method_kwargs.get("seed", 0))
     segmenter_cfg = dict(method_kwargs.get("segmenter", {}))
     return int(segmenter_cfg.get("seed", 0))
@@ -119,7 +119,7 @@ def apply_run_plot_dirs(
 ) -> dict[str, Any]:
     plot_dir_str = str(plot_dir)
     cfg = dict(method_kwargs)
-    if method_name in JOINT_METHODS or method_name == "fchmm":
+    if method_name in JOINT_METHODS:
         cfg["plot_dir"] = plot_dir_str
         return cfg
     segmenter_cfg = dict(cfg.get("segmenter", {}))
@@ -362,6 +362,18 @@ def _aggregate_learned_endpoint_poses(result: Mapping[str, Any]) -> tuple[list[l
     }
 
 
+def _supports_learned_endpoint_export(result: Mapping[str, Any]) -> bool:
+    dataset = result.get("dataset")
+    env = getattr(dataset, "env", None)
+    required_attributes = (
+        "table_surface_point",
+        "table_normal",
+        "_bar_geometry_trace",
+        "get_demo_scene",
+    )
+    return env is not None and all(hasattr(env, name) for name in required_attributes)
+
+
 def _extract_learned_constraint_artifact(
     *,
     dataset_name: str,
@@ -521,7 +533,7 @@ def _extract_objectives(method_name: str, result: Mapping[str, Any]) -> dict[str
         if history:
             _append_scalar_if_finite(out, "ModelObjectiveFinal", history[-1])
             _append_scalar_if_finite(out, "SegmentationLogLikelihoodFinal", history[-1])
-    elif method_name in {"fchmm", "hmm"} and constraint_model is not None:
+    elif method_name == "hmm" and constraint_model is not None:
         history = getattr(constraint_model, "loss_loglik", None)
         if history:
             _append_scalar_if_finite(out, "ModelObjectiveFinal", history[-1])
@@ -611,7 +623,7 @@ def save_run_artifacts(
             _extract_constraints(result),
         ),
     }
-    if method_name in _MAP_METHODS:
+    if method_name in _MAP_METHODS and _supports_learned_endpoint_export(result):
         files["learned_constraints"] = write_json(
             run_dir / "learned_constraints.json",
             _extract_learned_constraint_artifact(

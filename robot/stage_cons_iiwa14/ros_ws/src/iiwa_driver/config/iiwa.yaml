@@ -9,7 +9,7 @@ hardware_interface:
   # apply only to the dedicated control thread; failure to apply them prevents
   # the driver from starting instead of silently running without RT protection.
   fri_realtime_priority: 80
-  fri_cpu_affinity: 4
+  fri_cpu_affinity: $(optenv STAGE_FRI_CPU 4)
   # Diagnostics are observational only and do not change the FRI control path.
   fri_diagnostics_publish_period: 1.0
   # Serialization is handed off through realtime publishers so it does not run

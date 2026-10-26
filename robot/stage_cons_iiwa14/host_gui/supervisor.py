@@ -30,11 +30,16 @@ from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "ros_ws/src/stage_robot_config/src"))
+from stage_robot_config import active as robot_runtime, resolve as robot_resource
+
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY_ROOT = PROJECT_ROOT.parents[1]
-FINAL_VIDEO_RUN_ROOT = PROJECT_ROOT.parent / "final_video_runs"
+FINAL_VIDEO_RUN_ROOT = PROJECT_ROOT.parent / "final_video_runs" / robot_runtime().robot_id / robot_runtime().site_id
 WEB_ROOT = Path(__file__).resolve().parent / "web"
-GUI_SETTINGS_PATH = PROJECT_ROOT / "data" / "gui_settings.json"
+GUI_SETTINGS_PATH = PROJECT_ROOT / "data" / "runtime" / robot_runtime().robot_id / robot_runtime().site_id / "gui_settings.json"
 LEARNED_CONSTRAINT_ROOT = REPOSITORY_ROOT / "outputs"
 MAP_METHODS = frozenset(
     {"map", "map_pooled", "map_balanced_pooled", "map_balanced_vote"}
@@ -62,21 +67,10 @@ TASK_ACTIVE_PHASES = frozenset(
         "executing",
     }
 )
-SCENE_CONFIG = (
-    PROJECT_ROOT
-    / "ros_ws"
-    / "src"
-    / "stage_iiwa_sim"
-    / "config"
-    / "demo_scene.json"
-)
-SCENE_CONFIG_DIR = SCENE_CONFIG.parent / "scenes"
-TASK_CONFIGS = {
-    "BarClean": (
-        PROJECT_ROOT / "ros_ws" / "src" / "stage_constraint_planner"
-        / "config" / "bar_clean_true.json"
-    ),
-}
+RUNTIME = robot_runtime()
+SCENE_CONFIG = RUNTIME.scene_path
+SCENE_CONFIG_DIR = RUNTIME.site_dir / "scenes"
+TASK_CONFIGS = {"BarClean": RUNTIME.task_dir / "bar_clean_true.json"}
 FEATURE_SAMPLE_HZ = 20.0
 CAMERA_PREVIEW_MARKER = "Stage Camera Preview"
 CAMERA_SOURCE_LAUNCHER = Path.home() / "apps" / "android-camera-v4l2"
@@ -784,7 +778,7 @@ class Supervisor:
     def _robot_ee_pose(
         self, *, timeout: float = 0.15, max_age: float = 0.25
     ) -> Optional[Dict[str, float]]:
-        key = (CONTAINER, "iiwa14_link_0", "iiwa14_link_7")
+        key = (CONTAINER, robot_resource("iiwa14_link_0"), robot_resource("iiwa14_link_7"))
         with self._lock:
             stream = self._tf_pose_streams.get(key)
             if stream is None:
@@ -842,6 +836,8 @@ class Supervisor:
     def _env() -> Dict[str, str]:
         env = os.environ.copy()
         env["USER_UID"] = str(os.getuid())
+        env.update(RUNTIME.environment())
+        env["RUNTIME_CONFIG_ROOT"] = str(RUNTIME.root)
         return env
 
     def _run(
@@ -887,6 +883,18 @@ class Supervisor:
             check=False,
         )
         return result.returncode == 0 and result.stdout.strip() == "true"
+
+    def _assert_selected_container_profile(self) -> None:
+        result = self._run(
+            ["docker", "inspect", "--format", "{{json .Config.Env}}", CONTAINER],
+            timeout=5.0,
+        )
+        environment = dict(item.split("=", 1) for item in json.loads(result.stdout)
+                           if "=" in item)
+        if (environment.get("ROBOT_PROFILE", "iiwa14") != RUNTIME.robot_id or
+                environment.get("SITE_PROFILE", "lab_iiwa14") != RUNTIME.site_id):
+            raise RuntimeError("Container and GUI profiles differ; stop the workstation "
+                               "and recreate it with the selected robot/site")
 
     @staticmethod
     def _ensure_data_directories() -> None:
@@ -985,7 +993,7 @@ class Supervisor:
             )
             if (
                 "roslaunch iiwa_driver" in top.stdout
-                or "iiwa14_bringup.launch" in top.stdout
+                or "iiwa_bringup.launch" in top.stdout
                 or "/iiwa_driver/iiwa_driver" in top.stdout
             ):
                 conflicts.append(container)
@@ -1014,7 +1022,7 @@ class Supervisor:
                 [
                     "docker", "exec", CONTAINER,
                     "timeout", "--kill-after=0.25s", "0.75s", "/entrypoint.sh",
-                    "rosservice", "call", "/iiwa14/controller_manager/list_controllers",
+                    "rosservice", "call", robot_resource("/iiwa14/controller_manager/list_controllers"),
                 ],
                 text=True,
                 stdout=subprocess.PIPE,
@@ -1064,17 +1072,17 @@ class Supervisor:
                 return False
             discovered[command] = set(result.stdout.splitlines())
         required_services = {
-            "/iiwa14/iiwa_driver/set_position_commanding",
-            "/iiwa14/real_executor/prepare",
-            "/iiwa14/real_executor/execute",
-            "/iiwa14/real_executor/return_home",
-            "/iiwa14/real_executor/abort",
+            robot_resource("/iiwa14/iiwa_driver/set_position_commanding"),
+            robot_resource("/iiwa14/real_executor/prepare"),
+            robot_resource("/iiwa14/real_executor/execute"),
+            robot_resource("/iiwa14/real_executor/return_home"),
+            robot_resource("/iiwa14/real_executor/abort"),
         }
         required_topics = {
-            "/iiwa14/PositionTrajectoryController/follow_joint_trajectory/status",
-            "/iiwa14/PositionTrajectoryController/state",
-            "/iiwa14/real_executor/status",
-            "/iiwa14/real_executor/fri_ready_status",
+            robot_resource("/iiwa14/PositionTrajectoryController/follow_joint_trajectory/status"),
+            robot_resource("/iiwa14/PositionTrajectoryController/state"),
+            robot_resource("/iiwa14/real_executor/status"),
+            robot_resource("/iiwa14/real_executor/fri_ready_status"),
         }
         return (
             required_services.issubset(discovered["rosservice"])
@@ -1085,8 +1093,8 @@ class Supervisor:
     def _control_mode_from_graph(
         nodes: List[str], running_controllers: Optional[List[str]]
     ) -> Dict[str, object]:
-        driver_running = "/iiwa14/iiwa_driver" in nodes
-        real_executor_running = "/iiwa14/real_executor" in nodes
+        driver_running = robot_resource("/iiwa14/iiwa_driver") in nodes
+        real_executor_running = robot_resource("/iiwa14/real_executor") in nodes
         if not driver_running:
             return {"mode": "idle", "label": "Idle / no robot commands", "healthy": True}
         if running_controllers is None:
@@ -1134,8 +1142,8 @@ class Supervisor:
         if not self._container_running():
             return
         commands = (
-            "rosservice call /iiwa14/demo_virtual_fixture/enable_all 'data: false'",
-            "rosservice call /iiwa14/iiwa_driver/set_demo_mode 'data: false'",
+            robot_resource("rosservice call /iiwa14/demo_virtual_fixture/enable_all 'data: false'"),
+            robot_resource("rosservice call /iiwa14/iiwa_driver/set_demo_mode 'data: false'"),
             "rosservice call /demo_recorder/stop",
         )
         for command in commands:
@@ -1158,7 +1166,7 @@ class Supervisor:
         nodes = set(self._ros_nodes())
         self.log("Releasing robot control before " + reason)
         self._quiesce_demo_control()
-        if "/iiwa14/real_executor" in nodes:
+        if robot_resource("/iiwa14/real_executor") in nodes:
             try:
                 self._abort_real_and_confirm(reason)
             except RuntimeError as error:
@@ -1171,17 +1179,16 @@ class Supervisor:
     def _robot_iface_state(self) -> Dict[str, object]:
         env_file = PROJECT_ROOT / ".env"
         iface = ""
-        host_ip = ""
+        host_ip = RUNTIME.site["network"].get("host_ip") or ""
+        prefix = RUNTIME.site["network"]["host_prefix"]
         if env_file.exists():
             for raw in env_file.read_text(encoding="utf-8").splitlines():
                 line = raw.strip()
                 if not line or line.startswith("#") or "=" not in line:
                     continue
                 key, value = line.split("=", 1)
-                if key == "IIWA14_IFACE":
+                if key == "ROBOT_IFACE":
                     iface = value.strip().strip("'\"")
-                elif key == "FRI_HOST_IP":
-                    host_ip = value.strip().strip("'\"")
         configured = False
         if iface and host_ip:
             result = subprocess.run(
@@ -1191,7 +1198,7 @@ class Supervisor:
                 stderr=subprocess.DEVNULL,
                 check=False,
             )
-            configured = result.returncode == 0 and f"{host_ip}/24" in result.stdout
+            configured = result.returncode == 0 and f"{host_ip}/{prefix}" in result.stdout
         return {"interface": iface, "host_ip": host_ip, "configured": configured}
 
     @staticmethod
@@ -1380,7 +1387,9 @@ class Supervisor:
             pattern = "{}/*/method_seed_*/learned_constraints.json".format(
                 method_name
             )
-            for path in sorted(LEARNED_CONSTRAINT_ROOT.glob(pattern)):
+            paths = list(LEARNED_CONSTRAINT_ROOT.glob(pattern))
+            paths += list((LEARNED_CONSTRAINT_ROOT / RUNTIME.robot_id / RUNTIME.site_id).glob(pattern))
+            for path in sorted(paths):
                 try:
                     artifact = json.loads(path.read_text(encoding="utf-8"))
                     task_id = str(artifact.get("task_id"))
@@ -1784,7 +1793,7 @@ class Supervisor:
             bar = self._pose_from_topic_csv(
                 self._topic_value(
                     CONTAINER,
-                    "/vrpn_client_node/baiyu_bar/pose_from_iiwa14",
+                    robot_resource("/vrpn_client_node/baiyu_bar/pose_from_iiwa14"),
                     timeout=0.2,
                     max_age=0.5,
                 )
@@ -1796,8 +1805,8 @@ class Supervisor:
                     )
                 )
                 for topic in (
-                    "/vrpn_client_node/baiyu_obs_bar/pose_from_iiwa14",
-                    "/vrpn_client_node/baiyu_obs_bar_b/pose_from_iiwa14",
+                    robot_resource("/vrpn_client_node/baiyu_obs_bar/pose_from_iiwa14"),
+                    robot_resource("/vrpn_client_node/baiyu_obs_bar_b/pose_from_iiwa14"),
                 )
             ]
         except (RuntimeError, ValueError):
@@ -1999,7 +2008,7 @@ class Supervisor:
         self._reload_task_definitions()
         self._refresh_constraint_sources()
         nodes = self._ros_nodes()
-        driver_node_running = "/iiwa14/iiwa_driver" in nodes
+        driver_node_running = robot_resource("/iiwa14/iiwa_driver") in nodes
         driver_process_running = self._driver_binary_running()
         controllers = (
             self._running_iiwa_controllers()
@@ -2019,6 +2028,8 @@ class Supervisor:
             return {
                 "token": self.token,
                 "project_root": str(PROJECT_ROOT),
+                "runtime_profile": RUNTIME.metadata(),
+                "hardware_commissioned": RUNTIME.site.get("hardware_commissioned") is True,
                 "available_tasks": [
                     {"task_id": task_id, **profile}
                     for task_id, profile in self._task_profiles.items()
@@ -2073,7 +2084,7 @@ class Supervisor:
     def _pose_message(pose: Dict[str, float]) -> str:
         return json.dumps(
             {
-                "header": {"frame_id": "iiwa14_link_0"},
+                "header": {"frame_id": robot_resource("iiwa14_link_0")},
                 "pose": {
                     "position": {key: pose[key] for key in ("x", "y", "z")},
                     "orientation": {
@@ -2108,7 +2119,7 @@ class Supervisor:
                     stderr=subprocess.DEVNULL,
                     check=False,
                 )
-                if result.returncode == 0 and "/iiwa14/pybullet_sim" in result.stdout.splitlines():
+                if result.returncode == 0 and robot_resource("/iiwa14/pybullet_sim") in result.stdout.splitlines():
                     return
             time.sleep(0.5)
         raise RuntimeError("PyBullet simulator did not become ready within 30 s")
@@ -2212,7 +2223,7 @@ class Supervisor:
     def _read_sim_status(self) -> Dict[str, object]:
         data_line = self._topic_value(
             SIM_CONTAINER,
-            "/iiwa14/sim/status",
+            robot_resource("/iiwa14/sim/status"),
             timeout=3.0,
             max_age=0.75,
         )
@@ -2281,7 +2292,7 @@ class Supervisor:
             return json.loads(
                 self._topic_value(
                     CONTAINER,
-                    "/iiwa14/real_executor/status",
+                    robot_resource("/iiwa14/real_executor/status"),
                     timeout=3.0,
                     max_age=0.75,
                 )
@@ -2328,7 +2339,7 @@ class Supervisor:
         try:
             ready_value = self._topic_value(
                 CONTAINER,
-                "/iiwa14/real_executor/fri_ready_status",
+                robot_resource("/iiwa14/real_executor/fri_ready_status"),
                 timeout=3.0,
                 max_age=0.5,
             )
@@ -2370,8 +2381,8 @@ class Supervisor:
         self, child: Optional[subprocess.Popen[str]], timeout: float = 20.0
     ) -> None:
         required = {
-            "/iiwa14/iiwa_driver",
-            "/iiwa14/real_executor",
+            robot_resource("/iiwa14/iiwa_driver"),
+            robot_resource("/iiwa14/real_executor"),
             "/stage_constraint_planner",
         }
         deadline = time.monotonic() + timeout
@@ -2395,13 +2406,8 @@ class Supervisor:
         )
 
     def _optitrack_settings(self) -> Tuple[str, str, str, str, str]:
-        return (
-            self._read_env_value("OPTITRACK_SERVER", "128.178.145.104"),
-            self._read_env_value("OPTITRACK_BASE", "iiwa14"),
-            self._read_env_value("OPTITRACK_OBJECT", "baiyu_bar"),
-            self._read_env_value("OPTITRACK_OBSTACLE", "baiyu_obs_bar"),
-            self._read_env_value("OPTITRACK_OBSTACLE_B", "baiyu_obs_bar_b"),
-        )
+        return tuple(RUNTIME.tracking[key] for key in
+                     ("server", "base", "object", "obstacle_a", "obstacle_b"))
 
     def _scene_pose_source(self) -> str:
         source = self._read_env_value("SCENE_POSE_SOURCE", "fixed").lower()
@@ -2629,12 +2635,14 @@ class Supervisor:
             raise
 
     def _start_real_station(self, require_optitrack: bool = True) -> None:
+        RUNTIME.require_hardware()
         # Planner tasks consume live object poses. Return Home is deliberately
         # independent of OptiTrack and starts the same position station without
         # waiting for any tracked rigid body.
+        self._assert_selected_container_profile()
         station_nodes = {
-            "/iiwa14/iiwa_driver",
-            "/iiwa14/real_executor",
+            robot_resource("/iiwa14/iiwa_driver"),
+            robot_resource("/iiwa14/real_executor"),
             "/stage_constraint_planner",
         }
         tracking_nodes = self._scene_tracking_nodes()
@@ -2658,10 +2666,10 @@ class Supervisor:
         if require_optitrack:
             self._start_optitrack_process()
         nodes = set(self._ros_nodes())
-        if "/iiwa14/real_executor" in nodes:
+        if robot_resource("/iiwa14/real_executor") in nodes:
             self._wait_for_real_station(None, timeout=5.0)
             return
-        if "/iiwa14/iiwa_driver" in nodes:
+        if robot_resource("/iiwa14/iiwa_driver") in nodes:
             self._release_robot_control("switching to Planner / Position control")
         conflicts = self._driver_process_containers()
         if conflicts:
@@ -2688,7 +2696,7 @@ class Supervisor:
             response = self._run(
                 [
                     "docker", "exec", CONTAINER, "/entrypoint.sh", "rosservice",
-                    "call", "/iiwa14/real_executor/abort",
+                    "call", robot_resource("/iiwa14/real_executor/abort"),
                 ],
                 check=False,
                 timeout=5.0,
@@ -2848,14 +2856,14 @@ class Supervisor:
             )
             return
         self._real_ros(
-            "rosservice", "call", "/iiwa14/real_executor/set_recording",
+            "rosservice", "call", robot_resource("/iiwa14/real_executor/set_recording"),
             "data: true",
         )
         self._set_task_state(
             phase="preparing", message="Solving continuous IK and validating the joint trajectory"
         )
         response = self._real_ros(
-            "rosservice", "call", "/iiwa14/real_executor/prepare", timeout=60.0
+            "rosservice", "call", robot_resource("/iiwa14/real_executor/prepare"), timeout=60.0
         )
         if "success: True" not in response.stdout:
             raise RuntimeError("Real executor rejected the trajectory: " + response.stdout.strip())
@@ -2881,7 +2889,7 @@ class Supervisor:
                     "the video stream for recording"
                 )
             response = self._real_ros(
-                "rosservice", "call", "/iiwa14/real_executor/execute", timeout=10.0
+                "rosservice", "call", robot_resource("/iiwa14/real_executor/execute"), timeout=10.0
             )
             if "success: True" not in response.stdout:
                 raise RuntimeError(
@@ -3048,7 +3056,7 @@ class Supervisor:
             response = self._real_ros(
                 "rosservice",
                 "call",
-                "/iiwa14/real_executor/return_home",
+                robot_resource("/iiwa14/real_executor/return_home"),
                 timeout=70.0,
             )
             if "success: True" not in response.stdout:
@@ -3803,7 +3811,7 @@ class Supervisor:
         if mode in ("real", "home"):
             if not self._container_running():
                 message = "Real task terminated; the robot-control container is already stopped"
-            elif "/iiwa14/real_executor" in set(self._ros_nodes()):
+            elif robot_resource("/iiwa14/real_executor") in set(self._ros_nodes()):
                 self._abort_real_and_confirm("user pressed Stop Execution")
                 message = "Real trajectory stopped; command gate disarmed and task terminated"
             else:
@@ -3818,7 +3826,7 @@ class Supervisor:
                 return
             try:
                 response = self._sim_ros(
-                    "rosservice", "call", "/iiwa14/sim/abort", timeout=5.0
+                    "rosservice", "call", robot_resource("/iiwa14/sim/abort"), timeout=5.0
                 )
                 if "success: True" not in response.stdout:
                     raise RuntimeError(response.stdout.strip())
@@ -4429,7 +4437,7 @@ class Supervisor:
                 return
             nodes = set(self._ros_nodes())
             if (
-                "/iiwa14/iiwa_driver" in nodes
+                robot_resource("/iiwa14/iiwa_driver") in nodes
                 or self._driver_binary_running()
                 or self._task_state.get("phase") in TASK_ACTIVE_PHASES
             ):
@@ -4503,7 +4511,7 @@ class Supervisor:
                 return
             nodes = set(self._ros_nodes())
             if (
-                "/iiwa14/iiwa_driver" in nodes
+                robot_resource("/iiwa14/iiwa_driver") in nodes
                 or self._driver_binary_running()
                 or self._task_state.get("phase") in TASK_ACTIVE_PHASES
             ):
@@ -4558,9 +4566,11 @@ class Supervisor:
         self._start_job("Rebuild workstation image", task)
 
     def _read_env_value(self, key: str, default: str) -> str:
+        if key == "ROBOT_IP":
+            return RUNTIME.site["network"].get("robot_ip") or ""
         env_file = PROJECT_ROOT / ".env"
         if not env_file.exists():
-            return default
+            return self._profile_env_default(key, default)
         for raw in env_file.read_text(encoding="utf-8").splitlines():
             line = raw.strip()
             if not line or line.startswith("#") or "=" not in line:
@@ -4568,7 +4578,14 @@ class Supervisor:
             current_key, value = line.split("=", 1)
             if current_key == key:
                 return value.strip().strip("'\"")
-        return default
+        return self._profile_env_default(key, default)
+
+    @staticmethod
+    def _profile_env_default(key, default):
+        names = {"OPTITRACK_SERVER": "server", "OPTITRACK_BASE": "base",
+                 "OPTITRACK_OBJECT": "object", "OPTITRACK_OBSTACLE": "obstacle_a",
+                 "OPTITRACK_OBSTACLE_B": "obstacle_b"}
+        return RUNTIME.tracking.get(names.get(key), default)
 
     def _spawn(self, name: str, command: List[str]) -> subprocess.Popen[str]:
         with self._lock:
@@ -4604,7 +4621,7 @@ class Supervisor:
     ) -> None:
         required_nodes = {
             "/demo_recorder",
-            "/iiwa14/demo_virtual_fixture",
+            robot_resource("/iiwa14/demo_virtual_fixture"),
             "/stage_demo_gui",
         } | self._scene_tracking_nodes()
         deadline = time.monotonic() + timeout
@@ -4689,11 +4706,13 @@ class Supervisor:
 
     def prepare_demo_control(self) -> None:
         def task() -> None:
+            RUNTIME.require_hardware()
+            self._assert_selected_container_profile()
             if not self._container_running():
                 raise RuntimeError("Start the workstation container first")
             if not self._robot_iface_state()["configured"]:
                 raise RuntimeError("Robot network interface is not configured")
-            if "/iiwa14/iiwa_driver" in self._ros_nodes():
+            if robot_resource("/iiwa14/iiwa_driver") in self._ros_nodes():
                 controller_snapshot = self._running_iiwa_controllers()
                 running_controllers = set(controller_snapshot or [])
                 if "SafeTorqueController" in running_controllers:
@@ -4730,7 +4749,7 @@ class Supervisor:
                     CONTAINER,
                     "bash",
                     "-lc",
-                    "rosservice call /iiwa14/demo_virtual_fixture/enable_all 'data: false' >/dev/null 2>&1 || true",
+                    robot_resource("rosservice call /iiwa14/demo_virtual_fixture/enable_all 'data: false' >/dev/null 2>&1 || true"),
                 ],
                 check=False,
                 timeout=3,
@@ -4744,7 +4763,8 @@ class Supervisor:
                     "/entrypoint.sh",
                     "roslaunch",
                     "iiwa_driver",
-                    "iiwa14_bringup.launch",
+                    "iiwa_bringup.launch",
+                    "robot_ip:=" + self._read_env_value("ROBOT_IP", "192.170.10.4"),
                 ],
             )
             try:
@@ -4767,7 +4787,7 @@ class Supervisor:
                 raise RuntimeError(
                     f"iiwa_driver launch exited during startup (code {code}); see logs above"
                 )
-            if "/iiwa14/iiwa_driver" in self._ros_nodes():
+            if robot_resource("/iiwa14/iiwa_driver") in self._ros_nodes():
                 if stable_since is None:
                     stable_since = time.monotonic()
                 elif time.monotonic() - stable_since >= 2.0:
@@ -4809,7 +4829,7 @@ class Supervisor:
                     "bash",
                     "-lc",
                     "pkill -INT -f '[r]oslaunch stage_real_executor real_station.launch' || true; "
-                    "pkill -INT -f '[r]oslaunch iiwa_driver .*iiwa14_bringup.launch' || true",
+                    "pkill -INT -f '[r]oslaunch iiwa_driver .*iiwa_bringup.launch' || true",
                 ],
                 check=False,
                 timeout=5,
@@ -4838,7 +4858,7 @@ class Supervisor:
                 "bash",
                 "-lc",
                 "pkill -{signal_name} -f '[r]oslaunch stage_real_executor real_station.launch' || true; "
-                "pkill -{signal_name} -f '[r]oslaunch iiwa_driver .*iiwa14_bringup.launch' || true; "
+                "pkill -{signal_name} -f '[r]oslaunch iiwa_driver .*iiwa_bringup.launch' || true; "
                 "pkill -{signal_name} -f '[/]iiwa_driver/iiwa_driver' || true; "
                 "pkill -{signal_name} -f '[/]stage_real_executor/real_executor.py' || true".format(
                     signal_name=signal_name
@@ -4852,7 +4872,7 @@ class Supervisor:
         deadline = time.monotonic() + timeout
         stopped_since: Optional[float] = None
         while time.monotonic() < deadline:
-            driver_node_running = "/iiwa14/iiwa_driver" in self._ros_nodes()
+            driver_node_running = robot_resource("/iiwa14/iiwa_driver") in self._ros_nodes()
             launch_running = CONTAINER in self._driver_process_containers()
             if not driver_node_running and not launch_running:
                 if stopped_since is None:

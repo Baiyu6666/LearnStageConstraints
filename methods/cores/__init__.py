@@ -1,6 +1,6 @@
-from .fchmm_core import FCHMM
+from .hmm_core import HMM
 from .map import StageWiseMAPConstraintLearningModel
 from .posthoc_constraint_model import FixedTauConstraintModel
 from .swcl import StageWiseConstraintLearningModel
 
-__all__ = ["FCHMM", "FixedTauConstraintModel", "StageWiseConstraintLearningModel", "StageWiseMAPConstraintLearningModel"]
+__all__ = ["HMM", "FixedTauConstraintModel", "StageWiseConstraintLearningModel", "StageWiseMAPConstraintLearningModel"]

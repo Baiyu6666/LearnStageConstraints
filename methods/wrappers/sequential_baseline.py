@@ -14,7 +14,7 @@ from ..backends.hmm import segment_with_hmm
 from ..backends.ordered_cluster import segment_ordered_cluster
 from ..base import SegmentationResult, labels_to_cutpoints, labels_to_taus
 from ..common.tau_init import extract_taus_hat
-from ..cores.fchmm_core import FCHMM
+from ..cores.hmm_core import HMM
 
 @dataclass
 class SequentialBaselineSegmenter:
@@ -49,7 +49,7 @@ class SequentialBaselineSegmenter:
                 verbose=resolved_kwargs.get("verbose", True),
             )
             extras = {"gammas": posts, "segmentation_history": seg_hist}
-        elif self.method in {"fchmm", "hmm"}:
+        elif self.method == "hmm":
             if dataset.env is None:
                 raise ValueError(f"{self.method.upper()} segmenter requires a dataset env with feature API.")
             resolved_kwargs = dict(self.kwargs)
@@ -60,7 +60,7 @@ class SequentialBaselineSegmenter:
             elif plot_every is None:
                 plot_every = max_iter
 
-            model = FCHMM(
+            model = HMM(
                 demos=dataset.demos,
                 env=dataset.env,
                 precomputed_features=dataset.features,
@@ -80,9 +80,6 @@ class SequentialBaselineSegmenter:
                 standardize_x=resolved_kwargs.get("standardize_x", True),
                 standardize_feat=resolved_kwargs.get("standardize_feat", True),
                 selected_raw_feature_ids=resolved_kwargs.get("selected_raw_feature_ids"),
-                feature_model_types=resolved_kwargs.get("feature_model_types"),
-                fixed_feature_mask=resolved_kwargs.get("fixed_feature_mask"),
-                feature_emission_mode="joint_gmm" if self.method == "hmm" else "factorized_constraints",
                 A_init=resolved_kwargs.get("A_init"),
                 pi_init=resolved_kwargs.get("pi_init"),
                 plot_every=plot_every,

@@ -38,9 +38,12 @@ from std_msgs.msg import String
 from std_srvs.srv import SetBool, SetBoolResponse, Trigger, TriggerResponse
 
 
+from stage_robot_config import active as robot_runtime, resolve as robot_resource
+
+
 class IiwaPyBulletSim:
     TASK_IDS = {"BarClean"}
-    JOINT_NAMES = ["iiwa14_joint_{}".format(index) for index in range(1, 8)]
+    JOINT_NAMES = [robot_resource("iiwa14_joint_{}").format(index) for index in range(1, 8)]
     LOG_FIELDS = (
         ["wall_time_utc", "ros_time", "sim_time", "controller_state", "path_index"]
         + ["q{}".format(index) for index in range(1, 8)]
@@ -59,10 +62,10 @@ class IiwaPyBulletSim:
     def __init__(self):
         self._task_id = "BarClean"
         self._constraint_source = "true"
-        self.frame_id = rospy.get_param("~frame_id", "iiwa14_link_0")
+        self.frame_id = rospy.get_param("~frame_id", robot_resource("iiwa14_link_0"))
         self.physics_hz = float(rospy.get_param("~physics_hz", 240.0))
         self.publish_hz = float(rospy.get_param("~publish_hz", 60.0))
-        self.max_joint_force = float(rospy.get_param("~max_joint_force", 250.0))
+        self.max_joint_force = float(rospy.get_param("~max_joint_force", robot_runtime().robot["max_sim_joint_force_nm"]))
         self.joint_settle_tolerance = float(
             rospy.get_param("~joint_settle_tolerance_rad", 0.01)
         )
@@ -158,7 +161,7 @@ class IiwaPyBulletSim:
             self.joint_ranges,
             self.velocity_limits,
         ) = self._joint_model()
-        self.ee_link_index = self._find_link("iiwa14_link_ee")
+        self.ee_link_index = self._find_link(robot_resource("iiwa14_link_ee"))
         self.trajectory_compiler = CartesianTrajectoryCompiler(
             bullet,
             self.client,
@@ -189,13 +192,13 @@ class IiwaPyBulletSim:
         self.joint_publisher = rospy.Publisher("joint_states", JointState, queue_size=5)
         self.status_publisher = rospy.Publisher("sim/status", String, queue_size=2, latch=True)
         self.bar_publisher = rospy.Publisher(
-            "/vrpn_client_node/baiyu_bar/pose_from_iiwa14", PoseStamped, queue_size=2, latch=True
+            robot_resource("/vrpn_client_node/baiyu_bar/pose_from_iiwa14"), PoseStamped, queue_size=2, latch=True
         )
         self.obstacle_publishers = [
             rospy.Publisher(topic, PoseStamped, queue_size=2, latch=True)
             for topic in (
-                "/vrpn_client_node/baiyu_obs_bar/pose_from_iiwa14",
-                "/vrpn_client_node/baiyu_obs_bar_b/pose_from_iiwa14",
+                robot_resource("/vrpn_client_node/baiyu_obs_bar/pose_from_iiwa14"),
+                robot_resource("/vrpn_client_node/baiyu_obs_bar_b/pose_from_iiwa14"),
             )
         ]
         self.start_publisher = rospy.Publisher(
@@ -1496,6 +1499,7 @@ class IiwaPyBulletSim:
             status = {
                 "mode": "pybullet",
                 "task_id": self._task_id,
+            **robot_runtime().metadata(),
                 "constraint_source": self._constraint_source,
                 "controller": self._controller_state,
                 "task_sequence": self._task_sequence,
@@ -1564,7 +1568,7 @@ class IiwaPyBulletSim:
             return
         output_root = os.path.abspath(os.path.expanduser(rospy.get_param("~output_root", "/data/sim_runs")))
         run_name = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
-        self._run_directory = os.path.join(output_root, self._task_id, run_name)
+        self._run_directory = os.path.join(output_root, robot_runtime().robot_id, robot_runtime().site_id, self._task_id, run_name)
         os.makedirs(self._run_directory, exist_ok=False)
         self._log_file = open(os.path.join(self._run_directory, "trajectory.csv"), "w", newline="")
         self._log_writer = csv.DictWriter(self._log_file, fieldnames=self.LOG_FIELDS)

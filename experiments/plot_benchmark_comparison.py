@@ -31,7 +31,6 @@ METHOD_PRIORITY = [
     "map_balanced_pooled",
     "map_balanced_vote",
     "gmmhmm",
-    "fchmm",
     "arhsmm",
     "cluster",
     "changeforest",
@@ -40,25 +39,23 @@ METHOD_DISPLAY_LABELS = {
     "swcl": "SWCL (Ours)",
     "map": "MAP",
     "map_pooled": "MAP-Pooled",
-    "map_balanced_pooled": "MAP-Balanced",
+    "map_balanced_pooled": "SWCL (Ours)",
     "map_balanced_vote": "MAP-Balanced-Vote",
     "gmmhmm": "GMM-HMM",
-    "fchmm": "FCHMM",
     "arhsmm": "ARHSMM",
     "cluster": "Cluster",
-    "changeforest": "changeforest",
+    "changeforest": "ChangeForest",
 }
 METHOD_COLORS = {
     "swcl": "#4C78A8",
     "map": "#B279A2",
     "map_pooled": "#9D755D",
-    "map_balanced_pooled": "#E6AB02",
+    "map_balanced_pooled": "#4C78A8",
     "map_balanced_vote": "#7570B3",
-    "gmmhmm": "#72B7B2",
-    "fchmm": "#F58518",
+    "gmmhmm": "#F58518",
     "arhsmm": "#54A24B",
     "cluster": "#E45756",
-    "changeforest": "#FF9DA6",
+    "changeforest": "#E45756",
 }
 DATASET_DISPLAY_LABELS = {
     "S3ObsAvoid": "S3ObsAvoid",
@@ -67,8 +64,7 @@ DATASET_DISPLAY_LABELS = {
 }
 METRIC_SPECS = [
     ("MeanAbsCutpointError", "Cutpoint Error"),
-    ("SemanticConstraintF1", "Constraint F1"),
-    ("MeanParameterError", "Parameter Error"),
+    ("SemanticConstraintIoU", "Constraint Structure IoU"),
 ]
 METRIC_ALIASES = {
     "MeanParameterError": ("MeanParameterError", "MeanConstraintError"),
@@ -86,7 +82,6 @@ MODEL_OBJECTIVE_SPECS = {
     "gmmhmm": ("ModelObjectiveFinal", "max"),
     "changeforest": ("ModelObjectiveFinal", "max"),
     "arhsmm": ("ModelObjectiveFinal", "max"),
-    "fchmm": ("ModelObjectiveFinal", "max"),
     "hmm": ("ModelObjectiveFinal", "max"),
 }
 POSTHOC_OBJECTIVE_SPECS = {
@@ -99,7 +94,6 @@ POSTHOC_OBJECTIVE_SPECS = {
     "gmmhmm": ("PosthocObjectiveFinal", "max"),
     "changeforest": ("PosthocObjectiveFinal", "max"),
     "arhsmm": ("PosthocObjectiveFinal", "max"),
-    "fchmm": ("ModelObjectiveFinal", "max"),
     "hmm": ("PosthocObjectiveFinal", "max"),
 }
 
@@ -468,7 +462,7 @@ def plot_benchmark_comparison(summary: dict, save_path: Path) -> Path | None:
             ylabel=ylabel,
             rows=rows,
         )
-        if metric_name == "SemanticConstraintF1":
+        if metric_name == "SemanticConstraintIoU":
             ax.set_ylim(0.0, 1.05)
 
     legend_handles = [
@@ -555,7 +549,7 @@ def plot_benchmark_comparison_with_best_objective(
             width=width,
             values=best_values_by_metric[metric_name],
         )
-        if metric_name == "SemanticConstraintF1":
+        if metric_name == "SemanticConstraintIoU":
             ax.set_ylim(0.0, 1.05)
 
     method_handles = [
@@ -766,18 +760,18 @@ def plot_joint_constraint_comparison(
             ]
             if not candidates:
                 continue
-            f1_mean, f1_std = _metric_mean_std(candidates, "SemanticConstraintF1")
+            iou_mean, iou_std = _metric_mean_std(candidates, "SemanticConstraintIoU")
             parameter_mean, parameter_std = _metric_mean_std(candidates, "MeanParameterError")
-            if not np.isfinite(f1_mean):
+            if not np.isfinite(iou_mean):
                 continue
             coverage = _semantic_match_coverage(candidates)
             color = METHOD_COLORS.get(method, "#999999")
 
             if np.isfinite(parameter_mean):
                 scatter_ax.errorbar(
-                    f1_mean,
+                    iou_mean,
                     parameter_mean,
-                    xerr=[[min(max(f1_std, 0.0), f1_mean)], [min(max(f1_std, 0.0), 1.0 - f1_mean)]],
+                    xerr=[[min(max(iou_std, 0.0), iou_mean)], [min(max(iou_std, 0.0), 1.0 - iou_mean)]],
                     yerr=[[min(max(parameter_std, 0.0), parameter_mean)], [max(parameter_std, 0.0)]],
                     fmt="none",
                     ecolor=color,
@@ -787,7 +781,7 @@ def plot_joint_constraint_comparison(
                     zorder=2,
                 )
                 scatter_ax.scatter(
-                    [f1_mean],
+                    [iou_mean],
                     [parameter_mean],
                     s=_coverage_marker_size(coverage),
                     marker="o",
@@ -799,7 +793,7 @@ def plot_joint_constraint_comparison(
                 )
             else:
                 scatter_ax.scatter(
-                    [f1_mean],
+                    [iou_mean],
                     [no_match_y],
                     s=42,
                     marker="x",
@@ -811,13 +805,13 @@ def plot_joint_constraint_comparison(
             best_row = _best_objective_row(candidates, method, objective_specs)
             if best_row is None:
                 continue
-            best_f1 = _metric_payload(best_row.get("metrics", {}), "SemanticConstraintF1", np.nan)
+            best_iou = _metric_payload(best_row.get("metrics", {}), "SemanticConstraintIoU", np.nan)
             best_parameter = _metric_payload(best_row.get("metrics", {}), "MeanParameterError", np.nan)
-            if not np.isscalar(best_f1) or not np.isfinite(float(best_f1)):
+            if not np.isscalar(best_iou) or not np.isfinite(float(best_iou)):
                 continue
             best_y = float(best_parameter) if np.isscalar(best_parameter) and np.isfinite(float(best_parameter)) else no_match_y
             scatter_ax.scatter(
-                [float(best_f1)],
+                [float(best_iou)],
                 [best_y],
                 s=34,
                 marker="D",
@@ -830,7 +824,7 @@ def plot_joint_constraint_comparison(
 
         scatter_ax.set_xlim(-0.03, 1.03)
         scatter_ax.set_ylim(0.0, parameter_axis_top)
-        scatter_ax.set_xlabel("Constraint F1", fontsize=9)
+        scatter_ax.set_xlabel("Constraint Structure IoU", fontsize=9)
         scatter_ax.set_title(DATASET_DISPLAY_LABELS.get(dataset, dataset), fontsize=9.5, pad=4.0)
         scatter_ax.tick_params(axis="both", labelsize=8)
         scatter_ax.grid(alpha=0.18, linewidth=0.7, zorder=0)
@@ -1006,7 +1000,7 @@ def plot_best_seed_comparison(
                 show_xticklabels=True,
                 show_errorbars=False,
             )
-            if metric_name == "SemanticConstraintF1":
+            if metric_name == "SemanticConstraintIoU":
                 ax.set_ylim(0.0, 1.05)
             continue
 

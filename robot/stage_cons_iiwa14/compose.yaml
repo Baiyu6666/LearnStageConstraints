@@ -23,11 +23,16 @@ services:
     environment:
       ROS_IP: 127.0.0.1
       ROS_MASTER_URI: http://127.0.0.1:11311
+      ROBOT_PROFILE: ${ROBOT_PROFILE:-iiwa14}
+      SITE_PROFILE: ${SITE_PROFILE:-lab_iiwa14}
+      RUNTIME_CONFIG_ROOT: /runtime_profiles
+      SCENE_POSE_SOURCE: ${SCENE_POSE_SOURCE:-fixed}
       DISABLE_ROS1_EOL_WARNINGS: "1"
     volumes:
       - ./data/demos:/data/demos
       - ./data/real_runs:/data/real_runs
       - ./data/models:/models:ro
-      - ./ros_ws/src/stage_constraint_planner/config:/task_definitions:ro
-      - ./ros_ws/src/stage_iiwa_sim/config:/workcell_definition:ro
+      - ./config/runtime:/runtime_profiles:ro
+      - ./config/runtime/sites/${SITE_PROFILE:-lab_iiwa14}/tasks:/task_definitions:ro
+      - ./config/runtime/sites/${SITE_PROFILE:-lab_iiwa14}:/workcell_definition:ro
       - ../../outputs:/learned_constraints:ro

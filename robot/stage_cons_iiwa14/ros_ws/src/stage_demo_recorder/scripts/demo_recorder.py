@@ -16,6 +16,9 @@ from std_msgs.msg import String
 from std_srvs.srv import Trigger, TriggerResponse
 
 
+from stage_robot_config import active as robot_runtime
+
+
 class DemoRecorder:
     def __init__(self):
         self._lock = threading.RLock()
@@ -30,9 +33,9 @@ class DemoRecorder:
         self._video_requested = False
         self._video_error = None
 
-        self._output_root = Path(rospy.get_param("~output_root", "/data/demos"))
-        self._required_topics = self._topic_list("~required_topics")
-        self._optional_topics = self._topic_list("~optional_topics")
+        self._output_root = Path(rospy.get_param("~output_root", "/data/demos")) / robot_runtime().robot_id / robot_runtime().site_id
+        self._required_topics = [robot_runtime().resolve(t) for t in self._topic_list("~required_topics")]
+        self._optional_topics = [robot_runtime().resolve(t) for t in self._topic_list("~optional_topics")]
         self._marker_topic = rospy.get_param("~marker_topic", "/stage_cons/demo_marker")
         status_topic = rospy.get_param(
             "~status_topic", "/stage_cons/demo_recorder/status"
@@ -260,6 +263,7 @@ class DemoRecorder:
                 "session_id": session_name,
                 "experiment": rospy.get_param("~experiment", "stage_constraint"),
                 "task_id": task_id,
+                **robot_runtime().metadata(),
                 "label": label,
                 "operator_notes": rospy.get_param("~operator_notes", ""),
                 "started_at_utc": now.isoformat(),

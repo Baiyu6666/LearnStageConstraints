@@ -15,9 +15,12 @@ from std_srvs.srv import Trigger
 TASK_IDS = {"BarInspect", "BarClean"}
 
 
+from stage_robot_config import active as robot_runtime, resolve as robot_resource
+
+
 def pose_message(values):
     message = PoseStamped()
-    message.header.frame_id = "iiwa14_link_0"
+    message.header.frame_id = robot_resource("iiwa14_link_0")
     message.pose.position.x = float(values["x"])
     message.pose.position.y = float(values["y"])
     message.pose.position.z = float(values["z"])
@@ -55,7 +58,7 @@ def main():
             "/stage_cons/planner/status", String, selected(planner_selected), queue_size=2
         ),
         rospy.Subscriber(
-            "/iiwa14/real_executor/status", String, selected(executor_selected), queue_size=2
+            robot_resource("/iiwa14/real_executor/status"), String, selected(executor_selected), queue_size=2
         ),
     ]
     task_publisher = rospy.Publisher(

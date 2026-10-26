@@ -19,7 +19,7 @@
     "duration_var_floor": 4.0
   },
   "posthoc_constraint": {
-    "posthoc_training_mode": "voting",
+    "posthoc_training_mode": "map_balanced_pooled",
     "verbose": true,
     "fixed_feature_mask": null,
     "selected_raw_feature_ids": null,

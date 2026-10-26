@@ -77,7 +77,7 @@
       "map_active_sigma_floor": 0.003,
       "map_eq_sigma": 0.1,
       "map_c_bg": 1.0,
-      "map_c_ineq": 3.0,
+      "map_c_ineq": 0.25,
       "map_boundary_quantile": 0.05,
       "fixed_true_cutpoint_indices": [],
       "map_activation_prior": 0.5
@@ -85,55 +85,47 @@
     "gmmhmm": {
       "segmenter": {
         "n_stages": 4,
-        "selected_raw_feature_ids": ["surf_dist", "center_dist", "orient_err", "speed", "normal_force", "start_dist", "insert_err"]
-      },
-      "posthoc_constraint": {
-        "posthoc_training_mode": "voting"
+        "selected_raw_feature_ids": ["surf_dist", "center_dist", "orient_err", "speed", "normal_force", "start_dist", "insert_err"],
+        "use_state": false,
+        "use_velocity": false,
+        "use_env_features": true,
+        "n_components": 2,
+        "reg_covar": 0.01,
+        "init_mode": "random_stage_ends"
       }
-    },
-    "fchmm": {
-      "n_stages": 4,
-      "selected_raw_feature_ids": ["surf_dist", "center_dist", "orient_err", "speed", "normal_force", "start_dist", "insert_err"],
-      "feature_model_types": {
-        "surf_dist": "student_t",
-        "center_dist": "student_t",
-        "orient_err": "trunc_t_upper_z",
-        "speed": "trunc_t_upper_z",
-        "normal_force": "trunc_t_lower_z",
-        "start_dist": "trunc_t_lower_z",
-        "insert_err": "trunc_t_lower_z",
-        "noise": "student_t"
-      },
-      "fixed_feature_mask": [[1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1]],
-      "feat_weight": 0.1
     },
     "arhsmm": {
       "segmenter": {
         "n_stages": 4,
-        "selected_raw_feature_ids": ["surf_dist", "center_dist", "orient_err", "speed", "normal_force", "start_dist", "insert_err"]
+        "selected_raw_feature_ids": ["surf_dist", "center_dist", "orient_err", "speed", "normal_force", "start_dist", "insert_err"],
+        "use_velocity": false,
+        "use_env_features": true,
+        "tau_init": null,
+        "tau_init_mode": "random_taus",
+        "sticky": 10.0,
+        "min_duration": 3,
+        "duration_weight": 1.0,
+        "duration_var_floor": 4.0
       },
       "posthoc_constraint": {
         "selected_raw_feature_ids": ["surf_dist", "center_dist", "orient_err", "speed", "normal_force", "start_dist", "insert_err"],
-        "feature_model_types": {
-          "surf_dist": "student_t",
-          "center_dist": "student_t",
-          "orient_err": "trunc_t_upper_z",
-          "speed": "trunc_t_upper_z",
-          "normal_force": "trunc_t_lower_z",
-          "start_dist": "trunc_t_lower_z",
-          "insert_err": "trunc_t_lower_z",
-          "noise": "student_t"
-        },
-        "fixed_feature_mask": [[0, 0, 0, 0, 0, 0, 0], [1, 1, 0, 0, 1, 0, 0], [1, 1, 1, 1, 1, 0, 0], [1, 1, 1, 1, 1, 0, 0]]
+        "feature_model_types": null,
+        "fixed_feature_mask": null
       }
     },
     "changeforest": {
       "segmenter": {
         "n_stages": 4,
-        "selected_raw_feature_ids": ["surf_dist", "center_dist", "orient_err", "speed", "normal_force", "start_dist", "insert_err"]
+        "selected_raw_feature_ids": ["surf_dist", "center_dist", "orient_err", "speed", "normal_force", "start_dist", "insert_err"],
+        "use_state": false,
+        "use_velocity": true,
+        "use_env_features": true,
+        "method": "random_forest",
+        "random_forest_n_estimators": 50,
+        "random_forest_max_depth": 1,
+        "random_forest_max_features": 1
       },
       "posthoc_constraint": {
-        "posthoc_training_mode": "voting",
         "fixed_feature_mask": null
       }
     },

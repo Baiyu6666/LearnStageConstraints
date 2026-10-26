@@ -414,6 +414,8 @@ def process_bar_clean_archive(
             )
         ),
         "scene_pose_policy": np.asarray("per_demo_robust_static_lock"),
+        "robot_profile": np.asarray(scene_definition.get("robot_profile", "unspecified")),
+        "site_profile": np.asarray(scene_definition.get("site_profile", "unspecified")),
         "optitrack_to_robot_rotation": tracker_rotation,
         "optitrack_to_robot_translation": tracker_translation,
     }

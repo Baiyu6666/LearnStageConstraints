@@ -27,7 +27,7 @@ from experiments.extract_bar_inspection_rosbag import (  # noqa: E402
     BAR_TOPIC,
     JOINT_TOPIC,
     OBSTACLE_TOPIC,
-    iiwa14_fk,
+    robot_fk,
     load_environment_config,
     read_recording,
     scene_window_mask,
@@ -136,7 +136,7 @@ def build_diagnostics(args):
         f"[2/4] Computing FK for {len(timestamps)} joint samples at ~{raw_hz:.1f} Hz...",
         flush=True,
     )
-    trajectory = iiwa14_fk(raw_values[args.joint_topic])
+    trajectory = robot_fk(raw_values[args.joint_topic])
     position_window = odd_window_samples(
         args.position_smoothing_s,
         sample_dt,

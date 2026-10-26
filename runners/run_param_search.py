@@ -147,7 +147,7 @@ def _extract_objective_scalars(method_name: str, result: dict[str, Any]) -> dict
         history = (seg_extras.get("segmentation_history") or {}).get("loglik")
         if history:
             _append_scalar_if_finite(out, "SegmentationLogLikelihoodFinal", history[-1])
-    elif method_name in {"fchmm", "hmm"} and constraint_model is not None:
+    elif method_name == "hmm" and constraint_model is not None:
         history = getattr(constraint_model, "loss_loglik", None)
         if history:
             _append_scalar_if_finite(out, "TrainingLogLikelihoodFinal", history[-1])
@@ -169,7 +169,7 @@ def _extract_objective_scalars(method_name: str, result: dict[str, Any]) -> dict
 
 def _apply_method_seed(method_name: str, method_cfg: dict[str, Any], method_seed: int) -> dict[str, Any]:
     cfg = deepcopy(method_cfg)
-    if method_name in JOINT_METHODS or method_name == "fchmm":
+    if method_name in JOINT_METHODS:
         cfg["seed"] = int(method_seed)
         return cfg
 
@@ -181,7 +181,7 @@ def _apply_method_seed(method_name: str, method_cfg: dict[str, Any], method_seed
 
 def _disable_plots_in_cfg(method_name: str, method_cfg: dict[str, Any]) -> dict[str, Any]:
     cfg = deepcopy(method_cfg)
-    if method_name in JOINT_METHODS or method_name == "fchmm":
+    if method_name in JOINT_METHODS:
         cfg["disable_plots"] = True
         cfg["plot_every"] = None
         return cfg

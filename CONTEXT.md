@@ -35,3 +35,4 @@
 
 SWCL 论文改造
 1. 把s5的demo goal改了
+2. 记得研究下现在inactive和equality 估计sigma的方式不同，一个用quantile一个是解析

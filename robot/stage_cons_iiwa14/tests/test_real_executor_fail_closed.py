@@ -1,4 +1,5 @@
 import ast
+import sys
 import json
 import math
 import threading
@@ -20,6 +21,9 @@ DRIVER_SOURCE = (
     Path(__file__).resolve().parents[1]
     / "ros_ws/src/iiwa_driver/src/iiwa.cpp"
 )
+sys.path.insert(0, str(SOURCE.parents[2] / "stage_robot_config/src"))
+from stage_robot_config import resolve as robot_resource
+
 METHODS = {
     "_parse_orientation_constraints",
     "_accept_path",
@@ -69,6 +73,7 @@ def load_fail_closed_subject():
     )
     module = ast.fix_missing_locations(ast.Module(body=[subject_class], type_ignores=[]))
     namespace = {
+        "robot_resource": robot_resource,
         "Empty": types.SimpleNamespace,
         "Bool": types.SimpleNamespace,
         "GoalStatus": types.SimpleNamespace(SUCCEEDED=3),
@@ -294,7 +299,8 @@ class RealExecutorFailClosedTest(unittest.TestCase):
             )
         )
 
-        topics = ast.literal_eval(topics_assignment.value)
+        topics = eval(compile(ast.Expression(topics_assignment.value), str(SOURCE), "eval"),
+                      {"robot_resource": robot_resource})
 
         self.assertIn("/iiwa14/fri_diagnostics", topics)
 

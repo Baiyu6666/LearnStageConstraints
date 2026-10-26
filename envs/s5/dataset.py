@@ -11,7 +11,7 @@ import numpy as np
 from ..base import TaskBundle
 from .config import (
     S5SyntheticPreset,
-    S5_SYNTHETIC_V23,
+    S5_SYNTHETIC_V24,
     active_s5_env_kwargs,
     cache_compatible_s5_loader_config,
 )
@@ -43,7 +43,7 @@ def _s5_standalone_manifest(*, task_name: str, env: Any, n_demos: int) -> dict:
         "format_version": 2,
         "cache_version": int(_S5_DEMO_CACHE_VERSION),
         "generator_preset": {
-            "name": str(getattr(env, "preset_name", "s5_synthetic_v23")),
+            "name": str(getattr(env, "preset_name", "s5_synthetic_v24")),
             "version": int(getattr(env, "preset_version", 22)),
         },
         "task_name": str(task_name),
@@ -423,7 +423,7 @@ def _build_sphere_inspect_bundle(
     seed: int,
     env_kwargs=None,
     demo_kwargs=None,
-    preset: S5SyntheticPreset = S5_SYNTHETIC_V23,
+    preset: S5SyntheticPreset = S5_SYNTHETIC_V24,
     **extra_env_kwargs,
 ) -> TaskBundle:
     env_cfg = dict(env_kwargs or {})

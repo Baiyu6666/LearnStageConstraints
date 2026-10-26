@@ -11,9 +11,12 @@ from std_msgs.msg import String
 from std_srvs.srv import SetBool, Trigger
 
 
+from stage_robot_config import active as robot_runtime, resolve as robot_resource
+
+
 def pose_message(values):
     message = PoseStamped()
-    message.header.frame_id = "iiwa14_link_0"
+    message.header.frame_id = robot_resource("iiwa14_link_0")
     message.pose.position.x = float(values["x"])
     message.pose.position.y = float(values["y"])
     message.pose.position.z = float(values["z"])
@@ -58,7 +61,7 @@ def main():
         "/stage_cons/planner/status", String, planner_status_callback, queue_size=2
     )
     simulator_status_subscriber = rospy.Subscriber(
-        "/iiwa14/sim/status", String, simulator_status_callback, queue_size=2
+        robot_resource("/iiwa14/sim/status"), String, simulator_status_callback, queue_size=2
     )
     start_publisher = rospy.Publisher(
         "/stage_cons/planner/start", PoseStamped, queue_size=1, latch=True
@@ -69,8 +72,8 @@ def main():
     task_publisher = rospy.Publisher(
         "/stage_cons/planner/task", String, queue_size=1, latch=True
     )
-    rospy.wait_for_service("/iiwa14/sim/set_task_video", timeout=5.0)
-    rospy.wait_for_service("/iiwa14/sim/apply_scene_snapshot", timeout=5.0)
+    rospy.wait_for_service(robot_resource("/iiwa14/sim/set_task_video"), timeout=5.0)
+    rospy.wait_for_service(robot_resource("/iiwa14/sim/apply_scene_snapshot"), timeout=5.0)
     rospy.wait_for_service("/stage_constraint_planner/plan", timeout=5.0)
     rospy.set_param(
         "/stage_constraint_planner/constraint_source",
@@ -88,10 +91,10 @@ def main():
         rospy.sleep(0.02)
 
     rospy.set_param(
-        "/iiwa14/pybullet_sim/pending_scene_snapshot", scene_snapshot
+        robot_resource("/iiwa14/pybullet_sim/pending_scene_snapshot"), scene_snapshot
     )
     scene_response = rospy.ServiceProxy(
-        "/iiwa14/sim/apply_scene_snapshot", Trigger
+        robot_resource("/iiwa14/sim/apply_scene_snapshot"), Trigger
     )()
     if not scene_response.success:
         raise RuntimeError(scene_response.message)
@@ -101,7 +104,7 @@ def main():
     rospy.sleep(0.05)
 
     video_response = rospy.ServiceProxy(
-        "/iiwa14/sim/set_task_video", SetBool
+        robot_resource("/iiwa14/sim/set_task_video"), SetBool
     )(bool(task.get("render_video", False)))
     if not video_response.success:
         raise RuntimeError(video_response.message)

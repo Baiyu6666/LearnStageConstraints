@@ -27,11 +27,11 @@
 <launch>
   <!-- Select the robot -->
   <arg name="robot_name" default="iiwa"/>
-  <arg name="model" default="14" />
+  <arg name="model" default="$(optenv STAGE_ROBOT_MODEL 14)" />
 
   <!-- Select the controller -->
   <arg name="controller" default="SafeTorqueController"/>
-  <arg name="robot_ip" default="192.170.10.4"/>
+  <arg name="robot_ip" default="$(optenv ROBOT_IP 192.170.10.4)"/>
   
   <group ns="/$(arg robot_name)">
 

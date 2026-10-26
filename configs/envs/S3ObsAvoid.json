@@ -65,7 +65,7 @@
       "map_active_sigma_floor": 0.003,
       "map_eq_sigma": 0.1,
       "map_c_bg": 1.0,
-      "map_c_ineq": 0.0,
+      "map_c_ineq": 0.25,
       "map_boundary_quantile": 0.05,
       "fixed_true_cutpoint_indices": [],
       "map_activation_prior": 0.5
@@ -73,27 +73,9 @@
     "gmmhmm": {
       "segmenter": {
         "n_stages": 3,
-        "selected_raw_feature_ids": ["obs_dist", "speed", "arc_dist", "heading", "line_dist", "noise"]
-      },
-      "posthoc_constraint": {
-        "posthoc_training_mode": "voting"
+        "selected_raw_feature_ids": ["obs_dist", "speed", "arc_dist", "heading", "line_dist", "noise"],
+        "n_components": 1
       }
-    },
-    "fchmm": {
-      "n_stages": 3,
-      "selected_raw_feature_ids": ["obs_dist", "speed", "arc_dist", "heading", "line_dist", "noise"],
-      "feature_model_types": {
-        "obs_dist": "trunc_t_lower_z",
-        "speed": "student_t",
-        "arc_dist": "student_t",
-        "heading": "trunc_t_lower_z",
-        "line_dist": "student_t",
-        "noise": "student_t"
-      },
-      "fixed_feature_mask": [[1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1]],
-      "feat_weight": 0.5,
-      "x_weight": 0.05,
-      "gmm_K": 2
     },
     "hmm": {
       "segmenter": {
@@ -123,15 +105,8 @@
       },
       "posthoc_constraint": {
         "selected_raw_feature_ids": ["obs_dist", "speed", "arc_dist", "heading", "line_dist", "noise"],
-        "feature_model_types": {
-          "obs_dist": "trunc_t_lower_z",
-          "speed": "student_t",
-          "arc_dist": "student_t",
-          "heading": "trunc_t_lower_z",
-          "line_dist": "student_t",
-          "noise": "student_t"
-        },
-        "fixed_feature_mask": [[1, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0], [0, 1, 1, 0, 0, 0]]
+        "feature_model_types": null,
+        "fixed_feature_mask": null
       }
     },
     "changepoint": {
@@ -155,10 +130,16 @@
     "changeforest": {
       "segmenter": {
         "n_stages": 3,
-        "selected_raw_feature_ids": ["obs_dist", "speed", "arc_dist", "heading", "line_dist", "noise"]
+        "selected_raw_feature_ids": ["obs_dist", "speed", "arc_dist", "heading", "line_dist", "noise"],
+        "use_state": false,
+        "use_velocity": true,
+        "use_env_features": true,
+        "method": "random_forest",
+        "random_forest_n_estimators": 50,
+        "random_forest_max_depth": 1,
+        "random_forest_max_features": 1
       },
       "posthoc_constraint": {
-        "posthoc_training_mode": "voting",
         "fixed_feature_mask": null
       }
     },

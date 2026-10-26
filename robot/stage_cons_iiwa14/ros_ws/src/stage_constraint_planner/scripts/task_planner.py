@@ -22,6 +22,9 @@ from std_msgs.msg import Int32MultiArray, String
 from std_srvs.srv import Trigger, TriggerResponse
 
 
+from stage_robot_config import active as robot_runtime, resolve as robot_resource
+
+
 def _pose_array(message):
     pose = message.pose
     values = np.asarray(
@@ -58,7 +61,7 @@ class TaskPlannerNode:
         for task_id in self._config_paths:
             self._load_task_definition(task_id)
 
-        self._frame_id = rospy.get_param("~frame_id", "iiwa14_link_0")
+        self._frame_id = rospy.get_param("~frame_id", robot_resource("iiwa14_link_0"))
         self._scene_pose_rotation = np.asarray(
             rospy.get_param(
                 "~scene_pose_rotation",
@@ -102,8 +105,8 @@ class TaskPlannerNode:
             rospy.get_param(
                 "~obstacle_topics",
                 [
-                    "/vrpn_client_node/baiyu_obs_bar/pose_from_iiwa14",
-                    "/vrpn_client_node/baiyu_obs_bar_b/pose_from_iiwa14",
+                    robot_resource("/vrpn_client_node/baiyu_obs_bar/pose_from_iiwa14"),
+                    robot_resource("/vrpn_client_node/baiyu_obs_bar_b/pose_from_iiwa14"),
                 ],
             )
         )
@@ -147,7 +150,7 @@ class TaskPlannerNode:
             "/stage_cons/planner/goal", PoseStamped, self._goal_callback, queue_size=1
         )
         rospy.Subscriber(
-            rospy.get_param("~bar_topic", "/vrpn_client_node/baiyu_bar/pose_from_iiwa14"),
+            rospy.get_param("~bar_topic", robot_resource("/vrpn_client_node/baiyu_bar/pose_from_iiwa14")),
             PoseStamped,
             self._bar_callback,
             queue_size=2,

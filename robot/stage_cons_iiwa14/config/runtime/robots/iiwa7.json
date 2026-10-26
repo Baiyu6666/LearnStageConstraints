@@ -1,0 +1,104 @@
+{
+  "id": "iiwa7",
+  "model": 7,
+  "namespace": "iiwa7",
+  "base_frame": "iiwa7_link_0",
+  "tip_link": "iiwa7_link_7",
+  "ee_frame": "iiwa7_link_ee",
+  "joint_names": [
+    "iiwa7_joint_1",
+    "iiwa7_joint_2",
+    "iiwa7_joint_3",
+    "iiwa7_joint_4",
+    "iiwa7_joint_5",
+    "iiwa7_joint_6",
+    "iiwa7_joint_7"
+  ],
+  "velocity_scale": 0.25,
+  "acceleration_limit_rad_s2": 1,
+  "external_torque_thresholds_nm": [
+    20,
+    20,
+    15,
+    15,
+    8,
+    8,
+    8
+  ],
+  "max_demo_torque_nm": 6,
+  "max_sim_joint_force_nm": 250,
+  "joint_origins_xyz": [
+    [
+      0,
+      0,
+      0.15
+    ],
+    [
+      0,
+      0,
+      0.19
+    ],
+    [
+      0,
+      0.21,
+      0
+    ],
+    [
+      0,
+      0,
+      0.19
+    ],
+    [
+      0,
+      0.21,
+      0
+    ],
+    [
+      0,
+      0.0607,
+      0.19
+    ],
+    [
+      0,
+      0.081,
+      0.0607
+    ]
+  ],
+  "joint_origins_rpy": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      1.5707963267948966,
+      0,
+      3.141592653589793
+    ],
+    [
+      1.5707963267948966,
+      0,
+      3.141592653589793
+    ],
+    [
+      1.5707963267948966,
+      0,
+      0
+    ],
+    [
+      -1.5707963267948966,
+      3.141592653589793,
+      0
+    ],
+    [
+      1.5707963267948966,
+      0,
+      0
+    ],
+    [
+      -1.5707963267948966,
+      3.141592653589793,
+      0
+    ]
+  ]
+}

@@ -1,0 +1,1470 @@
+\documentclass[lettersize,journal]{IEEEtran}
+% \usepackage[UTF8,fontset=windows]{ctex}
+\usepackage{booktabs}
+\usepackage{dsfont}
+\usepackage{graphicx}
+\usepackage[caption=false,font=footnotesize]{subfig}\usepackage{array}
+\usepackage{textcomp}
+\usepackage{verbatim}
+\hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore}
+\newenvironment{redsection}
+  {\begingroup\color{red}
+   \captionsetup{labelfont={color=red}, textfont={color=red}}}
+  {\endgroup}
+% \usepackage[utf8]{inputenc}
+% \usepackage[T1]{fontenc}
+% \usepackage{aecompl}
+\usepackage{dsfont}
+\usepackage{epstopdf}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts, amsthm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage[table]{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\newcommand{\NA}{\cellcolor{gray!18}}
+\newcommand{\NoAct}{--}
+% \usepackage{picinpar}
+% \usepackage{babel}
+\usepackage{url}
+% \usepackage[latin1]{inputenc}
+\usepackage{multirow}
+\usepackage{color}
+\usepackage{enumerate}
+\usepackage{siunitx}
+% \usepackage{breakurl}
+\usepackage{epstopdf}
+\usepackage{pbox}
+\usepackage{stfloats}
+\usepackage{adjustbox}
+\usepackage[colorlinks=true,
+            linkcolor=black,  
+            citecolor=black,    
+            urlcolor=blue      
+]{hyperref}\newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{remark}{Remark}
+\usepackage[most]{tcolorbox}
+\tcbset{highlightstyle/.style={
+  colback=yellow!10, 
+  colframe=red!50,   
+  boxrule=0.5pt, arc=3pt, left=3pt, right=3pt, top=3pt, bottom=3pt
+}}
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+\usepackage{stfloats}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\usepackage{balance}
+
+\begin{document}
+
+\title{Learning Stage-wise Constraints from Expert Demonstrations}
+
+
+\author{Baiyu Peng$^{1}$, Aude Billard$^{1}$%
+\thanks{
+This work was supported by euROBIN Grant.  } %Use only for final RAL version
+\thanks{$^{1}$ The authors are with the LASA, School of Engineering, EPFL (Swiss Federal Institute of Technology in Lausanne), Lausanne 1015 Vaud, Switzerland.
+        ({\tt\footnotesize baiyu.peng@epfl.ch} ; {\tt\footnotesize aude.billard@epfl.ch}). Corresponding author: Baiyu Peng.}%
+
+}
+\markboth{Journal of \LaTeX\ Class Files,~Vol.~18, No.~9, September~2024}%
+{How to Use the IEEEtran \LaTeX \ Templates}
+
+\maketitle
+
+\begin{abstract}
+Learning task constraints from demonstrations provides an explicit and reusable representation for downstream planning. However, many existing constraint-learning methods assume that the same constraint set remains active throughout an entire trajectory, which is restrictive for multi-stage robotic tasks where different constraints govern different phases and the stage cutpoints are unobserved. This paper studies stage-wise constraint learning from feasible demonstrations. Given a task-dependent feature bank, the goal is to recover, for each stage and feature, whether the feature is inactive, equality-constrained, lower-bound constrained, or upper-bound constrained, together with the corresponding target or boundary value when active. We propose Stage-Wise Constraint Learning (SWCL) to jointly segments demonstrations and recovers stage-wise constraints. For each candidate segment, SWCL evaluates local feature evidence for equality, inequality, or inactive interpretations, subgoal-progress consistency, and cross-demonstration agreement with shared stage-wise prototypes. With fixed prototypes, each demonstration is segmented exactly by dynamic programming over ordered cutpoints; the prototypes are then updated by aggregating local modes and parameters across demonstrations. Experiments on planar obstacle avoidance, slide insertion, and spherical surface inspection show that SWCL recovers more accurate cutpoints and constraint parameters than HMM-, HSMM-, and clustering-based baselines, even though the baselines are given ground-truth active constraint pairs during parameter evaluation. Planning experiments further show that the learned constraints can be reused as feasibility conditions in modified and new task instances.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Constraint learning, Learning from demonstration
+\end{IEEEkeywords}
+\section{Preliminaries and Problem Formulation}
+\label{sec:preliminaries}
+
+We consider multi-stage robotic tasks represented through a prescribed bank of
+task-dependent scalar features. Let
+$\mathcal{X}\subseteq\mathbb{R}^{d_x}$ denote the state space, and let
+\[
+\Phi=\{\phi_j:\mathcal{X}\rightarrow\mathbb{R}\}_{j=1}^{F}
+\]
+be the feature bank. For a state $x_t\in\mathcal{X}$, we denote the corresponding
+feature value by
+$u_{t,j}=\phi_j(x_t)$ and the full feature vector by
+$\phi(x_t)=[u_{t,1},\dots,u_{t,F}]^\top$.
+Before learning, each feature dimension is standardized over the demonstrated
+data. All constraint parameters introduced below are therefore expressed in
+standardized feature coordinates during learning and can subsequently be mapped
+back to their original physical units.
+
+A task consists of $K$ ordered stages. For demonstration $i$, let
+\[
+\tau^{(i)}
+=
+\{x_t^{(i)}\}_{t=1}^{T_i}
+\]
+denote a trajectory of length $T_i$. Its unknown stage schedule is represented by
+the cutpoints
+\[
+B^{(i)}
+=
+\{b_k^{(i)}\}_{k=0}^{K},
+\qquad
+1=b_0^{(i)}<b_1^{(i)}<\cdots<b_K^{(i)}=T_i+1.
+\]
+The corresponding stage interval is
+\begin{equation}
+\mathcal{I}_k^{(i)}
+\left(B^{(i)}\right)
+=
+\left\{
+b_{k-1}^{(i)},\dots,b_k^{(i)}-1
+\right\}.
+\label{eq:stage_interval_map}
+\end{equation}
+The cutpoints are latent and may differ across demonstrations.
+
+\subsection{Shared Stage-wise Constraint Model}
+
+Each stage-feature pair is associated with a shared task-level constraint mode
+\[
+\bar{\gamma}_{k,j}
+\in
+\{\varnothing,\mathrm{eq},\mathrm{lb},\mathrm{ub}\},
+\]
+where $\varnothing$ denotes an inactive feature, $\mathrm{eq}$ denotes an
+equality constraint, and $\mathrm{lb}$ and $\mathrm{ub}$ denote lower- and
+upper-bound inequalities, respectively.
+
+Each feature is assigned a known admissible constraint family. Let
+$\mathcal{F}_{\mathrm{eq}}$ and $\mathcal{F}_{\mathrm{ineq}}$ denote the
+equality-type and inequality-type feature sets. We define the admissible mode set
+for feature $j$ as
+\begin{equation}
+\mathcal{M}_j
+=
+\begin{cases}
+\{\varnothing,\mathrm{eq}\},
+& j\in\mathcal{F}_{\mathrm{eq}},
+\\
+\{\varnothing,\mathrm{lb},\mathrm{ub}\},
+& j\in\mathcal{F}_{\mathrm{ineq}}.
+\end{cases}
+\label{eq:admissible_mode_set_map}
+\end{equation}
+
+When $\bar{\gamma}_{k,j}\neq\varnothing$, the corresponding shared scalar
+constraint parameter is denoted by $\bar{\eta}_{k,j}\in\mathbb{R}$. It represents
+an equality target when $\bar{\gamma}_{k,j}=\mathrm{eq}$ and a boundary value
+when
+$\bar{\gamma}_{k,j}\in\{\mathrm{lb},\mathrm{ub}\}$.
+We collect the shared variables of one stage-feature pair as
+\[
+\bar{\theta}_{k,j}
+=
+\left(
+\bar{\gamma}_{k,j},
+\bar{\eta}_{k,j}
+\right),
+\]
+where $\bar{\eta}_{k,j}$ is omitted when
+$\bar{\gamma}_{k,j}=\varnothing$.
+The complete shared stage-wise constraint model is
+\[
+\bar{\Theta}
+=
+\{
+\bar{\theta}_{k,j}
+:
+k=1,\dots,K,\;
+j=1,\dots,F
+\}.
+\]
+
+The shared mode and parameter define the corresponding feasible set
+\begin{equation}
+\bar{\mathcal{C}}_{k,j}
+=
+\begin{cases}
+\mathcal{X},
+& \bar{\gamma}_{k,j}=\varnothing,
+\\
+\{x\in\mathcal{X}:\phi_j(x)=\bar{\eta}_{k,j}\},
+& \bar{\gamma}_{k,j}=\mathrm{eq},
+\\
+\{x\in\mathcal{X}:\phi_j(x)\geq\bar{\eta}_{k,j}\},
+& \bar{\gamma}_{k,j}=\mathrm{lb},
+\\
+\{x\in\mathcal{X}:\phi_j(x)\leq\bar{\eta}_{k,j}\},
+& \bar{\gamma}_{k,j}=\mathrm{ub}.
+\end{cases}
+\label{eq:shared_stage_feature_feasible_set}
+\end{equation}
+
+Known task-independent feasibility requirements, including system dynamics and
+known global collision or actuator constraints, are collected in
+$\mathcal{C}_{\mathrm{known}}$.
+
+\subsection{Demonstration-specific Local Constraint Variables}
+
+Although corresponding stages share the same task-level constraint model,
+individual demonstrations may express the shared constraints imperfectly because
+of execution variability, finite sampling, noise, or imperfect stage
+localization. We therefore introduce a local latent constraint interpretation for
+each demonstration, stage, and feature.
+
+For demonstration $i$, let
+\[
+\gamma_{k,j}^{(i)}
+\in
+\mathcal{M}_j
+\]
+denote the local constraint mode of feature $j$ in stage $k$. When
+$\gamma_{k,j}^{(i)}\neq\varnothing$, let
+$\eta_{k,j}^{(i)}\in\mathbb{R}$ denote its local target or boundary parameter.
+We write
+\[
+\theta_{k,j}^{(i)}
+=
+\left(
+\gamma_{k,j}^{(i)},
+\eta_{k,j}^{(i)}
+\right),
+\]
+with $\eta_{k,j}^{(i)}$ omitted for the inactive mode, and define
+\[
+\Theta^{(i)}
+=
+\{
+\theta_{k,j}^{(i)}
+:
+k=1,\dots,K,\;
+j=1,\dots,F
+\}.
+\]
+
+The variables $\Theta^{(i)}$ are auxiliary demonstration-specific latent
+variables. The final task representation is the shared model $\bar{\Theta}$,
+rather than the individual local interpretations.
+
+For a candidate interval $\mathcal{I}$ in demonstration $i$, we denote the
+observed values of feature $j$ by
+\begin{equation}
+\mathcal{U}_j^{(i)}(\mathcal{I})
+=
+\{
+u_{t,j}^{(i)}
+=
+\phi_j(x_t^{(i)})
+:
+t\in\mathcal{I}
+\}.
+\label{eq:interval_feature_samples_map}
+\end{equation}
+
+We are given a set of feasible demonstrations
+\[
+\mathcal{D}
+=
+\{
+\tau^{(i)}
+\}_{i=1}^{N}.
+\]
+The demonstrations share the number and ordering of stages and the shared
+constraint model $\bar{\Theta}$, while their cutpoints
+$\{B^{(i)}\}$ and local constraint variables
+$\{\Theta^{(i)}\}$ are unobserved.
+
+\begin{definition}[Stage-wise constraint learning]
+Given the demonstrations $\mathcal{D}$, the number of stages $K$, the feature
+bank $\Phi$, and the admissible feature families
+$\mathcal{F}_{\mathrm{eq}}$ and $\mathcal{F}_{\mathrm{ineq}}$, the objective is
+to estimate the shared stage-wise constraint model $\bar{\Theta}$.
+The demonstration-specific schedules $\{B^{(i)}\}$ and local constraint
+variables $\{\Theta^{(i)}\}$ are jointly inferred as auxiliary latent variables.
+\end{definition}
+
+
+\section{Method}
+\label{sec:method}
+
+We formulate SWCL as regularized hierarchical maximum-a-posteriori inference.
+The probabilistic part of the model contains two levels. First, the feature
+observations within each stage are modeled conditionally on a
+demonstration-specific local constraint interpretation. Second, the local
+constraint variables are modeled as noisy realizations of a shared stage-wise
+prototype. An additional subgoal-progress regularizer favors motion-coherent
+candidate stages.
+
+The resulting optimization alternates between two conditional problems.
+Conditioned on the current shared prototypes, each demonstration is independently
+segmented by dynamic programming while its local constraint modes and parameters
+are inferred. Conditioned on the resulting local variables, the shared prototype
+of every stage-feature pair is updated by MAP estimation.
+
+\subsection{Observation Model for Local Constraints}
+\label{subsec:observation_model_map}
+
+We first specify the likelihood of the observed feature samples under each local
+constraint mode. The observation-model parameters introduced below are fixed
+during the alternating MAP procedure and are not part of the learned task
+constraint representation.
+
+\subsubsection{Inactive Reference Model}
+
+For each feature $j$, let
+$q_j(u)$ denote a proper background density used as the reference observation
+model for the inactive mode. We use a Student-$t$ reference density,
+\begin{equation}
+q_j(u)
+=
+\frac{1}{\sigma_{0,j}}
+t_{\nu_0}
+\left(
+\frac{u-\mu_{0,j}}{\sigma_{0,j}}
+\right),
+\label{eq:inactive_reference_density}
+\end{equation}
+where $\mu_{0,j}$ and $\sigma_{0,j}>0$ are feature-specific background
+parameters and $t_{\nu_0}$ denotes the standard Student-$t$ density with
+$\nu_0$ degrees of freedom. The background parameters are estimated once from
+the standardized demonstration data and then held fixed during alternating
+inference.
+
+For the inactive mode,
+\begin{equation}
+p_j
+\left(
+u
+\mid
+\gamma=\varnothing
+\right)
+=
+q_j(u).
+\label{eq:inactive_observation_model}
+\end{equation}
+
+\subsubsection{Equality Observation Model}
+
+For an equality interpretation with local target $\eta$, we use a centered
+Student-$t$ likelihood
+\begin{equation}
+p_j
+\left(
+u
+\mid
+\gamma=\mathrm{eq},
+\eta
+\right)
+=
+\frac{1}{\sigma_{\mathrm{eq},j}}
+t_{\nu}
+\left(
+\frac{u-\eta}{\sigma_{\mathrm{eq},j}}
+\right),
+\label{eq:equality_student_t_likelihood}
+\end{equation}
+where $\sigma_{\mathrm{eq},j}>0$ is the observation scale of feature $j$ under
+an equality interpretation and $\nu$ is the Student-$t$ degrees of freedom.
+The scale parameter controls the expected demonstration variability around a
+fixed equality target; it is an observation-model parameter rather than a task
+constraint parameter.
+
+\subsubsection{Inequality Observation Model}
+
+For an inequality mode
+$m\in\{\mathrm{lb},\mathrm{ub}\}$ and candidate boundary $\eta$, define the
+signed slack
+\begin{equation}
+y_m(u;\eta)
+=
+\begin{cases}
+u-\eta,
+& m=\mathrm{lb},
+\\
+\eta-u,
+& m=\mathrm{ub}.
+\end{cases}
+\label{eq:map_inequality_slack}
+\end{equation}
+Thus, $y_m(u;\eta)\geq0$ indicates the feasible side of the candidate boundary.
+
+We use the soft half-Student-$t$ density
+\begin{equation}
+p_j
+\left(
+u
+\mid
+\gamma=m,
+\eta
+\right)
+=
+\frac{1}{Z_{\nu,\kappa}}
+\begin{cases}
+\dfrac{2}{\sigma_{\mathrm{ineq},j}}
+t_\nu
+\left(
+\dfrac{y_m(u;\eta)}
+{\sigma_{\mathrm{ineq},j}}
+\right),
+& y_m(u;\eta)\geq0,
+\\[1em]
+\dfrac{2}{\sigma_{\mathrm{ineq},j}}
+t_\nu(0)
+\exp
+\left(
+\dfrac{y_m(u;\eta)}
+{\kappa\sigma_{\mathrm{ineq},j}}
+\right),
+& y_m(u;\eta)<0,
+\end{cases}
+\label{eq:map_soft_half_t_density}
+\end{equation}
+where $\sigma_{\mathrm{ineq},j}>0$ controls feasible-side dispersion,
+$\kappa>0$ controls the softness of infeasible-side violations, and
+\begin{equation}
+Z_{\nu,\kappa}
+=
+1+2\kappa t_\nu(0)
+\label{eq:map_half_t_normalizer}
+\end{equation}
+is the normalization constant.
+
+Different from the original quantile-based local fitting rule, the inequality
+boundary $\eta$ is now a latent parameter optimized directly under the
+likelihood and hierarchical prior.
+
+\subsubsection{Factorized Segment Likelihood}
+
+For a candidate interval $\mathcal{I}$ and local constraint variables
+$\theta_j=(\gamma_j,\eta_j)$, we assume conditional independence of the feature
+observations across time and feature dimensions. The interval likelihood is
+therefore
+\begin{equation}
+p
+\left(
+\{\mathcal{U}_j(\mathcal{I})\}_{j=1}^{F}
+\mid
+\{\theta_j\}_{j=1}^{F}
+\right)
+=
+\prod_{j=1}^{F}
+\prod_{t\in\mathcal{I}}
+p_j
+\left(
+u_{t,j}
+\mid
+\gamma_j,\eta_j
+\right),
+\label{eq:factorized_segment_likelihood}
+\end{equation}
+where $\eta_j$ is omitted when $\gamma_j=\varnothing$.
+This factorization defines the observation model used by SWCL.
+
+
+\subsection{Hierarchical Model for Shared and Local Constraints}
+\label{subsec:hierarchical_constraint_model}
+
+The shared stage-wise prototype influences the local constraint interpretation
+through a hierarchical prior.
+
+Let
+\[
+M_j
+=
+|\mathcal{M}_j|
+\]
+denote the number of admissible modes for feature $j$. Given a shared mode
+$\bar{\gamma}_{k,j}$, the local mode follows the symmetric categorical deviation
+model
+\begin{equation}
+p
+\left(
+\gamma_{k,j}^{(i)}=m
+\mid
+\bar{\gamma}_{k,j}=\bar{m}
+\right)
+=
+\begin{cases}
+1-\epsilon,
+& m=\bar{m},
+\\[0.3em]
+\dfrac{\epsilon}{M_j-1},
+& m\neq\bar{m},
+\end{cases}
+\label{eq:hierarchical_mode_model}
+\end{equation}
+where $0<\epsilon<1$ controls the expected probability of a
+demonstration-specific mode deviation.
+
+For active local modes, we also require a prior on the local parameter.
+Let
+\begin{equation}
+r_j(\eta)
+=
+\mathcal{N}
+\left(
+\eta;
+\mu_{\eta,j},
+s_{\eta,j}^{2}
+\right)
+\label{eq:broad_parameter_reference_prior}
+\end{equation}
+denote a broad proper reference prior on feature-$j$ constraint parameters.
+Its parameters $\mu_{\eta,j}$ and $s_{\eta,j}$ are fixed.
+
+Conditioned on a matching active shared mode, the local parameter is modeled by
+a Laplace distribution centered at the shared parameter:
+\begin{equation}
+p
+\left(
+\eta_{k,j}^{(i)}
+\mid
+\gamma_{k,j}^{(i)}
+=
+\bar{\gamma}_{k,j}
+\neq\varnothing,
+\bar{\eta}_{k,j}
+\right)
+=
+\operatorname{Lap}
+\left(
+\eta_{k,j}^{(i)};
+\bar{\eta}_{k,j},
+b_j
+\right),
+\label{eq:hierarchical_parameter_laplace}
+\end{equation}
+where $b_j>0$ controls the expected cross-demonstration variation of the local
+parameter around the shared parameter.
+
+When the local mode is active but differs from the shared mode, its parameter is
+instead assigned the broad reference prior $r_j$:
+\begin{equation}
+p
+\left(
+\eta_{k,j}^{(i)}
+\mid
+\gamma_{k,j}^{(i)}\neq\bar{\gamma}_{k,j},
+\gamma_{k,j}^{(i)}\neq\varnothing
+\right)
+=
+r_j
+\left(
+\eta_{k,j}^{(i)}
+\right).
+\label{eq:mismatched_parameter_prior}
+\end{equation}
+
+Combining the mode and parameter terms, the complete conditional prior of a local
+stage-feature variable is
+\begin{equation}
+p
+\left(
+\theta_{k,j}^{(i)}
+\mid
+\bar{\theta}_{k,j}
+\right)
+=
+p
+\left(
+\gamma_{k,j}^{(i)}
+\mid
+\bar{\gamma}_{k,j}
+\right)
+\times
+\begin{cases}
+1,
+& \gamma_{k,j}^{(i)}=\varnothing,
+\\
+\operatorname{Lap}
+\left(
+\eta_{k,j}^{(i)};
+\bar{\eta}_{k,j},b_j
+\right),
+&
+\gamma_{k,j}^{(i)}
+=
+\bar{\gamma}_{k,j}
+\neq\varnothing,
+\\
+r_j
+\left(
+\eta_{k,j}^{(i)}
+\right),
+&
+\gamma_{k,j}^{(i)}
+\neq\bar{\gamma}_{k,j},
+\;
+\gamma_{k,j}^{(i)}
+\neq\varnothing.
+\end{cases}
+\label{eq:complete_local_hierarchical_prior}
+\end{equation}
+
+Finally, we place a prior on each shared prototype. Let
+$\pi_{j,m}>0$ denote the prior probability of shared mode $m\in\mathcal{M}_j$,
+with
+$\sum_{m\in\mathcal{M}_j}\pi_{j,m}=1$.
+We use
+\begin{equation}
+p
+\left(
+\bar{\theta}_{k,j}
+\right)
+=
+\pi_{j,\bar{\gamma}_{k,j}}
+\times
+\begin{cases}
+1,
+& \bar{\gamma}_{k,j}=\varnothing,
+\\
+r_j
+\left(
+\bar{\eta}_{k,j}
+\right),
+& \bar{\gamma}_{k,j}\neq\varnothing.
+\end{cases}
+\label{eq:shared_prototype_prior}
+\end{equation}
+A uniform mode prior can be used when no prior preference among admissible modes
+is available.
+
+
+\subsection{Regularized Joint MAP Objective}
+\label{subsec:regularized_joint_map}
+
+For a candidate segmentation $B^{(i)}$, let
+$\mathcal{U}_{k,j}^{(i)}(B^{(i)})$ denote the feature-$j$ observations belonging
+to stage $k$.
+The negative log observation likelihood of one local stage-feature variable is
+\begin{equation}
+\mathcal{L}_{\mathrm{obs}}
+\left(
+\mathcal{U}_{k,j}^{(i)};
+\theta_{k,j}^{(i)}
+\right)
+=
+-
+\sum_{t\in\mathcal{I}_k^{(i)}}
+\log
+p_j
+\left(
+u_{t,j}^{(i)}
+\mid
+\gamma_{k,j}^{(i)},
+\eta_{k,j}^{(i)}
+\right).
+\label{eq:local_observation_nll}
+\end{equation}
+
+The hierarchical coupling cost is
+\begin{equation}
+\mathcal{L}_{\mathrm{hier}}
+\left(
+\theta_{k,j}^{(i)};
+\bar{\theta}_{k,j}
+\right)
+=
+-
+\log
+p
+\left(
+\theta_{k,j}^{(i)}
+\mid
+\bar{\theta}_{k,j}
+\right),
+\label{eq:local_hierarchical_nll}
+\end{equation}
+and the shared-prototype prior cost is
+\begin{equation}
+\mathcal{L}_{\mathrm{shared}}
+\left(
+\bar{\theta}_{k,j}
+\right)
+=
+-
+\log
+p
+\left(
+\bar{\theta}_{k,j}
+\right).
+\label{eq:shared_prior_nll}
+\end{equation}
+
+The probabilistic component of the objective is therefore the negative log joint
+posterior, up to an additive constant. We additionally retain the subgoal-progress
+term as a structural regularizer. The complete optimization objective is
+\begin{equation}
+\begin{aligned}
+\mathcal{J}
+\left(
+\bar{\Theta},
+\{B^{(i)},\Theta^{(i)}\}_{i=1}^{N}
+\right)
+={}&
+\sum_{i=1}^{N}
+\sum_{k=1}^{K}
+\sum_{j=1}^{F}
+\Big[
+\mathcal{L}_{\mathrm{obs}}
+\left(
+\mathcal{U}_{k,j}^{(i)};
+\theta_{k,j}^{(i)}
+\right)
+\\
+&\qquad\qquad+
+\mathcal{L}_{\mathrm{hier}}
+\left(
+\theta_{k,j}^{(i)};
+\bar{\theta}_{k,j}
+\right)
+\Big]
+\\
+&+
+\sum_{k=1}^{K}
+\sum_{j=1}^{F}
+\mathcal{L}_{\mathrm{shared}}
+\left(
+\bar{\theta}_{k,j}
+\right)
+\\
+&+
+\lambda_{\mathrm{prog}}
+\sum_{i=1}^{N}
+\sum_{k=1}^{K}
+C_{\mathrm{prog}}
+\left(
+\mathcal{I}_k^{(i)}
+\right).
+\end{aligned}
+\label{eq:regularized_map_objective}
+\end{equation}
+
+When $\lambda_{\mathrm{prog}}=0$, the objective reduces to the negative log joint
+posterior of the hierarchical constraint model. For
+$\lambda_{\mathrm{prog}}>0$, SWCL performs regularized MAP estimation.
+
+
+\subsection{Local MAP Model Selection for a Candidate Interval}
+\label{subsec:local_map_candidate}
+
+We now describe how the objective in
+\eqref{eq:regularized_map_objective} produces an additive stage cost suitable for
+dynamic programming.
+
+Consider candidate interval $\mathcal{I}=[s,e]$ in demonstration $i$, and suppose
+that this interval is assigned to stage $k$. Conditioned on the current shared
+prototype $\bar{\theta}_{k,j}$, each admissible local mode
+$m\in\mathcal{M}_j$ defines a candidate posterior score.
+
+For the inactive mode,
+\begin{equation}
+S_{k,j}^{(i)}
+\left(
+\mathcal{I},\varnothing;
+\bar{\theta}_{k,j}
+\right)
+=
+-
+\sum_{t\in\mathcal{I}}
+\log q_j
+\left(
+u_{t,j}^{(i)}
+\right)
+-
+\log
+p
+\left(
+\gamma_{k,j}^{(i)}=\varnothing
+\mid
+\bar{\gamma}_{k,j}
+\right).
+\label{eq:inactive_candidate_map_score}
+\end{equation}
+
+For an active candidate mode
+$m\in\mathcal{M}_j\setminus\{\varnothing\}$, define
+\begin{equation}
+\begin{aligned}
+S_{k,j}^{(i)}
+\left(
+\mathcal{I},m;
+\bar{\theta}_{k,j}
+\right)
+=
+\min_{\eta\in\mathbb{R}}
+\Bigg[
+&
+-
+\sum_{t\in\mathcal{I}}
+\log
+p_j
+\left(
+u_{t,j}^{(i)}
+\mid
+\gamma=m,\eta
+\right)
+\\
+&
+-
+\log
+p
+\left(
+\gamma_{k,j}^{(i)}=m
+\mid
+\bar{\gamma}_{k,j}
+\right)
+\\
+&
+-
+\log
+p
+\left(
+\eta
+\mid
+\gamma_{k,j}^{(i)}=m,
+\bar{\theta}_{k,j}
+\right)
+\Bigg].
+\end{aligned}
+\label{eq:active_candidate_map_score}
+\end{equation}
+
+Let
+$\eta_{k,j}^{(i)\star}(\mathcal{I},m)$ denote the minimizing parameter in
+\eqref{eq:active_candidate_map_score}. Because the constraint parameter is
+scalar, this inner optimization is one-dimensional.
+
+The local mode assigned to the candidate interval is
+\begin{equation}
+\gamma_{k,j}^{(i)\star}(\mathcal{I})
+=
+\arg\min_{m\in\mathcal{M}_j}
+S_{k,j}^{(i)}
+\left(
+\mathcal{I},m;
+\bar{\theta}_{k,j}
+\right),
+\label{eq:local_mode_map_selection}
+\end{equation}
+and its corresponding local parameter is
+\begin{equation}
+\eta_{k,j}^{(i)\star}(\mathcal{I})
+=
+\eta_{k,j}^{(i)\star}
+\left(
+\mathcal{I},
+\gamma_{k,j}^{(i)\star}(\mathcal{I})
+\right)
+\label{eq:local_parameter_map_selection}
+\end{equation}
+when the selected mode is active.
+
+The profiled local constraint cost is
+\begin{equation}
+C_{\mathrm{con},k,j}^{(i)}
+\left(
+\mathcal{I};
+\bar{\theta}_{k,j}
+\right)
+=
+\min_{m\in\mathcal{M}_j}
+S_{k,j}^{(i)}
+\left(
+\mathcal{I},m;
+\bar{\theta}_{k,j}
+\right).
+\label{eq:profiled_local_constraint_cost}
+\end{equation}
+
+Thus, unlike a two-step procedure that first estimates a local constraint
+independently and subsequently penalizes its deviation from the shared
+prototype, the local mode and parameter in
+\eqref{eq:local_mode_map_selection}--\eqref{eq:local_parameter_map_selection}
+are estimated while already conditioning on the shared stage-wise prototype.
+
+
+\subsection{Subgoal-progress Regularization}
+\label{subsec:subgoal_progress_map}
+
+Constraint likelihood alone may assign a low cost to a long interval containing
+multiple distinct motions. We therefore retain an auxiliary motion-coherence
+regularizer based on progress toward the candidate segment endpoint.
+
+For candidate interval
+$\mathcal{I}=[s,e]$, define its endpoint-induced subgoal as
+\begin{equation}
+g(\mathcal{I})
+=
+x_e.
+\label{eq:candidate_endpoint_subgoal_map}
+\end{equation}
+Let
+\begin{equation}
+d_t(\mathcal{I})
+=
+\left\|
+x_t-g(\mathcal{I})
+\right\|_2.
+\label{eq:candidate_subgoal_distance_map}
+\end{equation}
+The progress regularizer is
+\begin{equation}
+C_{\mathrm{prog}}(\mathcal{I})
+=
+\sum_{t=s}^{e-1}
+\operatorname{softplus}_{\beta}
+\left(
+d_{t+1}(\mathcal{I})
+-
+d_t(\mathcal{I})
+\right),
+\label{eq:progress_regularizer_map}
+\end{equation}
+where
+$\operatorname{softplus}_{\beta}(z)
+=
+\beta^{-1}\log(1+\exp(\beta z))$.
+Motion toward the endpoint produces a near-zero penalty, whereas motion away
+from the endpoint increases the cost.
+
+This term is not interpreted as a task constraint or as part of the feature
+observation likelihood. It serves only as a structural regularizer on the
+segmentation.
+
+
+\subsection{Dynamic Programming Conditioned on Shared Prototypes}
+\label{subsec:map_dynamic_programming}
+
+For candidate interval $\mathcal{I}$ assigned to stage $k$ in demonstration $i$,
+the complete stage cost conditioned on the current shared prototype is
+\begin{equation}
+C_k^{(i)}
+\left(
+\mathcal{I};
+\bar{\Theta}
+\right)
+=
+\sum_{j=1}^{F}
+C_{\mathrm{con},k,j}^{(i)}
+\left(
+\mathcal{I};
+\bar{\theta}_{k,j}
+\right)
++
+\lambda_{\mathrm{prog}}
+C_{\mathrm{prog}}^{(i)}
+\left(
+\mathcal{I}
+\right).
+\label{eq:map_stage_cost}
+\end{equation}
+
+The shared-prototype prior terms
+$\mathcal{L}_{\mathrm{shared}}(\bar{\theta}_{k,j})$ do not appear in
+\eqref{eq:map_stage_cost}, because they are constant with respect to the
+segmentation when $\bar{\Theta}$ is fixed.
+
+For a candidate schedule $B^{(i)}$, the conditional objective of demonstration
+$i$ is additive over stages:
+\begin{equation}
+\mathcal{J}_i
+\left(
+B^{(i)},\Theta^{(i)}
+\mid
+\bar{\Theta}
+\right)
+=
+\sum_{k=1}^{K}
+C_k^{(i)}
+\left(
+\mathcal{I}_k^{(i)};
+\bar{\Theta}
+\right).
+\label{eq:conditional_demo_map_objective}
+\end{equation}
+
+Let $F_k^{(i)}(t)$ denote the minimum conditional cost of assigning the prefix
+$\{x_1^{(i)},\dots,x_t^{(i)}\}$ to the first $k$ stages. The dynamic-programming
+recurrence is
+\begin{equation}
+F_k^{(i)}(t)
+=
+\min_{k\leq s\leq t}
+\left[
+F_{k-1}^{(i)}(s-1)
++
+C_k^{(i)}
+\left(
+[s,t];
+\bar{\Theta}
+\right)
+\right].
+\label{eq:map_dp_recurrence}
+\end{equation}
+The initialization is
+\[
+F_0^{(i)}(0)=0,
+\qquad
+F_0^{(i)}(t)=+\infty
+\quad
+\text{for }t>0.
+\]
+
+The optimal conditional cost is $F_K^{(i)}(T_i)$. Backtracking through the
+minimizing start indices in \eqref{eq:map_dp_recurrence} recovers the cutpoints
+$B^{(i)}$. Because every candidate stage cost stores the minimizing local mode
+and parameter from
+\eqref{eq:local_mode_map_selection}--\eqref{eq:local_parameter_map_selection},
+the same backtracking step also recovers the corresponding local constraint
+variables $\Theta^{(i)}$.
+
+Therefore, conditioned on $\bar{\Theta}$, the DP step jointly solves
+\begin{equation}
+\left(
+B^{(i)\star},
+\Theta^{(i)\star}
+\right)
+=
+\arg\min_{B^{(i)},\Theta^{(i)}}
+\mathcal{J}_i
+\left(
+B^{(i)},\Theta^{(i)}
+\mid
+\bar{\Theta}
+\right),
+\label{eq:conditional_local_map_problem}
+\end{equation}
+where the combinatorial search over ordered stage boundaries is solved exactly
+by dynamic programming and each active scalar local parameter is obtained from
+the one-dimensional optimization in
+\eqref{eq:active_candidate_map_score}.
+
+
+\subsection{MAP Update of the Shared Constraint Prototypes}
+\label{subsec:shared_prototype_map_update}
+
+After all demonstrations have been segmented, the cutpoints
+$\{B^{(i)}\}$ and local variables $\{\Theta^{(i)}\}$ are held fixed.
+The observation-likelihood and progress terms in
+\eqref{eq:regularized_map_objective} are then constant with respect to the
+shared prototypes. Consequently, every shared stage-feature pair
+$\bar{\theta}_{k,j}$ can be updated independently.
+
+For a candidate shared mode
+$m\in\mathcal{M}_j$, define the prototype objective
+\begin{equation}
+\begin{aligned}
+G_{k,j}(m,\bar{\eta})
+=
+&
+-
+\log
+p
+\left(
+\bar{\theta}_{k,j}
+=
+(m,\bar{\eta})
+\right)
+\\
+&
+-
+\sum_{i=1}^{N}
+\log
+p
+\left(
+\theta_{k,j}^{(i)}
+\mid
+\bar{\theta}_{k,j}
+=
+(m,\bar{\eta})
+\right),
+\end{aligned}
+\label{eq:shared_candidate_mode_objective}
+\end{equation}
+where $\bar{\eta}$ is omitted when $m=\varnothing$.
+
+For the inactive candidate mode,
+\begin{equation}
+G_{k,j}^{\star}(\varnothing)
+=
+-
+\log \pi_{j,\varnothing}
+-
+\sum_{i=1}^{N}
+\log
+p
+\left(
+\theta_{k,j}^{(i)}
+\mid
+\bar{\gamma}_{k,j}=\varnothing
+\right).
+\label{eq:shared_inactive_score}
+\end{equation}
+
+For each active candidate mode
+$m\in\mathcal{M}_j\setminus\{\varnothing\}$, the optimal shared parameter is
+\begin{equation}
+\bar{\eta}_{k,j}^{\star}(m)
+=
+\arg\min_{\bar{\eta}\in\mathbb{R}}
+G_{k,j}(m,\bar{\eta}),
+\label{eq:shared_parameter_map_update}
+\end{equation}
+and the corresponding optimized mode score is
+\begin{equation}
+G_{k,j}^{\star}(m)
+=
+G_{k,j}
+\left(
+m,
+\bar{\eta}_{k,j}^{\star}(m)
+\right).
+\label{eq:optimized_shared_mode_score}
+\end{equation}
+
+The updated shared mode is then
+\begin{equation}
+\bar{\gamma}_{k,j}^{\star}
+=
+\arg\min_{m\in\mathcal{M}_j}
+G_{k,j}^{\star}(m),
+\label{eq:shared_mode_map_update}
+\end{equation}
+and, when the selected mode is active,
+\begin{equation}
+\bar{\eta}_{k,j}^{\star}
+=
+\bar{\eta}_{k,j}^{\star}
+\left(
+\bar{\gamma}_{k,j}^{\star}
+\right).
+\label{eq:shared_parameter_selected_update}
+\end{equation}
+
+Under the Laplace coupling in
+\eqref{eq:hierarchical_parameter_laplace}, only demonstrations whose local mode
+matches the candidate shared mode contribute a prototype-dependent absolute
+deviation term. Ignoring the weak reference prior $r_j$ on the shared
+parameter, the minimizer in
+\eqref{eq:shared_parameter_map_update} reduces to the median of the
+mode-matched local parameter estimates. The proper reference prior in
+\eqref{eq:shared_prototype_prior} turns this into a regularized one-dimensional
+MAP estimate.
+
+Importantly, the shared mode is not determined by majority vote alone.
+For each candidate mode, both local-mode agreement and the consistency of its
+associated local parameter estimates contribute to
+$G_{k,j}^{\star}(m)$. The selected shared mode and parameter therefore form a
+joint MAP prototype update.
+
+
+\subsection{Deterministic Initialization and Alternating MAP Inference}
+\label{subsec:alternating_map_inference}
+
+The conditional local MAP problem requires an initial shared prototype.
+We obtain it through a deterministic uncoupled initialization.
+
+Before cross-demonstration coupling is introduced, every candidate interval is
+evaluated using only the observation likelihood, a fixed local mode prior
+$\pi_{j,m}$, and the broad parameter prior $r_j$. Specifically, for an active
+mode $m$ we define
+\begin{equation}
+\begin{aligned}
+S_{j}^{\mathrm{init}}
+(\mathcal{I},m)
+=
+\min_{\eta}
+\Bigg[
+&
+-
+\sum_{t\in\mathcal{I}}
+\log
+p_j
+\left(
+u_{t,j}
+\mid
+m,\eta
+\right)
+\\
+&
+-
+\log \pi_{j,m}
+-
+\log r_j(\eta)
+\Bigg],
+\end{aligned}
+\label{eq:initial_local_map_score}
+\end{equation}
+while for the inactive mode
+\begin{equation}
+S_{j}^{\mathrm{init}}
+(\mathcal{I},\varnothing)
+=
+-
+\sum_{t\in\mathcal{I}}
+\log q_j(u_{t,j})
+-
+\log\pi_{j,\varnothing}.
+\label{eq:initial_inactive_map_score}
+\end{equation}
+
+These scores are combined with the progress regularizer and used in the same DP
+recurrence as \eqref{eq:map_dp_recurrence}. The resulting initial segmentations
+and local variables are then used in
+\eqref{eq:shared_parameter_map_update}--\eqref{eq:shared_mode_map_update} to
+construct the first shared prototype $\bar{\Theta}^{(0)}$.
+
+Starting from $\bar{\Theta}^{(0)}$, SWCL alternates the following two updates:
+
+\begin{enumerate}
+    \item \textbf{Conditional local MAP and segmentation.}
+    With $\bar{\Theta}^{(q)}$ fixed, independently solve
+    \eqref{eq:conditional_local_map_problem} for every demonstration using
+    dynamic programming, producing
+    $\{B^{(i,q+1)},\Theta^{(i,q+1)}\}_{i=1}^{N}$.
+
+    \item \textbf{Shared prototype MAP update.}
+    With the recovered local variables fixed, update every stage-feature
+    prototype independently using
+    \eqref{eq:shared_parameter_map_update}--\eqref{eq:shared_mode_map_update},
+    producing $\bar{\Theta}^{(q+1)}$.
+\end{enumerate}
+
+The alternating procedure terminates when the cutpoints and shared prototypes
+remain unchanged, when the relative reduction in
+$\mathcal{J}$ falls below a tolerance, or when a maximum number of iterations is
+reached.
+
+Because the hierarchical and observation-model hyperparameters are fixed after
+initialization, both alternating updates optimize the same objective
+\eqref{eq:regularized_map_objective}. If the scalar inner parameter
+optimizations are solved exactly, the DP step minimizes the objective with
+respect to all demonstration-specific cutpoints and local constraint variables
+conditioned on the current shared prototypes, while the prototype step minimizes
+it with respect to the shared variables conditioned on the current local
+variables. Hence,
+\begin{equation}
+\mathcal{J}^{(q+1)}
+\leq
+\mathcal{J}^{(q)},
+\label{eq:map_monotonicity}
+\end{equation}
+although the non-convex mixed discrete-continuous problem does not in general
+guarantee convergence to the global optimum.
+
+
+\begin{algorithm}[t]
+\caption{Regularized Hierarchical MAP Stage-wise Constraint Learning}
+\label{alg:swcl_map}
+\begin{algorithmic}[1]
+\Require demonstrations $\mathcal{D}$, number of stages $K$,
+feature bank $\Phi$, admissible feature families
+$\mathcal{F}_{\mathrm{eq}}$ and $\mathcal{F}_{\mathrm{ineq}}$,
+observation-model parameters, hierarchical-model parameters,
+and $\lambda_{\mathrm{prog}}$
+\Ensure shared constraint model $\hat{\bar{\Theta}}$,
+cutpoints $\{\hat B^{(i)}\}$,
+and local latent constraints $\{\hat\Theta^{(i)}\}$
+
+\State Extract and standardize all feature trajectories
+\State Fit the fixed inactive reference densities $\{q_j\}_{j=1}^{F}$
+\State Precompute the subgoal-progress costs for all candidate intervals
+
+\Statex
+\State \textbf{Deterministic initialization}
+\ForAll{demonstrations $i=1,\dots,N$}
+    \State Compute the uncoupled candidate scores using
+    \eqref{eq:initial_local_map_score} and
+    \eqref{eq:initial_inactive_map_score}
+    \State Solve the DP recurrence and recover
+    $B^{(i,0)}$ and $\Theta^{(i,0)}$
+\EndFor
+\State Update the shared prototype $\bar{\Theta}^{(0)}$ using
+\eqref{eq:shared_parameter_map_update}--\eqref{eq:shared_mode_map_update}
+
+\Statex
+\State $q\leftarrow0$
+\Repeat
+    \ForAll{demonstrations $i=1,\dots,N$}
+        \ForAll{candidate stage intervals}
+            \State Compute local MAP mode and parameter scores using
+            \eqref{eq:inactive_candidate_map_score}--\eqref{eq:local_mode_map_selection}
+        \EndFor
+        \State Solve \eqref{eq:map_dp_recurrence}
+        \State Backtrack to recover
+        $B^{(i,q+1)}$ and $\Theta^{(i,q+1)}$
+    \EndFor
+
+    \For{$k=1,\dots,K$}
+        \For{$j=1,\dots,F$}
+            \State Enumerate all $m\in\mathcal{M}_j$
+            \State For each active $m$, solve
+            \eqref{eq:shared_parameter_map_update}
+            \State Select the shared mode using
+            \eqref{eq:shared_mode_map_update}
+        \EndFor
+    \EndFor
+
+    \State $q\leftarrow q+1$
+\Until{convergence or maximum number of iterations}
+\State \Return
+$\hat{\bar{\Theta}}=\bar{\Theta}^{(q)}$,
+$\{\hat B^{(i)}\}$,
+and $\{\hat\Theta^{(i)}\}$
+\end{algorithmic}
+\end{algorithm}
+
+
+\subsection{Implementation Considerations}
+\label{subsec:map_implementation}
+
+The reformulated local MAP fit depends on the current shared prototype through
+the hierarchical prior. Therefore, unlike an uncoupled local-fitting procedure,
+the final local mode and parameter of a candidate interval cannot in general be
+computed once and reused in every outer iteration.
+
+Quantities independent of the shared prototypes can still be cached. These
+include the standardized feature trajectories, candidate interval indices,
+inactive-reference likelihood contributions, and subgoal-progress costs.
+Observation-model statistics that accelerate the one-dimensional active
+parameter optimizations may also be precomputed. At each outer iteration, only
+the prototype-dependent local MAP fits and the subsequent DP stage costs need to
+be updated.
+
+\subsection{Discussion}
+\label{subsec:map_discussion}
+
+The hierarchical MAP formulation provides a unified interpretation of the main
+components of SWCL. In particular, local feature evidence is represented by an
+explicit observation likelihood, while agreement between demonstration-specific
+constraint interpretations and the shared stage-wise prototypes is represented
+through a hierarchical prior. Consequently, local constraint fitting and
+cross-demonstration consensus are no longer treated as two separate operations:
+the local mode and parameter of a candidate interval are inferred while already
+conditioning on the current shared prototype. This allows the data likelihood
+and the shared task structure to jointly determine the local interpretation.
+
+A second advantage is that the formulation preserves demonstration-specific
+constraint variables while maintaining a shared task-level representation. A
+strict shared model would require all corresponding stages to be explained
+directly by exactly the same mode and parameter. In contrast, the hierarchical
+model permits a local constraint estimate to deviate from the shared prototype
+when the evidence in an individual demonstration supports such a deviation.
+This flexibility is useful in the presence of execution variability, observation
+noise, imperfect segmentation, or individual demonstrations that express a
+constraint less clearly than others. At the same time, the hierarchical prior
+discourages arbitrary local deviations and allows information from corresponding
+stages in other demonstrations to resolve locally ambiguous interpretations.
+
+The probabilistic formulation also makes several quantities that would otherwise
+appear as independent cost weights more interpretable. For example, the
+local-to-shared parameter coupling is controlled by the scale $b_j$ of the
+hierarchical parameter distribution, while the strength of mode agreement is
+controlled by the deviation probability $\epsilon$. These quantities have a
+direct statistical interpretation as expected cross-demonstration variability.
+Similarly, the observation scales
+$\sigma_{\mathrm{eq},j}$ and $\sigma_{\mathrm{ineq},j}$ describe the variability
+of feature observations under the corresponding active constraint models.
+This does not eliminate hyperparameters, but it separates different sources of
+variability and gives their relative strengths an explicit modeling
+interpretation.
+
+The formulation remains compatible with exact dynamic programming for the
+segmentation subproblem. Conditioned on the current shared prototypes, the
+demonstrations are independent and the objective is additive over ordered
+candidate stages. The local mode and parameter of each candidate interval can
+therefore be profiled out before evaluating its stage cost, after which dynamic
+programming exactly searches over all admissible ordered cutpoint sequences.
+The subsequent shared-prototype update is also separable over stage-feature
+pairs. Hence, although the complete problem is mixed discrete-continuous and
+non-convex, both alternating blocks have well-defined optimization objectives.
+With fixed model hyperparameters and exact inner optimizations, the complete
+regularized objective in \eqref{eq:regularized_map_objective} is non-increasing
+across alternating iterations.
+
+The probabilistic interpretation, however, introduces additional modeling
+assumptions. Most importantly, an inactive feature does not have a unique
+generative distribution. The absence of a task constraint does not imply that
+the corresponding feature values are uniformly distributed or highly variable:
+unconstrained behavior may still be concentrated because of the demonstrator's
+policy, system dynamics, other task constraints, or the geometry of the task.
+The reference density $q_j$ therefore acts as an explicit background model
+against which active constraint hypotheses are compared, and its specification
+can affect active--inactive model selection. This issue is intrinsic to
+constraint inference from feasible demonstrations and is not removed by the MAP
+formulation.
+
+Relatedly, the observation scales
+$\sigma_{\mathrm{eq},j}$ and $\sigma_{\mathrm{ineq},j}$ must distinguish typical
+demonstration variability from the structural signature of an active
+constraint. Allowing these scales to vary freely for every candidate interval
+would make the active models overly flexible: a poorly fitting interval could
+be explained by simply increasing its observation scale. We therefore treat
+these quantities as feature-level observation-model parameters rather than
+stage-specific constraint parameters. They may be calibrated from the
+demonstrations or estimated at a higher level of the model, but their values
+still encode assumptions about the expected variability under an active
+constraint.
+
+Another limitation is that the likelihood in
+\eqref{eq:factorized_segment_likelihood} uses a conditional-independence
+approximation across time and feature dimensions. Feature values computed from
+the same robot state can be correlated, and neighboring trajectory samples are
+generally temporally dependent. Modeling the full joint feature trajectory
+distribution would require substantially more complex observation models and
+would reduce the simplicity of the segment-wise dynamic-programming
+formulation. The factorized likelihood should therefore be interpreted as a
+tractable feature-level observation model rather than a complete generative
+model of demonstrated trajectories.
+
+The MAP formulation also increases computational cost relative to a fully
+precomputed local-fitting procedure. Because the optimal local parameter of a
+candidate interval depends on the current shared prototype through the
+hierarchical prior, the final local MAP fit must in general be recomputed when
+the prototype changes. Prototype-independent quantities, including feature
+trajectories, progress costs, inactive likelihood contributions, and useful
+interval statistics, can still be cached, but the complete candidate-interval
+fit can no longer be precomputed once and reused throughout all outer
+iterations.
+
+Finally, the subgoal-progress term remains an auxiliary structural
+regularizer rather than part of the probabilistic constraint model. It provides
+additional information for distinguishing motion-coherent stages when feature
+likelihood alone is insufficient, but its weight
+$\lambda_{\mathrm{prog}}$ is not determined by the hierarchical probability
+model. Accordingly, the complete method is more precisely described as
+regularized hierarchical MAP inference rather than pure MAP estimation.
+This separation is intentional: the probabilistic model describes how local and
+shared constraints explain feature observations, whereas the progress term
+encodes an additional assumption about the temporal coherence of a valid stage.
+
+Overall, the reformulation trades implementation simplicity for a more unified
+statistical treatment of local constraint inference and cross-demonstration
+sharing. It provides a consistent objective for segmentation, local constraint
+estimation, and shared prototype updates, while retaining the exact
+dynamic-programming structure of the segmentation step. Its main remaining
+modeling choices concern the inactive reference distribution, observation-scale
+calibration, and the strength of the hierarchical coupling, all of which reflect
+information that cannot in general be determined uniquely from feasible
+demonstrations alone.
+
+\bibliographystyle{IEEEtran}
+\bibliography{ref}
+% \begin{thebibliography}{1}
+% \bibliographystyle{IEEEtran}
+
+
+\end{document}Unable to help with that. Please provide the text of the paragraph for further assistance.

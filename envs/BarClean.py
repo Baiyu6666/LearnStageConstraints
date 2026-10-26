@@ -11,17 +11,9 @@ from .base import TaskBundle
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_TASK_DEFINITION = (
-    PROJECT_ROOT
-    / "robot"
-    / "stage_cons_iiwa14"
-    / "ros_ws"
-    / "src"
-    / "stage_constraint_planner"
-    / "config"
-    / "bar_clean_true.json"
-)
-PLANNER_PYTHON_ROOT = DEFAULT_TASK_DEFINITION.parent.parent / "src"
+from utils.robot_runtime import active as robot_runtime
+DEFAULT_TASK_DEFINITION = robot_runtime().task_dir / "bar_clean_true.json"
+PLANNER_PYTHON_ROOT = PROJECT_ROOT / "robot/stage_cons_iiwa14/ros_ws/src/stage_constraint_planner/src"
 if str(PLANNER_PYTHON_ROOT) not in sys.path:
     sys.path.insert(0, str(PLANNER_PYTHON_ROOT))
 
@@ -731,6 +723,8 @@ def load_BarClean(
             demo_obstacle_poses = np.asarray(
                 archive["demo_obstacle_poses"], dtype=float
             )
+            source_robot_profile = str(np.asarray(archive["robot_profile"]).item()) if "robot_profile" in archive.files else "unspecified"
+            source_site_profile = str(np.asarray(archive["site_profile"]).item()) if "site_profile" in archive.files else "unspecified"
             downsample_hz = float(np.asarray(archive["downsample_hz"]).item())
             tracker_rotation = np.asarray(
                 archive["optitrack_to_robot_rotation"], dtype=float
@@ -889,6 +883,8 @@ def load_BarClean(
                     "source_demo_id": int(archive_source_demo_ids[archive_index]),
                     "source": "processed_real_demo",
                     "processed_demo_path": str(data_path),
+                "source_robot_profile": source_robot_profile,
+                "source_site_profile": source_site_profile,
                     "recording_bounds": row.tolist(),
                     **demo_scenes[archive_index].to_dict(),
                 }

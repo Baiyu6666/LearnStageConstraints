@@ -17,4 +17,5 @@
   <exec_depend>inspection_virtual_fixture</exec_depend>
   <exec_depend>stage_demo_recorder</exec_depend>
   <exec_depend>stage_optitrack</exec_depend>
+  <exec_depend>stage_robot_config</exec_depend>
 </package>

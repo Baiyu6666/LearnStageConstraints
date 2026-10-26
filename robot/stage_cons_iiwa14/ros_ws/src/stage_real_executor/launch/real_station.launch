@@ -1,11 +1,12 @@
 <launch>
-  <arg name="robot_name" default="iiwa14"/>
-  <arg name="robot_ip" default="192.170.10.4"/>
+  <param name="/stage_cons/runtime_identity" value="$(optenv STAGE_RUNTIME_IDENTITY)"/>
+  <arg name="robot_name" default="$(optenv STAGE_ROBOT_NAME iiwa14)"/>
+  <arg name="robot_ip" default="$(optenv ROBOT_IP 192.170.10.4)"/>
   <arg name="output_root" default="/data/demos"/>
-  <arg name="velocity_scale" default="0.25"/>
-  <arg name="acceleration_limit_rad_s2" default="1.0"/>
+  <arg name="velocity_scale" default="$(optenv STAGE_VELOCITY_SCALE 0.25)"/>
+  <arg name="acceleration_limit_rad_s2" default="$(optenv STAGE_ACCELERATION_LIMIT 1.0)"/>
 
-  <include file="$(find iiwa_driver)/launch/iiwa14_bringup.launch">
+  <include file="$(find iiwa_driver)/launch/iiwa_bringup.launch">
     <arg name="robot_name" value="$(arg robot_name)"/>
     <arg name="controller" value="PositionTrajectoryController"/>
     <arg name="robot_ip" value="$(arg robot_ip)"/>
@@ -31,6 +32,6 @@
 
   <include file="$(find stage_constraint_planner)/launch/task_planner.launch">
     <arg name="frame_id" value="$(arg robot_name)_link_0"/>
-    <arg name="scene_pose_rotation" value="[[0.0, 0.0, 1.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0.0]]"/>
+    <arg name="scene_pose_rotation" value="$(optenv STAGE_SCENE_ROTATION)"/>
   </include>
 </launch>
