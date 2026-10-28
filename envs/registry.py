@@ -22,6 +22,7 @@ class _LazyEnvLoader:
 
 ENV_REGISTRY: Dict[str, Callable[..., TaskBundle]] = {
     "BarClean": _LazyEnvLoader(".BarClean", "load_BarClean"),
+    "BarSponge": _LazyEnvLoader(".BarSponge", "load_BarSponge"),
     "BarInspect": _LazyEnvLoader(".BarInspect", "load_BarInspect"),
     "S3ObsAvoid": _LazyEnvLoader(".S3ObsAvoid", "load_S3ObsAvoid"),
     "S5SphereInspect": _LazyEnvLoader(".S5SphereInspect", "load_S5SphereInspect"),
