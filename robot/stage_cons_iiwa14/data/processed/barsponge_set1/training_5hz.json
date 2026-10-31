@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "source_session_id": "20261029T095317_729197Z_bar_sponge_various",
+  "source_bag_sha256": "676d3c38b54f37c257b2f1711bbc5c43eaa027bf9b19327196be84b9a0c74bb4",
+  "training_sha256": "22d330dcef0cc1a5963b82cce8647ac777eb68e2b3dd090515d8d2ae1cf2e9fd",
+  "frame_id": "iiwa7_link_0",
+  "sample_rate_hz": 5.0,
+  "trajectory_columns": [
+    "ee_x",
+    "ee_y",
+    "ee_z",
+    "qx",
+    "qy",
+    "qz",
+    "qw"
+  ],
+  "feature_names": [
+    "cup_xy_distance",
+    "bar_relative_height",
+    "bar_lateral_offset",
+    "bar_longitudinal_offset",
+    "tcp_speed",
+    "world_z_force"
+  ],
+  "feature_units": [
+    "m",
+    "m",
+    "m",
+    "m",
+    "m/s",
+    "N"
+  ],
+  "bar_axis_local": [
+    0,
+    0,
+    1
+  ],
+  "bar_lateral_definition": "base Z cross projected bar local Z",
+  "bar_longitudinal_definition": "signed TCP minus Bar origin along normalized bar local Z projected into base XY",
+  "scene_pose_policy": "Bar and Cup fixed in robot base frame for every demo",
+  "stage_boundary_rule": "trimmed contact starts/ends from sustained compensated base Z force >5 N",
+  "demos": [
+    {
+      "demo": "demo_01",
+      "source_bag": "segments/trimmed/demo_01/demo.bag",
+      "samples": 81,
+      "bounds_indices": [
+        0,
+        15,
+        54,
+        81
+      ],
+      "contact_start_s": 2.899799999999999,
+      "contact_end_s": 10.6998
+    },
+    {
+      "demo": "demo_02",
+      "source_bag": "segments/trimmed/demo_02/demo.bag",
+      "samples": 79,
+      "bounds_indices": [
+        81,
+        95,
+        140,
+        160
+      ],
+      "contact_start_s": 2.7500999999999998,
+      "contact_end_s": 11.6001
+    },
+    {
+      "demo": "demo_03",
+      "source_bag": "segments/trimmed/demo_03/demo.bag",
+      "samples": 85,
+      "bounds_indices": [
+        160,
+        173,
+        216,
+        245
+      ],
+      "contact_start_s": 2.549899999999999,
+      "contact_end_s": 11.1499
+    },
+    {
+      "demo": "demo_04",
+      "source_bag": "segments/trimmed/demo_04/demo.bag",
+      "samples": 68,
+      "bounds_indices": [
+        245,
+        256,
+        292,
+        313
+      ],
+      "contact_start_s": 2.1994999999999987,
+      "contact_end_s": 9.2005
+    }
+  ],
+  "bar_relative_height_definition": "TCP.base_z - Bar.base_z; frozen tracked Bar origin; robot-base +Z",
+  "height_migration": {
+    "source_training_sha256": "126591cac4972df12484dfa57348803518d8eb8c94e19e75fadb0e80946e90a0",
+    "rule": "TCP.base_z - Bar.base_z; frozen tracked Bar origin; robot-base +Z"
+  }
+}

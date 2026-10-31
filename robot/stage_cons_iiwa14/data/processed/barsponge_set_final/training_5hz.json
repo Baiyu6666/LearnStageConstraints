@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "dataset_name": "barsponge_set_final",
+  "demo_count": 11,
+  "sample_count": 822,
+  "id_rule": "demo_id and source_demo_ids are 1..11; merged_demo_id retains set_index * 100 + original_demo_id",
+  "training_sha256": "148f3d4a58dd2084bc7a9ca4a8ddd20e3e702dc09f1054b30ca38d18623f33c0",
+  "source_archive": "robot/stage_cons_iiwa14/data/processed/barsponge_multiset/training_5hz.npz",
+  "source_archive_sha256": "b32c9c82fa4bae66dea5cc508bcf41fac34dec5db9b7d9e0fa012090fba3f32a",
+  "selected_merged_demo_ids": [
+    4,
+    7,
+    8,
+    101,
+    102,
+    201,
+    204,
+    203,
+    301,
+    303,
+    404
+  ],
+  "validated_method_parameters": {
+    "map_eq_sigma": 0.2,
+    "map_c_bg": 3,
+    "map_c_ineq": 4.0
+  },
+  "demos": [
+    {
+      "merged_demo_id": 4,
+      "set_name": "barsponge_set0",
+      "original_demo_id": 4,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set0/training_5hz.npz",
+      "source_session_id": "20261029T082907_888597Z_sponge_clean29",
+      "source_training_sha256": "cca823b48c22e2419ba34edf361221a85f769a39ce2b98aea727c782ca578980",
+      "samples": 90,
+      "demo_id": 1,
+      "demo": "demo_01"
+    },
+    {
+      "merged_demo_id": 7,
+      "set_name": "barsponge_set0",
+      "original_demo_id": 7,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set0/training_5hz.npz",
+      "source_session_id": "20261029T082907_888597Z_sponge_clean29",
+      "source_training_sha256": "cca823b48c22e2419ba34edf361221a85f769a39ce2b98aea727c782ca578980",
+      "samples": 75,
+      "demo_id": 2,
+      "demo": "demo_02"
+    },
+    {
+      "merged_demo_id": 8,
+      "set_name": "barsponge_set0",
+      "original_demo_id": 8,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set0/training_5hz.npz",
+      "source_session_id": "20261029T082907_888597Z_sponge_clean29",
+      "source_training_sha256": "cca823b48c22e2419ba34edf361221a85f769a39ce2b98aea727c782ca578980",
+      "samples": 84,
+      "demo_id": 3,
+      "demo": "demo_03"
+    },
+    {
+      "merged_demo_id": 101,
+      "set_name": "barsponge_set1",
+      "original_demo_id": 1,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set1/training_5hz.npz",
+      "source_session_id": "20261029T095317_729197Z_bar_sponge_various",
+      "source_training_sha256": "22d330dcef0cc1a5963b82cce8647ac777eb68e2b3dd090515d8d2ae1cf2e9fd",
+      "samples": 81,
+      "demo_id": 4,
+      "demo": "demo_04"
+    },
+    {
+      "merged_demo_id": 102,
+      "set_name": "barsponge_set1",
+      "original_demo_id": 2,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set1/training_5hz.npz",
+      "source_session_id": "20261029T095317_729197Z_bar_sponge_various",
+      "source_training_sha256": "22d330dcef0cc1a5963b82cce8647ac777eb68e2b3dd090515d8d2ae1cf2e9fd",
+      "samples": 79,
+      "demo_id": 5,
+      "demo": "demo_05"
+    },
+    {
+      "merged_demo_id": 201,
+      "set_name": "barsponge_set2",
+      "original_demo_id": 1,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set2/training_5hz.npz",
+      "source_session_id": "20261029T095619_356278Z_bar_sponge_various1",
+      "source_training_sha256": "3bc5a86cc089fdd0cab88e7673a1ee731fbd8fd1e012e697f2ea85300e1538c7",
+      "samples": 79,
+      "demo_id": 6,
+      "demo": "demo_06"
+    },
+    {
+      "merged_demo_id": 204,
+      "set_name": "barsponge_set2",
+      "original_demo_id": 4,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set2/training_5hz.npz",
+      "source_session_id": "20261029T095619_356278Z_bar_sponge_various1",
+      "source_training_sha256": "3bc5a86cc089fdd0cab88e7673a1ee731fbd8fd1e012e697f2ea85300e1538c7",
+      "samples": 61,
+      "demo_id": 7,
+      "demo": "demo_07"
+    },
+    {
+      "merged_demo_id": 203,
+      "set_name": "barsponge_set2",
+      "original_demo_id": 3,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set2/training_5hz.npz",
+      "source_session_id": "20261029T095619_356278Z_bar_sponge_various1",
+      "source_training_sha256": "3bc5a86cc089fdd0cab88e7673a1ee731fbd8fd1e012e697f2ea85300e1538c7",
+      "samples": 67,
+      "demo_id": 8,
+      "demo": "demo_08"
+    },
+    {
+      "merged_demo_id": 301,
+      "set_name": "barsponge_set3",
+      "original_demo_id": 1,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set3/training_5hz.npz",
+      "source_session_id": "20261029T095917_979223Z_bar_sponge_various2",
+      "source_training_sha256": "7869ab1b632a8299cab33c3cc82db692d125ed73c04919aed54e89bb49019ff7",
+      "samples": 66,
+      "demo_id": 9,
+      "demo": "demo_09"
+    },
+    {
+      "merged_demo_id": 303,
+      "set_name": "barsponge_set3",
+      "original_demo_id": 3,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set3/training_5hz.npz",
+      "source_session_id": "20261029T095917_979223Z_bar_sponge_various2",
+      "source_training_sha256": "7869ab1b632a8299cab33c3cc82db692d125ed73c04919aed54e89bb49019ff7",
+      "samples": 76,
+      "demo_id": 10,
+      "demo": "demo_10"
+    },
+    {
+      "merged_demo_id": 404,
+      "set_name": "barsponge_set4",
+      "original_demo_id": 4,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set4/training_5hz.npz",
+      "source_session_id": "20261029T100138_257323Z_bar_sponge_various3",
+      "source_training_sha256": "21b07309acf896b1c67c1bd23cc853177553cc305cd8c24538ab6c9a47a0e358",
+      "samples": 64,
+      "demo_id": 11,
+      "demo": "demo_11"
+    }
+  ],
+  "previous_training_sha256": "70ad1037ed6372f4564c3d06a0b803a4e73844dd11ab0355d9484483a63b4ecc",
+  "previous_dataset_backup": "outputs/barsponge_replacement_search/previous_final_dataset",
+  "replacements": [
+    {
+      "final_demo_id": 7,
+      "old": "barsponge_set2/demo2",
+      "new": "barsponge_set2/demo4"
+    },
+    {
+      "final_demo_id": 11,
+      "old": "barsponge_set4/demo1",
+      "new": "barsponge_set4/demo4"
+    }
+  ],
+  "validation_status": "passed full benchmark",
+  "validated_run_dir": "outputs/barsponge_replacement_search/retrained/map_balanced_pooled/BarSponge/method_seed_000",
+  "feature_names": [
+    "cup_xy_distance",
+    "bar_relative_height",
+    "bar_lateral_offset",
+    "bar_longitudinal_offset",
+    "tcp_speed",
+    "world_z_force"
+  ],
+  "bar_relative_height_definition": "TCP.base_z - Bar.base_z; frozen tracked Bar origin; robot-base +Z",
+  "height_migration": {
+    "source_training_sha256": "bd079cf012015468cf6fa128fc4b90e9f2e6ffa79dc0e0860c8d4e9b65c0ad98",
+    "rule": "TCP.base_z - Bar.base_z; frozen tracked Bar origin; robot-base +Z"
+  }
+}

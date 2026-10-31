@@ -15,6 +15,7 @@ def archive_path(tmp_path):
     trajectory[:, 6] = 1
     bars = np.zeros((3, 7))
     bars[:, 0] = [0.1, 0.2, 0.3]
+    bars[:, 2] = [.1, .2, .3]
     bars[:, 4] = bars[:, 6] = np.sqrt(0.5)
     cups = np.zeros((3, 7))
     cups[:, 0] = [1, 2, 3]
@@ -23,7 +24,8 @@ def archive_path(tmp_path):
     force = np.arange(count, dtype=float)
     features = np.column_stack((
         np.linalg.norm(trajectory[:, :2] - np.repeat(cups[:, :2], 9, axis=0), axis=1),
-        trajectory[:, 2], trajectory[:, 1], speed, force,
+        trajectory[:, 2] - np.repeat(bars[:, 2], 9), trajectory[:, 1],
+        trajectory[:, 0] - np.repeat(bars[:, 0], 9), speed, force,
     ))
     path = tmp_path / 'training.npz'
     np.savez(
@@ -71,3 +73,26 @@ def test_invalid_demo_selection(archive_path, ids, message):
 def test_default_selection_uses_first_n_demos(archive_path):
     bundle = load_env('BarSponge', processed_demo_path=archive_path, n_demos=2)
     assert bundle.meta['source_demo_ids'] == [11, 22]
+
+
+@pytest.mark.parametrize('yaw, expected_lateral, expected_longitudinal', [
+    (0., -.2, .3), (90., -.3, -.2),
+])
+def test_longitudinal_offset_uses_signed_projected_axis_and_bar_origin(
+        yaw, expected_lateral, expected_longitudinal):
+    from scipy.spatial.transform import Rotation
+    from envs.BarSponge import BarSpongeEnv
+
+    rotation = Rotation.from_euler('z', yaw, degrees=True) * Rotation.from_euler('y', 45., degrees=True)
+    bar = np.r_[[.5, .7, 0.], rotation.as_quat()]
+    scene = {'bar_pose_base': bar, 'cup_pose_base': np.array([1., 1., 0., 0., 0., 0., 1.])}
+    trajectory = np.array([[.8, .5, 5., 0., 0., 0., 1.]])
+    env = BarSpongeEnv(downsample_hz=5., frame_id='robot_base')
+    env.register_observed_traces(trajectory, [.12], [20.])
+    matrix = env.compute_all_features_matrix(trajectory, scene=scene)
+
+    assert matrix.shape == (1, 6)
+    np.testing.assert_allclose(matrix[0, 2:], [expected_lateral, expected_longitudinal, .12, 20.])
+    schema = env.get_feature_schema()
+    assert schema[3]['name'] == 'bar_longitudinal_offset'
+    assert schema[3]['unit'] == 'm'

@@ -23,7 +23,7 @@ except ModuleNotFoundError:
     Axes3D = None
 
 from .io import learner_plot_dir, save_figure
-from .top_view_scene import draw_top_view_scene, top_view_scene_limit_points
+from .top_view_scene import configure_top_view_axis_direction, draw_top_view_scene, top_view_scene_limit_points
 
 PAPER_FIGSIZE = (8.4, 6.0)
 PAPER_TITLE_SIZE = 9
@@ -880,6 +880,7 @@ def _configure_2d_trajectory_axes(
     ax.set_ylim(ymin - pad, ymax + pad)
     ax.set_ylabel("y", fontsize=PAPER_LABEL_SIZE)
     ax.set_aspect("equal", adjustable="box")
+    configure_top_view_axis_direction(ax, env)
 
 
 def _true_cutpoints_for_demo(learner, demo_idx):

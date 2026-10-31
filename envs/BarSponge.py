@@ -12,8 +12,8 @@ from .base import TaskBundle
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-FEATURE_NAMES = ('cup_xy_distance', 'base_z', 'bar_lateral_offset',
-                 'tcp_speed', 'world_z_force')
+FEATURE_NAMES = ('cup_xy_distance', 'bar_relative_height', 'bar_lateral_offset',
+                 'bar_longitudinal_offset', 'tcp_speed', 'world_z_force')
 TRAJECTORY_COLUMNS = ('ee_x', 'ee_y', 'ee_z', 'qx', 'qy', 'qz', 'qw')
 
 
@@ -42,11 +42,12 @@ class BarSpongeEnv:
     @staticmethod
     def get_feature_schema():
         names = FEATURE_NAMES
-        units = ('m', 'm', 'm', 'm/s', 'N')
+        units = ('m', 'm', 'm', 'm', 'm/s', 'N')
         descriptions = (
             'TCP point XY distance to the tracked cup center',
-            'FK end-effector Z in the robot base frame',
+            'Signed TCP base Z minus frozen tracked Bar center base Z',
             'Signed offset along base Z cross projected bar local Z',
+            'Signed TCP minus Bar origin along normalized bar local Z projected into base XY',
             'FK end-effector translational speed',
             'Compensated positive robot-base Z force',
         )
@@ -113,8 +114,9 @@ class BarSpongeEnv:
         lateral = np.array([-axis[1], axis[0]])
         matrix = np.column_stack((
             np.linalg.norm(pose[:, :2] - cup[:2], axis=1),
-            pose[:, 2],
+            pose[:, 2] - bar[2],
             (pose[:, :2] - bar[:2]) @ lateral,
+            (pose[:, :2] - bar[:2]) @ axis,
             speed,
             force,
         ))
@@ -162,7 +164,7 @@ def load_BarSponge(*, processed_demo_path, n_demos=5, seed=2026, source_demo_ids
         raise ValueError('BarSponge demo boundaries or scene poses have invalid shapes')
     if not all(np.all(np.isfinite(values)) for values in (pose, features, timestamps, force, speed, bar_poses, cup_poses)):
         raise ValueError('BarSponge training data contains non-finite values')
-    if not np.allclose(features[:, 3], speed) or not np.allclose(features[:, 4], force):
+    if not np.allclose(features[:, 4], speed) or not np.allclose(features[:, 5], force):
         raise ValueError('Stored speed or force feature does not match its source trace')
     if bounds[0, 0] != 0 or bounds[-1, -1] != len(pose) or np.any(bounds[1:, 0] != bounds[:-1, -1]) or np.any(np.diff(bounds, axis=1) < 3):
         raise ValueError('BarSponge stage bounds must be contiguous with three nonempty stages')

@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "id_rule": "merged_demo_id = set_index * 100 + original_demo_id",
+  "sample_count": 1949,
+  "demo_count": 26,
+  "demos": [
+    {
+      "merged_demo_id": 1,
+      "set_name": "barsponge_set0",
+      "original_demo_id": 1,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set0/training_5hz.npz",
+      "source_session_id": "20261029T082907_888597Z_sponge_clean29",
+      "source_training_sha256": "cca823b48c22e2419ba34edf361221a85f769a39ce2b98aea727c782ca578980",
+      "samples": 76
+    },
+    {
+      "merged_demo_id": 2,
+      "set_name": "barsponge_set0",
+      "original_demo_id": 2,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set0/training_5hz.npz",
+      "source_session_id": "20261029T082907_888597Z_sponge_clean29",
+      "source_training_sha256": "cca823b48c22e2419ba34edf361221a85f769a39ce2b98aea727c782ca578980",
+      "samples": 87
+    },
+    {
+      "merged_demo_id": 3,
+      "set_name": "barsponge_set0",
+      "original_demo_id": 3,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set0/training_5hz.npz",
+      "source_session_id": "20261029T082907_888597Z_sponge_clean29",
+      "source_training_sha256": "cca823b48c22e2419ba34edf361221a85f769a39ce2b98aea727c782ca578980",
+      "samples": 89
+    },
+    {
+      "merged_demo_id": 4,
+      "set_name": "barsponge_set0",
+      "original_demo_id": 4,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set0/training_5hz.npz",
+      "source_session_id": "20261029T082907_888597Z_sponge_clean29",
+      "source_training_sha256": "cca823b48c22e2419ba34edf361221a85f769a39ce2b98aea727c782ca578980",
+      "samples": 90
+    },
+    {
+      "merged_demo_id": 5,
+      "set_name": "barsponge_set0",
+      "original_demo_id": 5,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set0/training_5hz.npz",
+      "source_session_id": "20261029T082907_888597Z_sponge_clean29",
+      "source_training_sha256": "cca823b48c22e2419ba34edf361221a85f769a39ce2b98aea727c782ca578980",
+      "samples": 76
+    },
+    {
+      "merged_demo_id": 6,
+      "set_name": "barsponge_set0",
+      "original_demo_id": 6,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set0/training_5hz.npz",
+      "source_session_id": "20261029T082907_888597Z_sponge_clean29",
+      "source_training_sha256": "cca823b48c22e2419ba34edf361221a85f769a39ce2b98aea727c782ca578980",
+      "samples": 81
+    },
+    {
+      "merged_demo_id": 7,
+      "set_name": "barsponge_set0",
+      "original_demo_id": 7,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set0/training_5hz.npz",
+      "source_session_id": "20261029T082907_888597Z_sponge_clean29",
+      "source_training_sha256": "cca823b48c22e2419ba34edf361221a85f769a39ce2b98aea727c782ca578980",
+      "samples": 75
+    },
+    {
+      "merged_demo_id": 8,
+      "set_name": "barsponge_set0",
+      "original_demo_id": 8,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set0/training_5hz.npz",
+      "source_session_id": "20261029T082907_888597Z_sponge_clean29",
+      "source_training_sha256": "cca823b48c22e2419ba34edf361221a85f769a39ce2b98aea727c782ca578980",
+      "samples": 84
+    },
+    {
+      "merged_demo_id": 101,
+      "set_name": "barsponge_set1",
+      "original_demo_id": 1,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set1/training_5hz.npz",
+      "source_session_id": "20261029T095317_729197Z_bar_sponge_various",
+      "source_training_sha256": "22d330dcef0cc1a5963b82cce8647ac777eb68e2b3dd090515d8d2ae1cf2e9fd",
+      "samples": 81
+    },
+    {
+      "merged_demo_id": 102,
+      "set_name": "barsponge_set1",
+      "original_demo_id": 2,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set1/training_5hz.npz",
+      "source_session_id": "20261029T095317_729197Z_bar_sponge_various",
+      "source_training_sha256": "22d330dcef0cc1a5963b82cce8647ac777eb68e2b3dd090515d8d2ae1cf2e9fd",
+      "samples": 79
+    },
+    {
+      "merged_demo_id": 103,
+      "set_name": "barsponge_set1",
+      "original_demo_id": 3,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set1/training_5hz.npz",
+      "source_session_id": "20261029T095317_729197Z_bar_sponge_various",
+      "source_training_sha256": "22d330dcef0cc1a5963b82cce8647ac777eb68e2b3dd090515d8d2ae1cf2e9fd",
+      "samples": 85
+    },
+    {
+      "merged_demo_id": 104,
+      "set_name": "barsponge_set1",
+      "original_demo_id": 4,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set1/training_5hz.npz",
+      "source_session_id": "20261029T095317_729197Z_bar_sponge_various",
+      "source_training_sha256": "22d330dcef0cc1a5963b82cce8647ac777eb68e2b3dd090515d8d2ae1cf2e9fd",
+      "samples": 68
+    },
+    {
+      "merged_demo_id": 201,
+      "set_name": "barsponge_set2",
+      "original_demo_id": 1,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set2/training_5hz.npz",
+      "source_session_id": "20261029T095619_356278Z_bar_sponge_various1",
+      "source_training_sha256": "3bc5a86cc089fdd0cab88e7673a1ee731fbd8fd1e012e697f2ea85300e1538c7",
+      "samples": 79
+    },
+    {
+      "merged_demo_id": 202,
+      "set_name": "barsponge_set2",
+      "original_demo_id": 2,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set2/training_5hz.npz",
+      "source_session_id": "20261029T095619_356278Z_bar_sponge_various1",
+      "source_training_sha256": "3bc5a86cc089fdd0cab88e7673a1ee731fbd8fd1e012e697f2ea85300e1538c7",
+      "samples": 72
+    },
+    {
+      "merged_demo_id": 203,
+      "set_name": "barsponge_set2",
+      "original_demo_id": 3,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set2/training_5hz.npz",
+      "source_session_id": "20261029T095619_356278Z_bar_sponge_various1",
+      "source_training_sha256": "3bc5a86cc089fdd0cab88e7673a1ee731fbd8fd1e012e697f2ea85300e1538c7",
+      "samples": 67
+    },
+    {
+      "merged_demo_id": 204,
+      "set_name": "barsponge_set2",
+      "original_demo_id": 4,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set2/training_5hz.npz",
+      "source_session_id": "20261029T095619_356278Z_bar_sponge_various1",
+      "source_training_sha256": "3bc5a86cc089fdd0cab88e7673a1ee731fbd8fd1e012e697f2ea85300e1538c7",
+      "samples": 61
+    },
+    {
+      "merged_demo_id": 301,
+      "set_name": "barsponge_set3",
+      "original_demo_id": 1,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set3/training_5hz.npz",
+      "source_session_id": "20261029T095917_979223Z_bar_sponge_various2",
+      "source_training_sha256": "7869ab1b632a8299cab33c3cc82db692d125ed73c04919aed54e89bb49019ff7",
+      "samples": 66
+    },
+    {
+      "merged_demo_id": 302,
+      "set_name": "barsponge_set3",
+      "original_demo_id": 2,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set3/training_5hz.npz",
+      "source_session_id": "20261029T095917_979223Z_bar_sponge_various2",
+      "source_training_sha256": "7869ab1b632a8299cab33c3cc82db692d125ed73c04919aed54e89bb49019ff7",
+      "samples": 65
+    },
+    {
+      "merged_demo_id": 303,
+      "set_name": "barsponge_set3",
+      "original_demo_id": 3,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set3/training_5hz.npz",
+      "source_session_id": "20261029T095917_979223Z_bar_sponge_various2",
+      "source_training_sha256": "7869ab1b632a8299cab33c3cc82db692d125ed73c04919aed54e89bb49019ff7",
+      "samples": 76
+    },
+    {
+      "merged_demo_id": 304,
+      "set_name": "barsponge_set3",
+      "original_demo_id": 4,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set3/training_5hz.npz",
+      "source_session_id": "20261029T095917_979223Z_bar_sponge_various2",
+      "source_training_sha256": "7869ab1b632a8299cab33c3cc82db692d125ed73c04919aed54e89bb49019ff7",
+      "samples": 68
+    },
+    {
+      "merged_demo_id": 401,
+      "set_name": "barsponge_set4",
+      "original_demo_id": 1,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set4/training_5hz.npz",
+      "source_session_id": "20261029T100138_257323Z_bar_sponge_various3",
+      "source_training_sha256": "21b07309acf896b1c67c1bd23cc853177553cc305cd8c24538ab6c9a47a0e358",
+      "samples": 82
+    },
+    {
+      "merged_demo_id": 402,
+      "set_name": "barsponge_set4",
+      "original_demo_id": 2,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set4/training_5hz.npz",
+      "source_session_id": "20261029T100138_257323Z_bar_sponge_various3",
+      "source_training_sha256": "21b07309acf896b1c67c1bd23cc853177553cc305cd8c24538ab6c9a47a0e358",
+      "samples": 79
+    },
+    {
+      "merged_demo_id": 403,
+      "set_name": "barsponge_set4",
+      "original_demo_id": 3,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set4/training_5hz.npz",
+      "source_session_id": "20261029T100138_257323Z_bar_sponge_various3",
+      "source_training_sha256": "21b07309acf896b1c67c1bd23cc853177553cc305cd8c24538ab6c9a47a0e358",
+      "samples": 62
+    },
+    {
+      "merged_demo_id": 404,
+      "set_name": "barsponge_set4",
+      "original_demo_id": 4,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set4/training_5hz.npz",
+      "source_session_id": "20261029T100138_257323Z_bar_sponge_various3",
+      "source_training_sha256": "21b07309acf896b1c67c1bd23cc853177553cc305cd8c24538ab6c9a47a0e358",
+      "samples": 64
+    },
+    {
+      "merged_demo_id": 405,
+      "set_name": "barsponge_set4",
+      "original_demo_id": 5,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set4/training_5hz.npz",
+      "source_session_id": "20261029T100138_257323Z_bar_sponge_various3",
+      "source_training_sha256": "21b07309acf896b1c67c1bd23cc853177553cc305cd8c24538ab6c9a47a0e358",
+      "samples": 71
+    },
+    {
+      "merged_demo_id": 406,
+      "set_name": "barsponge_set4",
+      "original_demo_id": 6,
+      "source_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set4/training_5hz.npz",
+      "source_session_id": "20261029T100138_257323Z_bar_sponge_various3",
+      "source_training_sha256": "21b07309acf896b1c67c1bd23cc853177553cc305cd8c24538ab6c9a47a0e358",
+      "samples": 66
+    }
+  ],
+  "training_sha256": "b32c9c82fa4bae66dea5cc508bcf41fac34dec5db9b7d9e0fa012090fba3f32a",
+  "feature_names": [
+    "cup_xy_distance",
+    "bar_relative_height",
+    "bar_lateral_offset",
+    "bar_longitudinal_offset",
+    "tcp_speed",
+    "world_z_force"
+  ],
+  "bar_relative_height_definition": "TCP.base_z - Bar.base_z; frozen tracked Bar origin; robot-base +Z",
+  "height_migration": {
+    "source_training_sha256": "2094800f8b99caae623641f1a11ff4f3f8b69c88ad3dd363cf35bcac460bd17f",
+    "rule": "TCP.base_z - Bar.base_z; frozen tracked Bar origin; robot-base +Z"
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "source_session_id": "20261029T082907_888597Z_sponge_clean29",
+  "source_bag_sha256": "d987a644823d40df0c642efa4cee3ff0315c7291c50f507d708f509d9df9af0c",
+  "training_sha256": "cca823b48c22e2419ba34edf361221a85f769a39ce2b98aea727c782ca578980",
+  "frame_id": "iiwa7_link_0",
+  "sample_rate_hz": 5.0,
+  "trajectory_columns": [
+    "ee_x",
+    "ee_y",
+    "ee_z",
+    "qx",
+    "qy",
+    "qz",
+    "qw"
+  ],
+  "feature_names": [
+    "cup_xy_distance",
+    "bar_relative_height",
+    "bar_lateral_offset",
+    "bar_longitudinal_offset",
+    "tcp_speed",
+    "world_z_force"
+  ],
+  "feature_units": [
+    "m",
+    "m",
+    "m",
+    "m",
+    "m/s",
+    "N"
+  ],
+  "bar_axis_local": [
+    0,
+    0,
+    1
+  ],
+  "bar_lateral_definition": "base Z cross projected bar local Z",
+  "bar_longitudinal_definition": "signed TCP minus Bar origin along normalized bar local Z projected into base XY",
+  "scene_pose_policy": "Bar and Cup fixed in robot base frame for every demo",
+  "stage_boundary_rule": "trimmed contact starts/ends from sustained compensated base Z force >5 N",
+  "demos": [
+    {
+      "demo": "demo_01",
+      "source_bag": "segments/trimmed/demo_01/demo.bag",
+      "samples": 76,
+      "bounds_indices": [
+        0,
+        9,
+        52,
+        76
+      ],
+      "contact_start_s": 1.6007999999999996,
+      "contact_end_s": 10.3498
+    },
+    {
+      "demo": "demo_02",
+      "source_bag": "segments/trimmed/demo_02/demo.bag",
+      "samples": 87,
+      "bounds_indices": [
+        76,
+        85,
+        136,
+        163
+      ],
+      "contact_start_s": 1.6502,
+      "contact_end_s": 11.850200000000001
+    },
+    {
+      "demo": "demo_03",
+      "source_bag": "segments/trimmed/demo_03/demo.bag",
+      "samples": 89,
+      "bounds_indices": [
+        163,
+        181,
+        226,
+        252
+      ],
+      "contact_start_s": 3.4999000000000002,
+      "contact_end_s": 12.4999
+    },
+    {
+      "demo": "demo_04",
+      "source_bag": "segments/trimmed/demo_04/demo.bag",
+      "samples": 90,
+      "bounds_indices": [
+        252,
+        261,
+        307,
+        342
+      ],
+      "contact_start_s": 1.7502999999999993,
+      "contact_end_s": 10.8503
+    },
+    {
+      "demo": "demo_05",
+      "source_bag": "segments/trimmed/demo_05/demo.bag",
+      "samples": 76,
+      "bounds_indices": [
+        342,
+        353,
+        394,
+        418
+      ],
+      "contact_start_s": 2.1498999999999997,
+      "contact_end_s": 10.2499
+    },
+    {
+      "demo": "demo_06",
+      "source_bag": "segments/trimmed/demo_06/demo.bag",
+      "samples": 81,
+      "bounds_indices": [
+        418,
+        427,
+        477,
+        499
+      ],
+      "contact_start_s": 1.7997999999999994,
+      "contact_end_s": 11.649799999999999
+    },
+    {
+      "demo": "demo_07",
+      "source_bag": "segments/trimmed/demo_07/demo.bag",
+      "samples": 75,
+      "bounds_indices": [
+        499,
+        506,
+        553,
+        574
+      ],
+      "contact_start_s": 1.3994,
+      "contact_end_s": 10.7494
+    },
+    {
+      "demo": "demo_08",
+      "source_bag": "segments/trimmed/demo_08/demo.bag",
+      "samples": 84,
+      "bounds_indices": [
+        574,
+        582,
+        637,
+        658
+      ],
+      "contact_start_s": 1.5997000000000003,
+      "contact_end_s": 12.4497
+    }
+  ],
+  "bar_relative_height_definition": "TCP.base_z - Bar.base_z; frozen tracked Bar origin; robot-base +Z",
+  "height_migration": {
+    "source_training_sha256": "301b4d2e6869a8305cc87471b7c1a19f397fd713fc57f0442de1b99b70b28dbf",
+    "rule": "TCP.base_z - Bar.base_z; frozen tracked Bar origin; robot-base +Z"
+  }
+}

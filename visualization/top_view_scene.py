@@ -8,6 +8,12 @@ except ModuleNotFoundError:  # pragma: no cover
     plt = None
 
 
+def configure_top_view_axis_direction(ax, env):
+    if str(getattr(env, "task_name", "")) == "BarSponge":
+        ax.xaxis.set_inverted(True)
+        ax.yaxis.set_inverted(True)
+
+
 def top_view_scene_geometry(env, demo_index=None):
     getter = getattr(env, "get_top_view_scene_geometry", None)
     if not callable(getter):

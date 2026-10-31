@@ -20,6 +20,7 @@ from visualization.learned_constraints_matrix import (
     plot_true_vs_learned_constraints_matrix_paper,
 )
 from visualization.top_view_scene import (
+    configure_top_view_axis_direction,
     draw_top_view_scene,
     top_view_scene_limit_points,
 )
@@ -209,6 +210,7 @@ def _set_compact_trajectory_limits(
     pad = max(0.10 * float(np.max(span)), 0.004)
     ax.set_xlim(float(lo[0] - pad), float(hi[0] + pad))
     ax.set_ylim(float(lo[1] - pad), float(hi[1] + pad))
+    configure_top_view_axis_direction(ax, env)
 
 
 def _legend(ax, *, outside=False, additional_axes=()):

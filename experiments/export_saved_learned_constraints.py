@@ -19,6 +19,12 @@ def convert(constraints_path: Path, task_id: str | None = None) -> Path:
     constraints = json.loads(constraints_path.read_text(encoding="utf-8"))
     metadata_path = constraints_path.with_name("metadata.json")
     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    if metadata["dataset_name"] == "BarSponge":
+        if task_id is not None and task_id not in ("BarSponge", "bar_sponge"):
+            raise ValueError("BarSponge export cannot override the task ID")
+        from experiments.bar_sponge_constraint_export import convert_saved_run
+
+        return convert_saved_run(constraints_path)
     names = [str(value) for value in constraints["ConstraintFeatureNames"]]
     semantics = np.asarray(
         constraints["ConstraintLearnedSemanticsMatrix"], dtype=object

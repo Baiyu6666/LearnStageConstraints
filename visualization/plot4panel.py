@@ -18,7 +18,7 @@ except ModuleNotFoundError:
     Axes3D = None
 
 from .io import learner_plot_dir, save_figure
-from .top_view_scene import draw_top_view_scene, top_view_scene_limit_points
+from .top_view_scene import configure_top_view_axis_direction, draw_top_view_scene, top_view_scene_limit_points
 
 PAPER_FIGSIZE = (7.2, 5.2)
 PAPER_TITLE_SIZE = 9
@@ -947,6 +947,7 @@ def _configure_2d_trajectory_axes(ax, env, pts):
     ax.set_ylim(ymin - pad, ymax + pad)
     ax.set_ylabel("z" if _is_pickplace(env) else "y")
     ax.set_aspect("equal", adjustable="box")
+    configure_top_view_axis_direction(ax, env)
 
 
 def _draw_chmm_gmms(ax, learner, x_dim: int):

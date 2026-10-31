@@ -623,7 +623,18 @@ def save_run_artifacts(
             _extract_constraints(result),
         ),
     }
-    if method_name in _MAP_METHODS and _supports_learned_endpoint_export(result):
+    if dataset_name == "BarSponge":
+        from experiments.bar_sponge_constraint_export import save_constraint
+
+        files["constraint"] = save_constraint(
+            run_dir,
+            dataset=result["dataset"],
+            constraints=_extract_constraints(result),
+            predicted_cutpoints=_extract_segmentation(result)["predicted_cutpoints"],
+            training_config=config_snapshot,
+            training_metadata=metadata,
+        )
+    elif method_name in _MAP_METHODS and _supports_learned_endpoint_export(result):
         files["learned_constraints"] = write_json(
             run_dir / "learned_constraints.json",
             _extract_learned_constraint_artifact(

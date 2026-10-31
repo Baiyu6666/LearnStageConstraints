@@ -1,34 +1,35 @@
 {
   "name": "BarSponge",
-  "n_demos": 5,
-  "processed_demo_path": "robot/stage_cons_iiwa14/data/processed/bar_sponge_clean2/training_5hz.npz",
+  "n_demos": 11,
+  "processed_demo_path": "robot/stage_cons_iiwa14/data/processed/barsponge_set_final/training_5hz.npz",
   "seed": 2026,
-  "source_demo_ids": [
-    1,2,3,4
-  ],
+  "source_demo_ids": null,
   "method_overrides": {
     "map_balanced_pooled": {
       "n_stages": 3,
       "selected_raw_feature_ids": [
         "cup_xy_distance",
-        "base_z",
+        "bar_relative_height",
         "bar_lateral_offset",
+        "bar_longitudinal_offset",
         "tcp_speed",
         "world_z_force"
       ],
       "duration_min": 5,
       "map_nu_eq": 5.0,
       "map_c_bg": 3,
-      "map_c_ineq": 1.0,
-      "map_eq_sigma": 0.15,
+      "map_c_ineq": 4.0,
+      "map_eq_sigma": 0.2,
+      "map_save_density_plots": true,
       "map_eq_distribution": "student-t"
     },
     "swcl": {
       "n_stages": 3,
       "selected_raw_feature_ids": [
         "cup_xy_distance",
-        "base_z",
+        "bar_relative_height",
         "bar_lateral_offset",
+        "bar_longitudinal_offset",
         "tcp_speed",
         "world_z_force"
       ],
