@@ -193,7 +193,7 @@ class PostHocConstraintLearner:
                 if upstream_history:
                     learner.loss_loglik = list(upstream_history)
                     learner.loss_label = "Changeforest split gain"
-        elif segmentation.method_name == "arhsmm":
+        elif segmentation.method_name in {"arhsmm", "hmm_lpv"}:
             history = (segmentation.extras.get("segmentation_history") or {}).get("loglik")
             if history is not None:
                 upstream_history = [float(x) for x in history if np.isscalar(x) and np.isfinite(float(x))]
@@ -245,7 +245,22 @@ class PostHocConstraintLearner:
             for ends in learner.stage_ends_
         ]
         if not bool(resolved_kwargs.get("disable_plots", False)):
-            if training_mode == "swcl":
+            if segmentation.method_name == "hmm_lpv":
+                from visualization.hmm_lpv_plots import plot_hmm_lpv_summary
+                from visualization.io import learner_plot_dir
+
+                plot_hmm_lpv_summary(
+                    parameters=segmentation.model.parameter_dict(),
+                    demos=dataset.demos,
+                    stage_ends=segmentation.model.stage_ends_,
+                    history=segmentation.extras["segmentation_history"],
+                    metrics=metrics,
+                    true_cutpoints=dataset.true_cutpoints,
+                    env=dataset.env,
+                    dataset_name=dataset.name,
+                    save_path=learner_plot_dir(learner) / "training_summary_posthoc_final.png",
+                )
+            elif training_mode == "swcl":
                 dummy_alphas = [np.zeros_like(gamma) for gamma in gammas]
                 dummy_betas = [np.zeros_like(gamma) for gamma in gammas]
                 plot_results_4panel(

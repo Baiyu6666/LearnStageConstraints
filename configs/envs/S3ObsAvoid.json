@@ -70,6 +70,12 @@
       "fixed_true_cutpoint_indices": [],
       "map_activation_prior": 0.5
     },
+    "hmm_lpv": {
+      "segmenter": {
+        "n_stages": 3,
+        "position_indices": [0, 1]
+      }
+    },
     "gmmhmm": {
       "segmenter": {
         "n_stages": 3,

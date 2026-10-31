@@ -1,0 +1,10 @@
+{
+  "name": "segment",
+  "prefix": "/home/baiyu/miniconda3/envs/segment",
+  "pythonVersion": "3.10.18",
+  "condaPackages": 29,
+  "pythonPackages": 173,
+  "localOrDirectReferences": 1,
+  "explicitComplete": true,
+  "method": "Static metadata inspection; no Python/Conda commands or project code executed."
+}

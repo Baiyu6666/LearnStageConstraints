@@ -528,7 +528,7 @@ def _extract_objectives(method_name: str, result: Mapping[str, Any]) -> dict[str
         if history:
             _append_scalar_if_finite(out, "ModelObjectiveFinal", history[-1])
             _append_scalar_if_finite(out, "SegmentationLogLikelihoodFinal", history[-1])
-    elif method_name == "gmmhmm" and seg_model is not None:
+    elif method_name in {"gmmhmm", "hmm_lpv"} and seg_model is not None:
         history = getattr(seg_model, "loss_loglik", None)
         if history:
             _append_scalar_if_finite(out, "ModelObjectiveFinal", history[-1])
@@ -623,6 +623,14 @@ def save_run_artifacts(
             _extract_constraints(result),
         ),
     }
+    if method_name == "hmm_lpv":
+        segmentation = result["segmentation"]
+        files["segmentation_model"] = write_json(
+            run_dir / "hmm_lpv_model.json", segmentation.model.parameter_dict(),
+        )
+        files["segmentation_training"] = write_json(
+            run_dir / "hmm_lpv_training.json", segmentation.extras["segmentation_history"],
+        )
     if dataset_name == "BarSponge":
         from experiments.bar_sponge_constraint_export import save_constraint
 

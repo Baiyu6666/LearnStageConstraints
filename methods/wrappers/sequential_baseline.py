@@ -11,6 +11,7 @@ from ..backends.changeforest import segment_with_changeforest
 from ..backends.changepoint import segment_changepoint
 from ..backends.gmm_hmm import segment_with_gmm_hmm
 from ..backends.hmm import segment_with_hmm
+from ..backends.hmm_lpv import segment_with_hmm_lpv
 from ..backends.ordered_cluster import segment_ordered_cluster
 from ..base import SegmentationResult, labels_to_cutpoints, labels_to_taus
 from ..common.tau_init import extract_taus_hat
@@ -24,7 +25,20 @@ class SequentialBaselineSegmenter:
     def run(self, dataset: TaskBundle) -> SegmentationResult:
         taus = None
         disable_plots = bool(self.kwargs.get("disable_plots", False))
-        if self.method == "gmmhmm":
+        if self.method == "hmm_lpv":
+            parameter_names = (
+                "n_stages", "n_components", "dt", "position_indices", "standardize",
+                "seed", "max_iter", "tol", "covariance_floor", "stability_margin",
+                "inverse_margin", "solver", "joint_max_iter", "init_mode", "verbose",
+            )
+            labels, model, seg_hist, posts = segment_with_hmm_lpv(
+                dataset.demos,
+                env=dataset.env,
+                true_cutpoints=getattr(dataset, "true_cutpoints", None),
+                **{name: self.kwargs[name] for name in parameter_names if name in self.kwargs},
+            )
+            extras = {"gammas": posts, "segmentation_history": seg_hist}
+        elif self.method == "gmmhmm":
             if dataset.env is None:
                 raise ValueError("GMM-HMM segmenter requires a dataset env with feature API.")
             resolved_kwargs = dict(self.kwargs)

@@ -1,0 +1,26 @@
+{
+  "name": "hmm_lpv",
+  "segmenter": {
+    "n_stages": 3,
+    "n_components": 7,
+    "position_indices": null,
+    "dt": null,
+    "standardize": true,
+    "seed": 0,
+    "max_iter": 30,
+    "tol": 0.0001,
+    "covariance_floor": 0.00001,
+    "stability_margin": 0.000001,
+    "inverse_margin": 0.5,
+    "solver": "CLARABEL",
+    "joint_max_iter": 100,
+    "init_mode": "kmeans",
+    "verbose": true
+  },
+  "posthoc_constraint": {
+    "posthoc_training_mode": "map_balanced_pooled",
+    "verbose": true,
+    "constraint_core_trim": 0,
+    "plot_dir": "outputs/plots"
+  }
+}

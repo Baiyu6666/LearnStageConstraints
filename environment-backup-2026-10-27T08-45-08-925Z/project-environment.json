@@ -1,0 +1,32 @@
+{
+  "project": "LearnStageConstraint",
+  "path": "/home/baiyu/PycharmProjects/LearnStageConstraint",
+  "status": "IDE_CONFIG_MATCHED",
+  "sdkName": "segment",
+  "interpreter": "/home/baiyu/miniconda3/envs/segment/bin/python",
+  "environment": "segment",
+  "evidence": "Saved .idea/misc.xml and PyCharm2026.2/options/jdk.table.xml. Live IDE API returned file not part of any module.",
+  "manifestCount": 19,
+  "manifests": [
+    "requirements.txt",
+    "robot/stage_cons_iiwa14/ros_ws/src/stage_demo_recorder/package.xml",
+    "robot/stage_cons_iiwa14/ros_ws/src/inspection_virtual_fixture/package.xml",
+    "robot/stage_cons_iiwa14/ros_ws/src/stage_real_executor/package.xml",
+    "robot/stage_cons_iiwa14/ros_ws/src/stage_demo_gui/package.xml",
+    "robot/stage_cons_iiwa14/ros_ws/src/stage_optitrack/package.xml",
+    "robot/stage_cons_iiwa14/ros_ws/src/stage_cartesian_trajectory/setup.py",
+    "robot/stage_cons_iiwa14/ros_ws/src/stage_cartesian_trajectory/package.xml",
+    "robot/stage_cons_iiwa14/ros_ws/src/stage_robot_config/setup.py",
+    "robot/stage_cons_iiwa14/ros_ws/src/stage_robot_config/package.xml",
+    "robot/stage_cons_iiwa14/compose.yaml",
+    "robot/stage_cons_iiwa14/ros_ws/src/stage_constraint_planner/setup.py",
+    "robot/stage_cons_iiwa14/ros_ws/src/force_sensor/package.xml",
+    "robot/stage_cons_iiwa14/Dockerfile",
+    "robot/stage_cons_iiwa14/ros_ws/src/stage_iiwa_sim/package.xml",
+    "robot/stage_cons_iiwa14/ros_ws/src/iiwa_control/package.xml",
+    "robot/stage_cons_iiwa14/ros_ws/src/iiwa_description/package.xml",
+    "robot/stage_cons_iiwa14/ros_ws/src/stage_constraint_planner/package.xml",
+    "robot/stage_cons_iiwa14/ros_ws/src/iiwa_driver/package.xml"
+  ],
+  "createdAt": "2026-10-27T08-45-08-925Z"
+}
